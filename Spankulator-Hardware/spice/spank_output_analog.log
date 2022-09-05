@@ -1,0 +1,22 @@
+Circuit: * C:\Users\Shannon\Dropbox\moog\spankulator\Spankulator-Hardware\spice\spank_output_analog.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Thu Feb 25 15:07:14 2021
+Total elapsed time: 0.109 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 3566
+traniter = 3560
+tranpoints = 1496
+accept = 1016
+rejected = 480
+matrix size = 32
+fillins = 24
+solver = Normal
+Thread vector: 11.4/8.5[3] 2.9/2.4[2] 2.1/1.8[2] 0.2/0.5[1]  2592/500
+Matrix Compiler1: 2.86 KB object code size  0.8/0.4/[0.2]
+Matrix Compiler2: 4.10 KB object code size  0.5/0.7/[0.3]
+

@@ -1,0 +1,21 @@
+Circuit: * C:\Users\Shannon\Dropbox\moog\spankulator\Spankulator-Hardware\spice\spank_dig_output_fet.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Fri Feb 26 03:19:09 2021
+Total elapsed time: 0.171 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 44472
+traniter = 44467
+tranpoints = 14777
+accept = 11185
+rejected = 3592
+matrix size = 10
+fillins = 0
+solver = Normal
+Matrix Compiler1: 426 bytes object code size  0.2/0.1/[0.0]
+Matrix Compiler2: 706 bytes object code size  0.1/0.1/[0.1]
+

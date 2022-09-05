@@ -1,0 +1,95 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+~$*
+
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# top-level stuff
+docs
+images
+macros
+node-red
+notes
+temp
+test_code
+zip
+
+Spankulator-Hardware/Spankulator.kicad_pcb-bak
+Spankulator-Hardware/*.zip
+Spankulator-Hardware/*.kicad_pcb-bak
+Spankulator-Hardware/fp-info-cache
+Spankulator-Hardware/spice/*.raw
+Spankulator-Hardware/*.csv
+Spankulator-Hardware/*.xml
+Spankulator-Hardware/*.bak
+Spankulator-Hardware/*.log
+Spankulator-Hardware/*.sch-bak
+Spankulator-Hardware/Spankulator-cache.lib
+Spankulator-Hardware/SpankParts-cache.lib
+Spankulator-Hardware/excel
+Spankulator-Hardware/math
+Spankulator-Hardware/sym-lib-table
+Spankulator-Hardware/Spankulator-backups
+# Spankulator-Hardware/bom/Spankulator.*
+
+Spankulator-Code/out
+Spankulator-Code/ArduinoLLC.ArduinoIDE_1.8.51.0_x86__mdqgnx93n4wtt
+Spankulator-Code/Spankulator/secrets
+Spankulator-Code/spank_port.txt
+Spankulator-Code/changes.bat
+Spankulator-Code/backit.bat
+Spankulator-Code/fix_devo.bat
+Spankulator-Code/excluded_from_backup.txt
+
+Spankulator-Manual/images
+Spankulator-Manual/psd
+Spankulator-Manual/*.tmp
+
+Spankulator-Panel/fp-info-cache
+Spankulator-Panel/*.kicad_pcb-bak
+Spankulator-Panel/*.zip

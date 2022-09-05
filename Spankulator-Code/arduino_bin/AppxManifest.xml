@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+  <Identity Name="ArduinoLLC.ArduinoIDE" ProcessorArchitecture="x86" Publisher="CN=AA9B1BC6-CE2F-47BE-AE0B-1758826804E2" Version="1.8.51.0" />
+  <!--
+    Publisher="CN=Arduino LLC, O=Arduino LLC, STREET=265 Franklin Street Suite 1702, L=Boston, S=MA, PostalCode=02110, C=US"
+  -->
+  <Properties>
+    <DisplayName>Arduino IDE</DisplayName>
+    <PublisherDisplayName>Arduino LLC</PublisherDisplayName>
+    <Logo>Assets\arduino.150x150.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+    <!--<PackageDependency Name="Microsoft.VCLibs.120.00.UWPDesktop" MinVersion="12.0.40652.5" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />-->
+  </Dependencies>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Applications>
+    <Application Id="ArduinoIDE" Executable="arduino.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="Arduino IDE" Description="Arduino IDE" BackgroundColor="transparent" Square150x150Logo="Assets\arduino.150x150.png" Square44x44Logo="Assets\arduino.44x44.png" />
+      <Extensions>
+        <uap3:Extension Category="windows.fileTypeAssociation">
+          <uap3:FileTypeAssociation Name="ino" Parameters="&quot;%1&quot;">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ino</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap2:SupportedVerbs>
+              <uap3:Verb Id="edit" Parameters="&quot;%1&quot;">edit</uap3:Verb>
+            </uap2:SupportedVerbs>
+          </uap3:FileTypeAssociation>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <mp:PhoneIdentity PhoneProductId="43a14287-2bf2-4a87-8e07-50c4012ecbcf" PhonePublisherId="7ed1f58f-3727-4602-b10c-2d77b2209d80" />
+</Package>

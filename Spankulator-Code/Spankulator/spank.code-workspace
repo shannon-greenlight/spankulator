@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": ".\\greenface_libs"
+		},
+		{
+			"path": "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.51.0_x86__mdqgnx93n4wtt\\libraries"
+		}
+	],
+	"settings": {
+		"C_Cpp.default.browse.path": [],
+		"C_Cpp.default.includePath": ["C:\\Users\\shann\\OneDrive\\Documents\\ArduinoData\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4"],
+		"arduino.additionalUrls": "",
+		"C_Cpp.default.systemIncludePath": [],
+		"C_Cpp.errorSquiggles": "Disabled"
+	}
+}
