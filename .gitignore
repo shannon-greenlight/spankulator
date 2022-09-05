@@ -78,7 +78,7 @@ Spankulator-Hardware/Spankulator-backups
 # Spankulator-Hardware/bom/Spankulator.*
 
 Spankulator-Code/out
-Spankulator-Code/ArduinoLLC.ArduinoIDE_1.8.51.0_x86__mdqgnx93n4wtt
+Spankulator-Code/arduino_bin/lib/*.jar
 Spankulator-Code/Spankulator/secrets
 Spankulator-Code/spank_port.txt
 Spankulator-Code/changes.bat

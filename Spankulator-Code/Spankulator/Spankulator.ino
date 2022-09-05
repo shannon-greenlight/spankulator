@@ -1,3 +1,4 @@
+// Spankulator main
 typedef void (*FunctionPointer)();
 
 // Load 3rd party libraries
