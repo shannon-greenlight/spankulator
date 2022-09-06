@@ -8,7 +8,7 @@ The BOM for the Spankulator is in bom/Spankulator.xlsx which can be directly upl
 
 # Spankulator-Code
 This repository contains the elements needed to build code for the Spankulator. 
-The code is for the Arduino Nano 33 IoT and is found in the Spankulator folder.
+The code is for the Arduino Nano 33 IoT and is found in the Spankulator folder. Make sure to get the required libraries from the Arduino-Libs repo.
 
 The build files are for Windows. They are simple .bat files but depend on having a working Arduino development system.
 Certain variables must be edited to adapt these files to a particular installation. 
