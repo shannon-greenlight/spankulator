@@ -4,7 +4,7 @@ uint16_t _dn_maxs[] = {9999, 9998, 99, 99, 9999};
 uint16_t _dn_init_vals[] = {100, 10, 10, 0, 100};
 uint16_t *dn_stuff[] = {_dn_params, _dn_mins, _dn_maxs, _dn_init_vals};
 String dn_labels[] = {"Start Pulse Len: ", "End Pulse Len: ", "Num Pulses: ", "Randomness: ", "Initial Delay: "};
-SPANK_fxn dn_spanker("Down", dn_labels, dn_stuff, sizeof(_dn_params) / sizeof(_dn_params[0]), &ui);
+Greenface_gadget dn_spanker("Down", dn_labels, dn_stuff, sizeof(_dn_params) / sizeof(_dn_params[0]));
 
 void dn_trigger()
 {

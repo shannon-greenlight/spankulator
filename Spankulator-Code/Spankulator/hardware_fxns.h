@@ -25,6 +25,17 @@ const byte right_button_pin = 8;     // >
 BufferedOutput gate(gate_out_pin);
 BufferedOutput tog(toggle_out_pin);
 
+// Rotary Encoder
+void intFxnA(void)
+{
+    e.aChanInt();
+}
+
+void intFxnB(void)
+{
+    e.bChanInt();
+}
+
 void hardware_begin()
 {
     pinMode(repeat_led_pin, OUTPUT);

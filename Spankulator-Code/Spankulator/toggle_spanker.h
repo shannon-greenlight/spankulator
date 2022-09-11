@@ -5,7 +5,7 @@ uint16_t _toggle_init_vals[] = {100, DAC_FS, 0, 0};
 uint16_t *toggle_stuff[] = {_toggle_params, _toggle_mins, _toggle_maxs, _toggle_init_vals};
 String toggle_string_params[] = {"", "", "", "Toggle,High,Low"};
 String toggle_labels[] = {"Delay: ", "Hi Level: ", "Lo Level: ", "State: "};
-SPANK_fxn toggle_spanker("Toggle", toggle_labels, toggle_stuff, sizeof(_toggle_params) / sizeof(_toggle_params[0]), &ui);
+Greenface_gadget toggle_spanker("Toggle", toggle_labels, toggle_stuff, sizeof(_toggle_params) / sizeof(_toggle_params[0]));
 
 #define TOGGLE_DELAY 0
 #define TOGGLE_HI_LEVEL 1

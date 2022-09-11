@@ -24,7 +24,7 @@ uint16_t _lfo_init_vals[] = {100, 0, 0};
 uint16_t *lfo_stuff[] = {_lfo_params, _lfo_mins, _lfo_maxs, _lfo_init_vals};
 String lfo_string_params[] = {"", "Sine,Inv Sine,Ramp Up,Ramp Down", ""};
 String lfo_labels[] = {"Period: ", "Waveform: ", "Randomness: "};
-SPANK_fxn lfo_spanker("LFO", lfo_labels, lfo_stuff, sizeof(_lfo_params) / sizeof(_lfo_params[0]), &ui);
+Greenface_gadget lfo_spanker("LFO", lfo_labels, lfo_stuff, sizeof(_lfo_params) / sizeof(_lfo_params[0]));
 
 // void write_dac(uint16_t val) {
 //   val = ( val << 2 ) | 0x3000;

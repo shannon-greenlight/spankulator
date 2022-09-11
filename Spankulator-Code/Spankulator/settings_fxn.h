@@ -7,7 +7,7 @@ String settings_labels[] = {"Version: ", "Adj Fxn: ", "Quantize: ", "Clock: ", "
 String settings_string_params[] = {VERSION_NUM, "Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "", "$~", "Push Trig", "ADC,DAC"};
 EEPROM_String settings_device_name(20);
 EEPROM_String settings_string_vars[] = {settings_device_name};
-SPANK_fxn settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]), &ui);
+Greenface_gadget settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]));
 
 #define SETTINGS_VER 0
 #define SETTINGS_ADJ_FXN 1
@@ -157,7 +157,7 @@ void settings_trigger()
     break;
 
   default:
-    ui.terminal_debug("Initialized: " + String(is_initialized()) + " Pattern: " + String(EEPROM_INIT_PATTERN));
+    ui.terminal_debug("Initialized: " + String(eeprom_is_initialized()) + " Pattern: " + String(EEPROM_INIT_PATTERN));
     break;
   }
 }

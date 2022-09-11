@@ -4,7 +4,7 @@ uint16_t _up_maxs[] = {9999, 9998, 99, 99, 9999};
 uint16_t _up_init_vals[] = {100, 10, 10, 0, 100};
 uint16_t *up_stuff[] = {_up_params, _up_mins, _up_maxs, _up_init_vals};
 String up_labels[] = {"End Pulse Len: ", "Start Pulse Len: ", "Num Pulses: ", "Randomness: ", "Initial Delay: "};
-SPANK_fxn up_spanker("Up", up_labels, up_stuff, sizeof(_up_params) / sizeof(_up_params[0]), &ui);
+Greenface_gadget up_spanker("Up", up_labels, up_stuff, sizeof(_up_params) / sizeof(_up_params[0]));
 
 void up_trigger()
 {

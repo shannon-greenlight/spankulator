@@ -10,39 +10,8 @@ typedef void (*FunctionPointer)();
 #include <arduino_secrets.h>
 
 #define BOARD_GENERATION 4
-
-// 30 beats per second
-#define HEART_RATE 30
-
-#define ADC_PIN A2
-
-#define ADC_BITS 12
-//#define ADC_FS (1 << ADC_BITS) - 1
-#define ADC_FS 4095
-//#define ADC_MID (1 << ADC_BITS - 1)
-#define ADC_MID 2048
-#define ADC_SCALE 409.6
-
-#define ADC_READS_SHIFT 8
-#define ADC_READS_COUNT (1 << ADC_READS_SHIFT)
-
-#define ADC_MIN_GAIN 0x0400
-#define ADC_UNITY_GAIN 0x0800
-#define ADC_MAX_GAIN (0x1000 - 1)
-#define ADC_RESOLUTION_BITS 12
-#define ADC_RANGE (1 << ADC_RESOLUTION_BITS)
-#define ADC_TOP_VALUE (ADC_RANGE - 1)
-
-#define MAX_TOP_VALUE_READS 10
-
-#define DAC_BITS 10
-//#define DAC_FS (1 << DAC_BITS)
-// #define DAC_FS 1023
-//#define DAC_MID (1 << DAC_BITS - 1)
-#define DAC_MID 512
-
-//#define ADC_DAC_SHIFT (ADC_BITS - DAC_BITS)
-#define ADC_DAC_SHIFT 2
+#include "version_num.h"
+#include "hardware_defs.h"
 
 void adc_config_hardware();
 
@@ -65,6 +34,7 @@ void restore_display();
 void check_display_restore();
 
 // variables
+String version_num = VERSION_NUM;
 volatile int keypress = 0;               // set by several sources
 volatile boolean fp_key_pressed = false; // only set by front panel keypress
 volatile int inactivity_timer = 0;
@@ -84,53 +54,22 @@ float scale;
 int offset;
 
 // Load Greenface libraries
-#include "version_num.h"
-#include "TerminalVT100.h"
-#include "RotaryEncoder.h"
-#include "Greenface_EEPROM.h"
-#include "EEPROM_Arr16.h"
-#include "EEPROM_Int.h"
-#include "EEPROM_Bool.h"
-#include "EEPROM_String.h"
+#include <TerminalVT100.h>
+#include <RotaryEncoder.h>
+#include <Greenface_EEPROM.h>
+#include <EEPROM_fxns.h>
+#include <Greenface_gadget.h>
+#include <WIFI_Util.h>
 
-// Rotary Encoder
-void intFxnA(void)
-{
-  e.aChanInt();
-}
-
-void intFxnB(void)
-{
-  e.bChanInt();
-}
-
-#include "hardware_defs.h"
 #include "hardware_fxns.h"
 #include "general_fxns.h"
 
-#include "GREENFACE_ui.h"
 #include "SPANK_ui.h"
-#include "WIFI_Util.h"
-#include "SPANK_fxn.h"
-SPANK_fxn *selected_fxn;
-#include "wifi_fxns.h"
-
 #include "face1.h" // greenface logo art
 
-#define EEPROM_DATA_START 16
-#define EEPROM_INIT_FLAG 14
-#define EEPROM_OFFSET_FLAG 12
-#define EEPROM_INIT_PATTERN 0x55aa
-
-int Greenface_EEPROM::eeprom_offset = EEPROM_DATA_START;
+Greenface_gadget *selected_fxn;
 EEPROM_Int fxn = EEPROM_Int(0, 1000);  // set max to real max when num_fxns has been defined
 EEPROM_Bool repeat_on = EEPROM_Bool(); // sizeof fxn val
-
-// todo should check for version change or new eeprom usage
-bool is_initialized()
-{
-  return fxn.read_int(EEPROM_INIT_FLAG) == EEPROM_INIT_PATTERN && fxn.read_int(EEPROM_OFFSET_FLAG) == Greenface_EEPROM::eeprom_offset;
-}
 
 #define UP_FXN 0
 #define DN_FXN 1
@@ -143,6 +82,7 @@ bool is_initialized()
 #define WIFI_FXN 8
 #define SETTINGS_FXN 9
 
+#include <Greenface_wifi_fxns.h>
 #include "up_spanker.h"
 #include "dn_spanker.h"
 #include "stretch_spanker.h"
@@ -172,7 +112,6 @@ void terminal_print_status()
     float percent = 100 * scale;
     ui.t.print("CV Scale: " + String(percent) + String("%"));
     ui.t.print(" Offset: " + String(offset));
-    // ui.t.print(" Keys: " + String(all_buttons_up()));
   }
 }
 
@@ -182,6 +121,8 @@ void terminal_print_status()
 void setup(void)
 {
   begin_all();
+  ee_info.begin(false);
+  ee_info.xfer();
   delay(500);
 
   offset_adj = ADC_MID;
@@ -191,7 +132,7 @@ void setup(void)
 
   set_encoder(); // sets msb,lsb for two types of encoder
 
-  if (!is_initialized())
+  if (!eeprom_is_initialized())
   {
     init_all();
   }
@@ -200,11 +141,8 @@ void setup(void)
   wifi_attempt_connect(false);
 
   ui.splash();
-  // Serial.println("EEO: " + String(EEO));
   delay(2500);
   exe_fxn();
-
-  // analogReadResolution(8);
 }
 
 void loop()

@@ -60,18 +60,18 @@ uint16_t *user_stuff_7[] = {user_params_7, user_mins_7, user_maxs_7};
 uint16_t *user_stuff_8[] = {user_params_8, user_mins_8, user_maxs_8};
 uint16_t *user_stuff_9[] = {user_params_9, user_mins_9, user_maxs_9};
 
-SPANK_fxn user_spanker_0("User 0", user_labels_0, user_stuff_0, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_1("User 1", user_labels_1, user_stuff_1, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_2("User 2", user_labels_2, user_stuff_2, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_3("User 3", user_labels_3, user_stuff_3, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_4("User 4", user_labels_4, user_stuff_4, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_5("User 5", user_labels_5, user_stuff_5, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_6("User 6", user_labels_6, user_stuff_6, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_7("User 7", user_labels_7, user_stuff_7, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_8("User 8", user_labels_8, user_stuff_8, USER_MAX_PARAMS, &ui);
-SPANK_fxn user_spanker_9("User 9", user_labels_9, user_stuff_9, USER_MAX_PARAMS, &ui);
+Greenface_gadget user_spanker_0("User 0", user_labels_0, user_stuff_0, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_1("User 1", user_labels_1, user_stuff_1, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_2("User 2", user_labels_2, user_stuff_2, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_3("User 3", user_labels_3, user_stuff_3, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_4("User 4", user_labels_4, user_stuff_4, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_5("User 5", user_labels_5, user_stuff_5, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_6("User 6", user_labels_6, user_stuff_6, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_7("User 7", user_labels_7, user_stuff_7, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_8("User 8", user_labels_8, user_stuff_8, USER_MAX_PARAMS);
+Greenface_gadget user_spanker_9("User 9", user_labels_9, user_stuff_9, USER_MAX_PARAMS);
 
-SPANK_fxn *user_spanks[] = {&user_spanker_0, &user_spanker_1, &user_spanker_2, &user_spanker_3, &user_spanker_4, &user_spanker_5, &user_spanker_6, &user_spanker_7, &user_spanker_8, &user_spanker_9};
+Greenface_gadget *user_spanks[] = {&user_spanker_0, &user_spanker_1, &user_spanker_2, &user_spanker_3, &user_spanker_4, &user_spanker_5, &user_spanker_6, &user_spanker_7, &user_spanker_8, &user_spanker_9};
 
 int user_param_num;
 byte user_dig_num = 0;
@@ -148,9 +148,9 @@ void user_update_user_string(String in_str)
   }
 }
 
-SPANK_fxn user_get_spank_obj(char c)
+Greenface_gadget user_get_spank_obj(char c)
 {
-  SPANK_fxn s = dn_spanker;
+  Greenface_gadget s = dn_spanker;
   switch (c)
   {
   case 'U':
@@ -225,7 +225,7 @@ void user_begin()
     selected_fxn->begin();
     // user_set_params(user_string.charAt(i));
     //*user_spanks[i].xfer();
-    SPANK_fxn f = user_get_spank_obj(user_string.charAt(i));
+    Greenface_gadget f = user_get_spank_obj(user_string.charAt(i));
     if (f.name > "")
     {
       // Serial.println("User Begin: "+user_spanks[i]->name);
@@ -428,7 +428,7 @@ void user_end()
 
 void user_set_params(char c)
 {
-  SPANK_fxn f = user_get_spank_obj(c);
+  Greenface_gadget f = user_get_spank_obj(c);
   f.copy_to(*user_spanks[user_dig_num]);
   if (c == 'L')
   {
@@ -461,7 +461,7 @@ void user_put_param_num(uint16_t pnum)
 
 void user_put_param(int param)
 {
-  // SPANK_fxn g = *user_spanks[user_dig_num];
+  // Greenface_gadget g = *user_spanks[user_dig_num];
   //  Serial.println("User put param: " + user_spanks[user_dig_num]->name);
   //  Serial.println("param_num: " + String(user_spanks[user_dig_num]->param_num));
   //  Serial.println("max: " + String(user_spanks[user_dig_num]->get_max()));

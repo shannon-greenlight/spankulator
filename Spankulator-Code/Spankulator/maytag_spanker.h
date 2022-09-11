@@ -4,7 +4,7 @@ uint16_t _maytag_maxs[] = {9999, 9999, 99};
 uint16_t _maytag_init_vals[] = {100, 500, 20};
 uint16_t *maytag_stuff[] = {_maytag_params, _maytag_mins, _maytag_maxs, _maytag_init_vals};
 String maytag_labels[] = {"Pulse Length: ", "Delay: ", "#Pulses: ", "Level 1: ", "Level 2: "};
-SPANK_fxn maytag_spanker("Maytag", maytag_labels, maytag_stuff, sizeof(_maytag_params) / sizeof(_maytag_params[0]), &ui);
+Greenface_gadget maytag_spanker("Maytag", maytag_labels, maytag_stuff, sizeof(_maytag_params) / sizeof(_maytag_params[0]));
 
 void maytag_trigger()
 {
