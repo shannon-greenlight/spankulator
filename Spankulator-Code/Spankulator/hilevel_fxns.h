@@ -323,7 +323,7 @@ void dec_dig_num()
   default:
     if (selected_fxn->get_param_type(selected_fxn->param_num) == SPANK_STRING_VAR_TYPE && key_held_down)
     {
-      // insert new char
+      // remove char
       selected_fxn->remove_char();
     }
     else
@@ -573,7 +573,7 @@ void check_serial()
 // boolean monitor = false;
 void heartbeat()
 {
-  // gate.set();
+  // gate.toggle(); // gate.set();
   // int inactivity_timeout = settings_get_inactivity_timeout();
   if (!keypress)
   {
@@ -584,8 +584,10 @@ void heartbeat()
     else if (!digitalRead(repeat_button_pin))
       keypress = '*'; // 42
     else if (!digitalRead(trigger_button_pin))
-      // else if ((port_a & TRIGGER_MASK) == 0)
+    // else if ((port_a & TRIGGER_MASK) == 0)
+    {
       keypress = '!'; // 33
+    }
     else if (!digitalRead(param_up_button_pin))
     {
       esc_mode = true;
@@ -632,10 +634,13 @@ void process_keypress()
 {
   // ui.terminal_debug("Processing keypress: " + String(keypress));
   unsigned long started = millis();
-  do
+  if (keypress != '!')
   {
-    key_held_down = millis() - started > 2000;
-  } while (!all_buttons_up() && !key_held_down);
+    do
+    {
+      key_held_down = millis() - started > 2000;
+    } while (!all_buttons_up() && !key_held_down);
+  }
 
   switch (keypress)
   {

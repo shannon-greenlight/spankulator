@@ -227,6 +227,7 @@ void _do_server()
             client.println("Content-type:text/html");
             // client.println("Content-type:application/json");
             client.println("Access-Control-Allow-Origin: *");
+            client.println("Access-Control-Allow-Methods: *");
             client.println();
 
             client.print("{");
@@ -265,8 +266,14 @@ void _do_server()
                 in_str = " ";
               }
               // Serial.println("Receiving: " + in_str + "*");
-
-              process_cmd(in_str);
+              if (in_str.startsWith("-Control"))
+              {
+                currentLine = "";
+              }
+              else
+              {
+                process_cmd(in_str);
+              }
             }
             currentLine = "";
           }

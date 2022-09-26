@@ -75,6 +75,9 @@ Spankulator-Hardware/excel
 Spankulator-Hardware/math
 Spankulator-Hardware/sym-lib-table
 Spankulator-Hardware/Spankulator-backups
+Spankulator-Hardware/bom/LCSC/SpankulatorFull.xlsx
+Spankulator-Hardware/bom/LCSC/lcsc_bom.xls
+Spankulator-Hardware/fab/pos
 # Spankulator-Hardware/bom/Spankulator.*
 
 Spankulator-Code/out
@@ -93,3 +96,4 @@ Spankulator-Manual/*.tmp
 Spankulator-Panel/fp-info-cache
 Spankulator-Panel/*.kicad_pcb-bak
 Spankulator-Panel/*.zip
+Spankulator-Panel/SpankulatorPanel-backups
