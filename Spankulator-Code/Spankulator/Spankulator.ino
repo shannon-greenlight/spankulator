@@ -132,9 +132,13 @@ void setup(void)
 
   set_encoder(); // sets msb,lsb for two types of encoder
 
-  if (!eeprom_is_initialized())
+  if (!eeprom_is_initialized() || !digitalRead(up_button_pin))
   {
     init_all();
+    wifi_password.init();
+    wifi_password.put("");
+    wifi_ssid.init();
+    wifi_ssid.put("");
   }
 
   // connect if wifi is active
