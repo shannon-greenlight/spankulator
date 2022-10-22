@@ -55,6 +55,7 @@ images
 macros
 node-red
 notes
+save
 temp
 test_code
 zip
@@ -97,3 +98,7 @@ Spankulator-Panel/fp-info-cache
 Spankulator-Panel/*.kicad_pcb-bak
 Spankulator-Panel/*.zip
 Spankulator-Panel/SpankulatorPanel-backups
+
+DuDad/DuDad-Board/DuDad-backups
+DuDad/DuDad-Panel/DuDadPanel-backups
+DuDad/spice

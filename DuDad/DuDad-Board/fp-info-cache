@@ -1,0 +1,176 @@
+39782281299647
+sputterizer
+Arducam_128_64_OLED
+
+
+0
+8
+8
+sputterizer
+ArduinoConnector
+Through hole straight socket strip, 1x15, 2.54mm pitch, single row (from Kicad 4.0.7), script generated
+Through hole socket strip THT 1x15 2.54mm single row
+0
+15
+15
+sputterizer
+BatteryHolder_Keystone_3030_1x10mm
+http://www.keyelco.com/product-pdf.cfm?p=777
+Keystone type 3000 coin cell retainer
+0
+3
+2
+sputterizer
+BatteryHolder_Keystone_3031_1x10mm
+http://www.keyelco.com/product-pdf.cfm?p=778
+Keystone type 3001 coin cell retainer
+0
+3
+2
+sputterizer
+BatteryHolder_MPD_BK_870
+http://www.keyelco.com/product-pdf.cfm?p=777
+Keystone type 3000 coin cell retainer
+0
+3
+2
+sputterizer
+CP_Radial_Tantal_D4.5mm_P5.00mm_Min
+CP, Radial_Tantal series, Radial, pin pitch=5.00mm, , diameter=4.5mm, Tantal Electrolytic Capacitor, http://cdn-reichelt.de/documents/datenblatt/B300/TANTAL-TB-Serie%23.pdf
+CP Radial_Tantal series Radial pin pitch 5.00mm  diameter 4.5mm Tantal Electrolytic Capacitor
+0
+2
+2
+sputterizer
+D_DO-41_SOD27_P7.62mm_Horizontal
+Diode, DO-35_SOD27 series, Axial, Horizontal, pin pitch=7.62mm, , length*diameter=4*2mm^2, , http://www.diodes.com/_files/packages/DO-35.pdf
+Diode DO-35_SOD27 series Axial Horizontal pin pitch 7.62mm  length 4mm diameter 2mm
+0
+2
+2
+sputterizer
+Jack_3.5mm_CUI_SJ1-3535NG_Horizontal_RectangularHoles
+TRS 3.5mm, horizontal, through-hole, , circular holeshttps://www.cui.com/product/resource/sj1-353xng.pdf
+TRS audio jack stereo horizontal circular
+0
+5
+5
+sputterizer
+LED_Bivar_SM1204BC
+LED RGB, APFA3010, http://www.kingbrightusa.com/images/catalog/SPEC/APFA3010LSEEZGKQBKC.pdf
+LED RGB APFA3010 KINGBRIGHT 3x1.5mm
+0
+3
+3
+sputterizer
+LED_RGBA1.6mm
+https://docs.broadcom.com/docs/AV02-4186EN
+LED Avago PLCC-4 ASMB-MTB0-0A3A2
+0
+4
+4
+sputterizer
+LED_RGBA1.6mm2
+https://docs.broadcom.com/docs/AV02-4186EN
+LED Avago PLCC-4 ASMB-MTB0-0A3A2
+0
+4
+4
+sputterizer
+LED_Wurth4.6x2.6mm
+https://docs.broadcom.com/docs/AV02-4186EN
+LED Avago PLCC-4 ASMB-MTB0-0A3A2
+0
+4
+4
+sputterizer
+LightPipe
+
+
+0
+2
+2
+sputterizer
+LightPipeRA
+Mounting Hole 2.1mm, no annular
+mounting hole 2.1mm no annular
+0
+0
+0
+sputterizer
+Molex-0472570001
+
+
+0
+6
+6
+sputterizer
+MountingHole_2.5mm-No-Margin
+Mounting Hole 2.5mm, no annular
+mounting hole 2.5mm no annular
+0
+0
+0
+sputterizer
+OLED_Header
+http://www.molex.com/pdm_docs/sd/022232031_sd.pdf
+
+0
+4
+4
+sputterizer
+OLED_Header_Slim
+http://www.molex.com/pdm_docs/sd/022232031_sd.pdf
+
+0
+4
+4
+sputterizer
+PinHeader_1x8_P2.54mm_Drill1.02mm
+http://www.molex.com/pdm_docs/sd/022232031_sd.pdf
+
+0
+8
+8
+sputterizer
+Plug_TRRS
+Through hole straight pin header, 1x04, 2.54mm pitch, single row
+Through hole pin header THT 1x04 2.54mm single row
+0
+4
+4
+sputterizer
+Plug_TRS
+Through hole straight pin header, 1x04, 2.54mm pitch, single row
+Through hole pin header THT 1x04 2.54mm single row
+0
+3
+3
+sputterizer
+S202031MS02Q
+
+
+0
+6
+4
+sputterizer
+SIP-2
+
+
+0
+2
+2
+sputterizer
+Switch_Tactile_SMD_4.5x4.5mm_K2-1109SP-A3SA-04
+http://spec_sheets.e-switch.com/specs/P010337.pdf
+
+0
+4
+4
+sputterizer
+USB_A_Amphenol_UE27AE54100_Vertical
+USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf
+USB_A Female Connector receptacle
+0
+6
+5
