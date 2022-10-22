@@ -1,10 +1,15 @@
-# Spankulator-Hardware
-This repo contains the materials needed to construct the Spankulator main board.
-See the Spankulator-Panel repo to make the front panel. 
+# Spankulator-Hardware, Spankulator-Panel
+These repos contain the materials needed to construct the Spankulator main board and the front panel.
 The files are for KiCAD 6.0. Go to the Greenlight Kicad repo to get the needed libraries.
 The gerber files work with JLCPC and will most likely work with other board manufacturers.
 Assembly instructions are in spankulator_assembly.docx.
-The BOM for the Spankulator is in bom/Spankulator.xlsx which can be directly uploaded to Digi-Key for buying parts.
+
+If starting from a bare circuit board, the BOM for the Spankulator is in bom/Digi-Key/spankulator_full_bom.xlsx. This file can be directly uploaded to Digi-Key for buying parts.
+If using the JLCPCB assembly service, the BOM is split into 2 parts.
+- bom/LCSC/spankulator_bom.xlsx : The parts to be assembled by JLCPCB
+- bom/Digi-Key/spankulator_bom.xlsx : The remaining parts to be assembled by user
+
+note: The bom files are auto-generated from the csv BOM files produced by KiCAD. You will need to refresh the data when changes to the schematic that affect the BOM occur.
 
 # Spankulator-Code
 This repository contains the elements needed to build code for the Spankulator. 
