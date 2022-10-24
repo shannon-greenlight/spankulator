@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\shann\Dropbox\moog\spankulator\DuDad\DuDad-Board\DuDad.kicad_sch</source>
-    <date>10/23/2022 7:15:47 AM</date>
+    <date>10/24/2022 9:41:23 AM</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -238,13 +238,13 @@
       <tstamps>d2010513-d039-43c6-bd57-c1f921d695f9</tstamps>
     </comp>
     <comp ref="R7">
-      <value>43K</value>
+      <value>30K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="Digi-Key Part">CF14JT43K0CT-ND</field>
+        <field name="Digi-Key Part">CF14JT30K0CT-ND</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT43K0CT-ND"/>
+      <property name="Digi-Key Part" value="CF14JT30K0CT-ND"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>

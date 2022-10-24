@@ -50,7 +50,6 @@ Temporary Items
 .apdisk
 
 # top-level stuff
-docs
 images
 macros
 node-red
@@ -101,4 +100,5 @@ Spankulator-Panel/SpankulatorPanel-backups
 
 DuDad/DuDad-Board/DuDad-backups
 DuDad/DuDad-Panel/DuDadPanel-backups
+DuDad/docs
 DuDad/spice

@@ -32,3 +32,16 @@ Here is a list of the batch files and folders:
 - list_ports.bat ... lists available COM ports
 - release.bat ... used to update release number in the code and create release binary zip
 - out ... this folder must be created. It holds compile output
+
+# Du Dad
+The Du Dad is an addition to the Spankulator that provides these benefits:
+
+- Front Panel USB access
+- Power sensing shuts off USB to Arduino when synth power is off
+- Reset switch
+- USB Power indicator
+- Boot Loader / Ext Trig Disabled indicator
+- Trig In Latch indicator
+- Extremely useful to those who use Terminal Remote mode
+
+The folder structure of the Du Dad is similar to the Spankulator Hardware folder. Currently there is no support for assembly service.
