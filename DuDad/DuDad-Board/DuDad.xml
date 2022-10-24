@@ -2,13 +2,13 @@
 <export version="E">
   <design>
     <source>C:\Users\shann\Dropbox\moog\spankulator\DuDad\DuDad-Board\DuDad.kicad_sch</source>
-    <date>10/21/2022 6:21:18 PM</date>
+    <date>10/23/2022 7:15:47 AM</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title/>
+        <title>DuDad</title>
         <company/>
-        <rev/>
+        <rev>1.3</rev>
         <date/>
         <source>DuDad.kicad_sch</source>
         <comment number="1" value=""/>
@@ -28,10 +28,10 @@
       <value>RED LED</value>
       <footprint>LED_THT:LED_D3.0mm</footprint>
       <fields>
-        <field name="Digi-Key Part">160-1035-ND</field>
+        <field name="Digi-Key Part">732-5005-ND</field>
       </fields>
       <libsource lib="Device" part="LED" description="Light emitting diode"/>
-      <property name="Digi-Key Part" value="160-1035-ND"/>
+      <property name="Digi-Key Part" value="732-5005-ND"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
