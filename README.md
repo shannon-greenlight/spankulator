@@ -1,3 +1,6 @@
+#Spankulator
+The Spankulator is a WiFi-enabled multi-function Eurorack module. Its main function is to generate a trio of coordinated analog and digital signals which can be used in an endless variety of ways. While each output generates familiar signals, it is the coordination of these signals and the methods of control that make the Spankulator special.
+
 # Spankulator-Hardware, Spankulator-Panel
 These repos contain the materials needed to construct the Spankulator main board and the front panel.
 The files are for KiCAD 6.0. Go to the Greenlight Kicad repo to get the needed libraries.
