@@ -1,6 +1,6 @@
 @echo off
-del .\dudad_gerbers.zip
-"C:\Program Files\7-Zip\7z.exe" a .\dudad_gerbers.zip .\gerber\*.gbr
-"C:\Program Files\7-Zip\7z.exe" a .\dudad_gerbers.zip .\gerber\*.gbrjob
-"C:\Program Files\7-Zip\7z.exe" a .\dudad_gerbers.zip .\gerber\*.drl
-pause
+set basename=DuDad
+set cmd_path=..\..\..\cmd\
+
+call %cmd_path%zip_gerbers.bat
+

@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\shann\Dropbox\moog\spankulator\DuDad\DuDad2HP-Board\DuDad2HP.kicad_sch</source>
-    <date>10/25/2022 7:57:54 AM</date>
+    <date>10/26/2022 11:07:36 AM</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -65,14 +65,14 @@
     </comp>
     <comp ref="J1">
       <value>EXP</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical</footprint>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical_SMD</footprint>
       <fields>
-        <field name="  LCSC Part #">C225520</field>
+        <field name="  LCSC Part #">C124391</field>
         <field name="Digi-Key Part">S2011EC-05-ND</field>
       </fields>
       <libsource lib="Connector_Generic" part="Conn_02x05_Odd_Even" description="Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <property name="Digi-Key Part" value="S2011EC-05-ND"/>
-      <property name="  LCSC Part #" value="C225520"/>
+      <property name="  LCSC Part #" value="C124391"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad2HP.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -114,11 +114,12 @@
         <field name="  LCSC Part #">C8326</field>
       </fields>
       <libsource lib="Transistor_BJT" part="MMBT3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"/>
+      <property name="Digi-Key Part" value=""/>
       <property name="  LCSC Part #" value="C8326"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad2HP.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>3e35ec55-6e98-4581-9a29-9732a6489518</tstamps>
+      <tstamps>efd46df6-7130-4652-9949-fc9c1a4f0ff8</tstamps>
     </comp>
     <comp ref="Q2">
       <value>MMBT5401</value>
@@ -127,24 +128,24 @@
       <fields>
         <field name="  LCSC Part #">C8326</field>
       </fields>
-      <libsource lib="Transistor_BJT" part="2N3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92"/>
+      <libsource lib="Transistor_BJT" part="MMBT3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"/>
       <property name="Digi-Key Part" value=""/>
       <property name="  LCSC Part #" value="C8326"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad2HP.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000061f47861</tstamps>
+      <tstamps>7146301d-2b52-476f-b7bb-4b2a0a7e1026</tstamps>
     </comp>
     <comp ref="Q3">
-      <value>2N7000</value>
+      <value>2N7002</value>
       <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
       <datasheet>https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</datasheet>
       <fields>
-        <field name="  LCSC Part #">C232838</field>
+        <field name="  LCSC Part #">C8545</field>
       </fields>
-      <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
+      <libsource lib="Transistor_FET" part="2N7002" description="0.115A Id, 60V Vds, N-Channel MOSFET, SOT-23"/>
       <property name="Digi-Key Part" value=""/>
-      <property name="  LCSC Part #" value="C232838"/>
+      <property name="  LCSC Part #" value="C8545"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad2HP.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -157,7 +158,7 @@
       <fields>
         <field name="  LCSC Part #">C8326</field>
       </fields>
-      <libsource lib="Transistor_BJT" part="2N3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92"/>
+      <libsource lib="Transistor_BJT" part="MMBT3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"/>
       <property name="Digi-Key Part" value=""/>
       <property name="  LCSC Part #" value="C8326"/>
       <property name="Sheetname" value=""/>
@@ -428,24 +429,6 @@
         <pin num="2" name="2" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Transistor_BJT" part="2N3906">
-      <description>-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92</description>
-      <docs>https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</docs>
-      <footprints>
-        <fp>TO?92*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">Q</field>
-        <field name="Value">2N3906</field>
-        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
-        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</field>
-      </fields>
-      <pins>
-        <pin num="1" name="E" type="passive"/>
-        <pin num="2" name="B" type="input"/>
-        <pin num="3" name="C" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="Transistor_BJT" part="MMBT3906">
       <description>-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</description>
       <docs>https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</docs>
@@ -464,21 +447,21 @@
         <pin num="3" name="C" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Transistor_FET" part="2N7000">
-      <description>0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92</description>
+    <libpart lib="Transistor_FET" part="2N7002">
+      <description>0.115A Id, 60V Vds, N-Channel MOSFET, SOT-23</description>
       <docs>https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</docs>
       <footprints>
-        <fp>TO?92*</fp>
+        <fp>SOT?23*</fp>
       </footprints>
       <fields>
         <field name="Reference">Q</field>
-        <field name="Value">2N7000</field>
-        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+        <field name="Value">2N7002</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
         <field name="Datasheet">https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</field>
       </fields>
       <pins>
-        <pin num="1" name="S" type="passive"/>
-        <pin num="2" name="G" type="input"/>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
         <pin num="3" name="D" type="passive"/>
       </pins>
     </libpart>
@@ -510,7 +493,7 @@
     <net code="1" name="+3V3">
       <node ref="J1" pin="9" pinfunction="Pin_9" pintype="passive"/>
       <node ref="Q1" pin="2" pinfunction="E" pintype="passive"/>
-      <node ref="Q2" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="E" pintype="passive"/>
     </net>
     <net code="2" name="+12V">
       <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
@@ -521,7 +504,7 @@
       <node ref="J1" pin="8" pinfunction="Pin_8" pintype="passive"/>
       <node ref="J2" pin="5" pinfunction="GND" pintype="power_out"/>
       <node ref="J3" pin="4" pinfunction="GND" pintype="power_in"/>
-      <node ref="Q3" pin="1" pinfunction="S" pintype="passive"/>
+      <node ref="Q3" pin="2" pinfunction="S" pintype="passive"/>
       <node ref="R1" pin="1" pintype="passive"/>
       <node ref="R3" pin="1" pintype="passive"/>
       <node ref="R4" pin="1" pintype="passive"/>
@@ -567,7 +550,7 @@
     </net>
     <net code="13" name="Net-(J2-Pad1)">
       <node ref="J2" pin="1" pinfunction="VBUS" pintype="power_out"/>
-      <node ref="Q4" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="Q4" pin="2" pinfunction="E" pintype="passive"/>
       <node ref="R8" pin="2" pintype="passive"/>
     </net>
     <net code="14" name="Net-(J2-Pad2)">
@@ -582,27 +565,27 @@
       <node ref="J2" pin="6" pinfunction="Shield" pintype="passive"/>
       <node ref="J3" pin="5" pinfunction="Shield" pintype="passive"/>
     </net>
-    <net code="17" name="Net-(Q1-Pad1)">
-      <node ref="Q1" pin="1" pinfunction="B" pintype="input"/>
-      <node ref="R2" pin="2" pintype="passive"/>
-    </net>
-    <net code="18" name="Net-(Q2-Pad2)">
-      <node ref="Q2" pin="2" pinfunction="B" pintype="input"/>
-      <node ref="R5" pin="2" pintype="passive"/>
-    </net>
-    <net code="19" name="Net-(Q3-Pad2)">
-      <node ref="Q3" pin="2" pinfunction="G" pintype="input"/>
+    <net code="17" name="Net-(Q3-Pad1)">
+      <node ref="Q3" pin="1" pinfunction="G" pintype="input"/>
       <node ref="R6" pin="2" pintype="passive"/>
       <node ref="R7" pin="1" pintype="passive"/>
     </net>
-    <net code="20" name="Net-(Q3-Pad3)">
+    <net code="18" name="Net-(Q3-Pad3)">
       <node ref="Q3" pin="3" pinfunction="D" pintype="passive"/>
       <node ref="R9" pin="1" pintype="passive"/>
     </net>
-    <net code="21" name="Net-(Q4-Pad2)">
-      <node ref="Q4" pin="2" pinfunction="B" pintype="input"/>
+    <net code="19" name="Net-(Q4-Pad1)">
+      <node ref="Q4" pin="1" pinfunction="B" pintype="input"/>
       <node ref="R8" pin="1" pintype="passive"/>
       <node ref="R9" pin="2" pintype="passive"/>
+    </net>
+    <net code="20" name="Net-(R2-Pad2)">
+      <node ref="Q1" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="21" name="Net-(R5-Pad2)">
+      <node ref="Q2" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R5" pin="2" pintype="passive"/>
     </net>
     <net code="22" name="unconnected-(J1-Pad3)">
       <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>

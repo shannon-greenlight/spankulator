@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "(6.0.1)"
     },
-    "CreationDate": "2022-10-21T21:40:06-07:00"
+    "CreationDate": "2022-10-29T04:51:09-07:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -38,8 +38,18 @@
       "FilePolarity": "Positive"
     },
     {
+      "Path": "DuDadPanel-B_Cu.gbr",
+      "FileFunction": "Copper,L2,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "DuDadPanel-F_Paste.gbr",
       "FileFunction": "SolderPaste,Top",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "DuDadPanel-B_Paste.gbr",
+      "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
@@ -48,8 +58,18 @@
       "FilePolarity": "Positive"
     },
     {
+      "Path": "DuDadPanel-B_Silkscreen.gbr",
+      "FileFunction": "Legend,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "DuDadPanel-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
+      "FilePolarity": "Negative"
+    },
+    {
+      "Path": "DuDadPanel-B_Mask.gbr",
+      "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {

@@ -58,6 +58,10 @@ save
 temp
 test_code
 zip
+spice
+
+*-backups
+fp-info-cache
 
 Spankulator-Hardware/Spankulator.kicad_pcb-bak
 Spankulator-Hardware/*.zip
@@ -74,7 +78,6 @@ Spankulator-Hardware/SpankParts-cache.lib
 Spankulator-Hardware/excel
 Spankulator-Hardware/math
 Spankulator-Hardware/sym-lib-table
-Spankulator-Hardware/Spankulator-backups
 Spankulator-Hardware/bom/LCSC/SpankulatorFull.xlsx
 Spankulator-Hardware/bom/LCSC/lcsc_bom.xls
 Spankulator-Hardware/fab/pos
@@ -96,9 +99,8 @@ Spankulator-Manual/*.tmp
 Spankulator-Panel/fp-info-cache
 Spankulator-Panel/*.kicad_pcb-bak
 Spankulator-Panel/*.zip
-Spankulator-Panel/SpankulatorPanel-backups
 
-DuDad/DuDad-Board/DuDad-backups
-DuDad/DuDad-Panel/DuDadPanel-backups
 DuDad/docs
 DuDad/spice
+
+*/fp-info-cache
