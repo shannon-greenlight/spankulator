@@ -14,10 +14,10 @@ If using the JLCPCB assembly service, the BOM is split into 3 parts.
 - bom/Digi-Key/spankulator_bom.xlsx : The remaining parts to be assembled by user
 - bom/Other/other_bom.xlsx : The parts that must be bought from sources other than JLCPCB and Digi-Key
 
-Also, when an assembly service is used, a component position file is required. This file's path is: fab/pos/spankulator_cpl.xlsx
+Also, when an assembly service is used, a component position file is required. This file's path is: fab/spankulator_cpl.xlsx
 
 notes: 	The bom and cpl files are auto-generated from the csv BOM files produced by KiCAD. You will need to refresh the data when changes to the schematic that affect the BOM or changes to the board layout occur.
-		The extra parts and additional data field that appear on the schematic help to produce the different BOM files. They must be maintained for these BOMs to come out right.
+		The extra parts and additional data fields that appear on the schematic help to produce the different BOM files. They must be maintained for these BOMs to come out right.
 
 # Spankulator-Code
 This repository contains the elements needed to build code for the Spankulator. 
