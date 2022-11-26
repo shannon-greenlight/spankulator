@@ -55,7 +55,22 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "silk_over_copper|105200000|101330000|3563f528-c66a-48e6-8a05-9c7fa879b89e|8c10173b-c110-489b-8d33-ecc22d9667e4",
+        "silk_over_copper|108343269|106294489|2a6458b5-6846-4a03-b0c8-4671bc486c50|b3da23e8-f627-42ed-99c7-f7577a061f21",
+        "silk_over_copper|108412665|106556195|d0902669-920d-45ef-bce5-05867e65d051|b3da23e8-f627-42ed-99c7-f7577a061f21",
+        "silk_over_copper|108717284|108848537|2a6458b5-6846-4a03-b0c8-4671bc486c50|c71292c1-99ba-4e88-bb9d-6d81f6c3052c",
+        "silk_over_copper|108787267|108761475|d0902669-920d-45ef-bce5-05867e65d051|c71292c1-99ba-4e88-bb9d-6d81f6c3052c",
+        "silk_over_copper|57530000|77930000|ecc3e446-fa37-438b-89fe-1bc2aa0f7ca5|e6b07139-f17b-4c97-b51b-038e0e8db74a",
+        "silk_over_copper|61920000|77930000|ecc3e446-fa37-438b-89fe-1bc2aa0f7ca5|9f3df9c6-8fdd-44e3-9ae8-2dba2cb0ac3a",
+        "silk_over_copper|95901714|98185714|7765f31a-b229-495c-9cd5-779f28c9bfd9|73020f4e-0646-42c6-9c58-c614b043f9c4",
+        "silk_overlap|105000000|105675000|3a167e27-0664-4993-810a-5228b728cdfc|d55db35c-e03a-4552-a6cd-37bfb99f86e4",
+        "silk_overlap|105000000|106025000|3a167e27-0664-4993-810a-5228b728cdfc|fc832630-959c-450b-9983-5fc5f5b3a195",
+        "silk_overlap|105000000|110425000|3a167e27-0664-4993-810a-5228b728cdfc|c7f89120-fc72-4666-b826-0cbb187d1166",
+        "silk_overlap|105000000|110475000|3a167e27-0664-4993-810a-5228b728cdfc|29579983-93b8-441e-ab2c-c415d547f8d2",
+        "silk_overlap|108617815|109224950|2a6458b5-6846-4a03-b0c8-4671bc486c50|d0902669-920d-45ef-bce5-05867e65d051",
+        "via_dangling|80010000|42890000|0c3865b1-0ed6-469a-8c1f-2e18c4a9026c|00000000-0000-0000-0000-000000000000"
+      ],
       "meta": {
         "filename": "board_design_settings.json",
         "version": 2
@@ -77,7 +92,7 @@
         "item_on_disabled_layer": "error",
         "items_not_allowed": "error",
         "length_out_of_range": "error",
-        "malformed_courtyard": "warning",
+        "malformed_courtyard": "ignore",
         "microvia_drill_out_of_range": "error",
         "missing_courtyard": "ignore",
         "missing_footprint": "warning",
