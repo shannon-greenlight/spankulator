@@ -1,9 +1,17 @@
-rem - "C:\Program Files\KiCad\bin\xsltproc" -o "Spankulator.csv" "C:\Program Files\KiCad\bin\scripting\plugins\bom2grouped_csv.xsl" "C:\Users\shann\Dropbox\moog\spankulator\Spankulator-Hardware\Spankulator.xml"
+@echo off
 
-"C:\Program Files\KiCad\bin\python" "C:\Users\shann\Dropbox\KiCAD\BOM/bom_lcsc.py" "Spankulator.xml" "bom\LCSC\spankulator_bom.csv"
+echo This creates BOM files for building the Spankulator
+echo It requires Spankulator.xml as an input. Make sure that it is up to date. Use the KiCAD schematic BOM generator with the bom2grouped_csv.xsl plugin that's supplied with KiCAD.
 
-"C:\Program Files\KiCad\bin\python" "C:\Users\shann\Dropbox\KiCAD\BOM/bom_digikey_split.py" "Spankulator.xml" "bom\Digi-Key\spankulator_split.csv"
+set bin_dir=C:\Program Files\KiCad\bin
+set plugin_dir=C:\Users\shann\Dropbox\KiCAD\BOM
 
-"C:\Program Files\KiCad\bin\python" "C:\Users\shann\Dropbox\KiCAD\BOM/bom_digikey_full.py" "Spankulator.xml" "bom\Digi-Key\spankulator_full.csv"
+"%bin_dir%\python" "%plugin_dir%/bom_lcsc.py" "Spankulator.xml" "bom\LCSC\spankulator_bom.csv"
+
+"%bin_dir%\python" "%plugin_dir%/bom_digikey_split.py" "Spankulator.xml" "bom\Digi-Key\spankulator_split.csv"
+
+"%bin_dir%\python" "%plugin_dir%/bom_digikey_full.py" "Spankulator.xml" "bom\Digi-Key\spankulator_full.csv"
+
+if not errorlevel 1 echo Success!
 
 pause
