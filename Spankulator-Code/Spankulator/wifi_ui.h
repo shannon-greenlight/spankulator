@@ -87,7 +87,7 @@ void send_user_params_to_client(WiFiClient client)
     // Serial.print(user_string.charAt(user_dig_num));
     // Serial.println("*");
     // Serial.println(out);
-    if (user_dig_num > 0)
+    if (user_dig_num > 0 && out.length() > 0)
     {
       out += ",";
     }
