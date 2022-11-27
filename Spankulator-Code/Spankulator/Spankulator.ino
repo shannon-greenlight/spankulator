@@ -32,6 +32,7 @@ void new_fxn();
 // void check_inactivity_timer();
 void restore_display();
 void check_display_restore();
+String old_status = "";
 
 // variables
 String version_num = VERSION_NUM;
