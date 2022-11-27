@@ -24,7 +24,7 @@ notes: 	The bom and cpl files are auto-generated from the csv BOM files produced
 		Select ./fab/pos as the output directory. This creates the pos files, the 'top' file being used as the data source for the cpl file that is sent to JLCPCB: fab/spankulator_cpl.xsl
 		Make sure to refresh the data and save the file before sending it to JLCPCB.
 		
-		The additional data fields that appear on the schematic help to produce the different BOM files. They must be maintained for these BOMs to come out right.
+The additional data fields that appear on the schematic help to produce the different BOM files. They must be maintained for these BOMs to come out right.
 
 # Spankulator-Code
 This repository contains the elements needed to build code for the Spankulator. 
