@@ -30,3 +30,4 @@ Reference,Quantity,Value,Footprint,JLCPCB Part #
 "U4, ",1,MC78L05_TO92,Package_TO_SOT_THT:TO-92_Inline_Wide,C156437
 "U5, ",1,LP2950-3.3_TO92,digikey-footprints:TO-92-3_Formed_Leads,C133551
 "U6, ",1,MAX7480,Package_DIP:DIP-8_W7.62mm_Socket_LongPads,C72124
+"U7, ",1,MB85RC256,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,C47538
