@@ -6,7 +6,7 @@
 
   (title_block
     (title "Spankulator")
-    (rev "4.4")
+    (rev "5.0")
     (company "Greenface Labs")
   )
 
@@ -842,23 +842,6 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Digi-Key Part" "732-11607-ND" (id 4) (at 36.83 162.56 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-  )
-
-  (symbol (lib_id "Mechanical:MountingHole") (at 62.23 178.435 0) (unit 1)
-    (in_bom no) (on_board yes)
-    (uuid 0da06eb7-62ae-4edc-a19d-38c77a95d643)
-    (property "Reference" "H5" (id 0) (at 64.77 177.2666 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "MountingHole" (id 1) (at 64.77 179.578 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "sputterizer:MountingHole_2.5mm-No-Margin" (id 2) (at 62.23 178.435 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (id 3) (at 62.23 178.435 0)
       (effects (font (size 1.27 1.27)) hide)
     )
   )
