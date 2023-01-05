@@ -79,7 +79,8 @@ String params_toJSON()
 void send_user_params_to_client(WiFiClient client)
 {
   byte temp = user_dig_num;
-  String out = "\"params\" : [";
+  String out = "";
+  client.print("\"params\" : [");
   for (user_dig_num = 0; user_dig_num < user_string.length() && user_dig_num < USER_MAXLEN; user_dig_num++)
   {
     // Serial.print(user_dig_num);
@@ -87,7 +88,7 @@ void send_user_params_to_client(WiFiClient client)
     // Serial.print(user_string.charAt(user_dig_num));
     // Serial.println("*");
     // Serial.println(out);
-    if (user_dig_num > 0 && out.length() > 0)
+    if (user_dig_num > 0)
     {
       out += ",";
     }
@@ -96,10 +97,10 @@ void send_user_params_to_client(WiFiClient client)
       out += user_params_toJSON();
     }
     client.print(out);
+    // Serial.print(out);
     out = "";
   }
   client.print("]");
-  // Serial.println(out);
   user_dig_num = temp;
 }
 

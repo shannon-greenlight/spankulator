@@ -126,19 +126,21 @@ void user_update_user_string(String in_str)
   boolean valid_user_str = true;
   byte my_dig_num = 0;
   byte the_length = min(USER_MAXLEN, in_str.length());
+  // Serial.print("Checking User String: ");
+  // Serial.println(in_str);
   for (my_dig_num = 0; my_dig_num < the_length; my_dig_num++)
   {
-    if (user_ops.indexOf(in_str.charAt(my_dig_num)) == -1)
+    if (user_ops.indexOf(in_str.charAt(my_dig_num + 1)) == -1)
     {
       valid_user_str = false;
       // Serial.print("Bad User String: ");
-      // Serial.println(in_str);
+      // Serial.println(in_str.charAt(my_dig_num));
     }
   }
   if (valid_user_str)
   {
     triggered = user_doing_trigger = false;
-    user_string.put(in_str.substring(0, the_length));
+    user_string.put(in_str.substring(1, the_length));
     for (user_dig_num = 0; user_dig_num < the_length; user_dig_num++)
     {
       user_set_params(user_string.charAt(user_dig_num));

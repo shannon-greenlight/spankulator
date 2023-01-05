@@ -764,12 +764,20 @@ void process_cmd(String in_str)
     set_scale();
     remote_adjusting = true;
     housekeep();
+    terminal_print_status();
+    break;
+  case 'P':
+    settings_spanker.param_put(int_param, SETTINGS_POT_FXN);
+    break;
+  case 'V':
+    settings_spanker.param_put(int_param, SETTINGS_DC_FXN);
     break;
   case 'S':
     scale_adj = int_param;
     set_scale();
     remote_adjusting = true;
     housekeep();
+    terminal_print_status();
     break;
   case 'f':
     fxn.put(int_param);
@@ -909,24 +917,17 @@ void process_cmd(String in_str)
     String sval = urlDecode(in_str.substring(1));
     // Serial.println("instr: " + in_str + "*");
     // Serial.println("String val: " + sval + "*");
-    selected_fxn->put_string_var(urlDecode(in_str.substring(1)));
-    // if (in_wifi())
-    // {
-    //   wifi_password.put(sval);
-    //   wifi_dig_num = wifi_password.length() - 1;
-    //   // ui.terminal_debug("String val: " + wifi_password.get() + "*");
-    // }
-    // else
-    // {
-    //   selected_fxn->put_string_var(sval);
-    // }
+    if (fxn.get() == USER_FXN && !esc_mode)
+    {
+      user_update_user_string(in_str);
+    }
+    else
+    {
+      selected_fxn->put_string_var(urlDecode(in_str.substring(1)));
+    }
+
     exe_fxn();
     break;
-  }
-
-  if (fxn.get() == USER_FXN && !esc_mode && cmd != 32)
-  {
-    user_update_user_string(in_str);
   }
 
   if (cmd > 47 && cmd < 58)
