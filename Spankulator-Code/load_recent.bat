@@ -21,7 +21,7 @@ if %port% == x exit
 echo %port% > spank_port.txt
 
 @mode com%port% baud=1200
-timeout /t 5
+timeout /t 2
 
 .\updater\bossac.exe -d -U true -i -e -w -v -b .\out\Spankulator.ino.bin -R
 EndLocal
