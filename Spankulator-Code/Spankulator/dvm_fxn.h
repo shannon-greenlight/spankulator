@@ -10,7 +10,7 @@ EEPROM_Int dvm_mode = EEPROM_Int(0, 3); // 0-DC 1=AC, 2=DCQ, 3=ACQ
 // DVM_SCALE is the input range in bits divided by the output range in volts
 // 4096 / 10.66667
 #define DVM_SCALE 384.0
-//#define DVM_MID ADC_MID
+// #define DVM_MID ADC_MID
 #define DVM_AC_OUTPUT_SCALE 1158.35
 // AC SCALE = SCALE * 2 * 1.414
 
@@ -122,9 +122,9 @@ void dvm_do_trigger()
 {
     noInterrupts();
     byte mode = dvm_mode.get();
-    byte pin = dvm_is_dc_mode() ? ain2_pin : ain3_pin;
+    adc_chan chan = dvm_is_dc_mode() ? ADC_DC : ADC_AC;
     byte buf_len = dvm_is_dc_mode() ? 32 : DVM_MEAS_BUF;
-    int raw = analogRead(pin);
+    int raw = readADC(chan);
     int reading = raw;
     float dac_temp;
 

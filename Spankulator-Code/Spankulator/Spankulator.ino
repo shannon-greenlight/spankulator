@@ -16,7 +16,8 @@ typedef void (*FunctionPointer)();
 void adc_config_hardware();
 
 // settings functions
-uint16_t settings_get_adj_fxn();
+uint16_t settings_get_pot_fxn();
+uint16_t settings_get_dc_fxn();
 boolean settings_is_quantized();
 String settings_get_device_name();
 boolean settings_is_ext_clk();
@@ -112,7 +113,10 @@ void terminal_print_status()
     ui.t.setCursor(FXN_ROW, "28");
     float percent = 100 * scale;
     ui.t.print("CV Scale: " + String(percent) + String("%"));
-    ui.t.print(" Offset: " + String(offset));
+
+    float volts = (float(offset_adj) / ADC_FS) * 10.66 - 5.33;
+    ui.t.print(" Offset: " + String(volts) + String("V"));
+    ui.t.clrToEOL();
   }
 }
 
@@ -127,7 +131,7 @@ void setup(void)
   delay(500);
 
   offset_adj = ADC_MID;
-  set_adj();
+  do_cv_mod();
   scale = 1.0;
   offset = 0;
 
@@ -177,7 +181,7 @@ void loop()
   }
   else
   {
-    set_adj();
+    do_cv_mod();
     housekeep();
     do_server();
   }

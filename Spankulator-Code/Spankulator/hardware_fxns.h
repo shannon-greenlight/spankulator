@@ -8,9 +8,9 @@ const byte triggered_led_pin = 12;
 const byte disable_ext_trigger_pin = 13;
 
 const byte aout_pin = A0;
-const byte ain1_pin = A1;
-const byte ain2_pin = A2;
-const byte ain3_pin = A3;
+// const byte ain1_pin = A1;
+// const byte ain2_pin = A2;
+// const byte ain3_pin = A3;
 
 // buttons
 const byte up_button_pin = 0; // fxn +
@@ -24,6 +24,26 @@ const byte right_button_pin = 8;     // >
 
 BufferedOutput gate(gate_out_pin);
 BufferedOutput tog(toggle_out_pin);
+
+// adc
+typedef enum _adc_chan
+{
+    ADC_POT = A1,
+    ADC_DC = A2,
+    ADC_AC = A3,
+} adc_chan;
+
+int readADC(adc_chan chan)
+{
+    if (chan == ADC_POT)
+    {
+        return analogRead(chan);
+    }
+    else
+    {
+        return ADC_FS - analogRead(chan);
+    }
+}
 
 // Rotary Encoder
 void intFxnA(void)

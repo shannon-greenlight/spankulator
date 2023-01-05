@@ -3,8 +3,8 @@
 // #define ADC_GND_PIN A1
 
 EEPROM_Int offsetCorrectionValue = EEPROM_Int(-100, 100);
-//int offsetCorrectionValue = 0;
-// uint16_t gainCorrectionValue = 0x600;
+// int offsetCorrectionValue = 0;
+//  uint16_t gainCorrectionValue = 0x600;
 EEPROM_Int gainCorrectionValue = EEPROM_Int(ADC_MIN_GAIN, ADC_MAX_GAIN);
 
 uint8_t adc_cal_screen = 0;
@@ -30,7 +30,7 @@ uint16_t readLevel()
     uint32_t readAccumulator = 0;
 
     for (int i = 0; i < ADC_READS_COUNT; ++i)
-        readAccumulator += analogRead(ADC_PIN);
+        readAccumulator += readADC(ADC_DC);
 
     uint16_t readValue = readAccumulator >> ADC_READS_SHIFT;
 
@@ -213,7 +213,7 @@ void adc_init()
 
 void adc_config_hardware()
 {
-    //DAC->CTRLB.bit.REFSEL = 0;
+    // DAC->CTRLB.bit.REFSEL = 0;
     ADC->SAMPCTRL.reg = 0x00; // sets 200usec sample rate
     analogReadResolution(ADC_BITS);
     analogReference(AR_EXTERNAL);

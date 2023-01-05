@@ -1,25 +1,30 @@
-uint16_t _settings_params[11];
-uint16_t _settings_mins[] = {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
-uint16_t _settings_maxs[] = {0, 2, 1, 1, 1, 1, 1, 9999, 0, 0, 1};
-uint16_t _settings_init_vals[] = {0, 0, 1, 0, 0, 0, 1, 15, 0, 0, 0};
+enum
+{
+  SETTINGS_VER = 0,
+  SETTINGS_POT_FXN,
+  SETTINGS_DC_FXN,
+  SETTINGS_QUANTIZE,
+  SETTINGS_CLK,
+  SETTINGS_EXT_TRIG,
+  SETTINGS_ENCODER,
+  SETTINGS_WIFI,
+  SETTINGS_SCREEN,
+  SETTINGS_NAME,
+  SETTINGS_RESET,
+  SETTINGS_CAL,
+  SETTINGS_NUM_PARAMS,
+};
+
+uint16_t _settings_params[SETTINGS_NUM_PARAMS];
+uint16_t _settings_mins[] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+uint16_t _settings_maxs[] = {0, 3, 3, 1, 1, 1, 1, 1, 9999, 0, 0, 1};
+uint16_t _settings_init_vals[] = {0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0, 0};
 uint16_t *settings_stuff[] = {_settings_params, _settings_mins, _settings_maxs, _settings_init_vals};
-String settings_labels[] = {"Version: ", "Adj Fxn: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: "};
-String settings_string_params[] = {VERSION_NUM, "Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "", "$~", "Push Trig", "ADC,DAC"};
+String settings_labels[] = {"Version: ", "CV Pot: ", "CV DC: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: "};
+String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "", "$~", "Push Trig", "ADC,DAC"};
 EEPROM_String settings_device_name(20);
 EEPROM_String settings_string_vars[] = {settings_device_name};
 Greenface_gadget settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]));
-
-#define SETTINGS_VER 0
-#define SETTINGS_ADJ_FXN 1
-#define SETTINGS_QUANTIZE 2
-#define SETTINGS_CLK 3
-#define SETTINGS_EXT_TRIG 4
-#define SETTINGS_ENCODER 5
-#define SETTINGS_WIFI 6
-#define SETTINGS_SCREEN 7
-#define SETTINGS_NAME 8
-#define SETTINGS_RESET 9
-#define SETTINGS_CAL 10
 
 void settings_fxn()
 {
@@ -58,9 +63,14 @@ void settings_adjust_param(int encoder_val, unsigned long delta)
   }
 }
 
-uint16_t settings_get_adj_fxn()
+uint16_t settings_get_pot_fxn()
 {
-  return settings_spanker.get_param(SETTINGS_ADJ_FXN);
+  return settings_spanker.get_param(SETTINGS_POT_FXN);
+}
+
+uint16_t settings_get_dc_fxn()
+{
+  return settings_spanker.get_param(SETTINGS_DC_FXN);
 }
 
 boolean settings_is_quantized()

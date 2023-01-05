@@ -102,13 +102,15 @@ String toJSON(String key, String value)
 // hardware primitives
 boolean user_adjusting()
 {
-  static byte cnt = 0;
-  int reading = analogRead(ain1_pin);
-  if (abs(adj - reading) > 20)
+  if (settings_get_pot_fxn() == 0)
   {
-    if (cnt++ > 3)
+    return false;
+  }
+  else
+  {
+    int reading = readADC(ADC_POT);
+    if (abs(adj - reading) > 2)
     {
-      cnt = 0;
       adj = reading;
       return true;
     }
@@ -116,11 +118,6 @@ boolean user_adjusting()
     {
       return false;
     }
-  }
-  else
-  {
-    cnt = 0;
-    return false;
   }
 }
 
@@ -272,27 +269,96 @@ void cv_out(uint16_t val)
   write_dac(DAC_FS - cv_val);
 }
 
-void set_adj()
+void mod_scale(adc_chan chan)
+{
+  scale_adj = readADC(chan);
+}
+
+void mod_offset(adc_chan chan)
+{
+  offset_adj = readADC(chan);
+}
+
+void mod_value(adc_chan chan)
+{
+  if (!triggered)
+  {
+    cv_out(readADC(chan) >> 2);
+  }
+}
+
+void do_cv_mod()
 {
   noInterrupts();
   // critical, time-sensitive code here
-  if (user_adjusting())
+  int mod_type = 10 * settings_get_dc_fxn() + settings_get_pot_fxn();
+  switch (mod_type)
   {
-    // Serial.println("Setting new " + String(settings_get_adj_fxn()) + ": " + String(adj));
-    switch (settings_get_adj_fxn())
-    {
-    case 0:
-      scale_adj = adj;
-      set_scale();
-      break;
-    case 1:
-      offset_adj = adj;
-      set_scale();
-      break;
-    case 2:
-      cv_out(adj >> 2); // unscaled
-      break;
-    }
+  case 0: // all off
+    break;
+  case 1: // pot scale, dc off
+    mod_scale(ADC_POT);
+    set_scale();
+    break;
+  case 2: // pot offset, dc off
+    mod_offset(ADC_POT);
+    set_scale();
+    break;
+  case 3: // pot value, dc off
+    mod_value(ADC_POT);
+    break;
+  case 10: // dc scale, pot off
+    mod_scale(ADC_DC);
+    set_scale();
+    break;
+  case 11: // dc scale, pot scale
+    scale_adj = int(float(readADC(ADC_DC)) / ADC_FS * readADC(ADC_POT));
+    set_scale();
+    break;
+  case 12: // pot offset, dc scale
+    mod_offset(ADC_POT);
+    mod_scale(ADC_DC);
+    set_scale();
+    break;
+  case 13: // pot value, dc scale
+    mod_value(ADC_POT);
+    mod_scale(ADC_DC);
+    set_scale();
+    break;
+  case 20: // dc offset, pot off
+    mod_offset(ADC_DC);
+    set_scale();
+    break;
+  case 22: // dc offset, pot offset
+    offset_adj = readADC(ADC_DC) + readADC(ADC_POT);
+    set_scale();
+    break;
+  case 30: // dc value, pot off
+    mod_value(ADC_DC);
+    break;
+  case 21: // pot scale, dc offset
+    mod_scale(ADC_POT);
+    mod_offset(ADC_DC);
+    set_scale();
+    break;
+  case 23: // pot value, dc offset
+    mod_value(ADC_POT);
+    mod_offset(ADC_DC);
+    set_scale();
+    break;
+  case 31: // pot scale, dc value
+    mod_scale(ADC_POT);
+    mod_value(ADC_DC);
+    set_scale();
+    break;
+  case 32: // pot offset, dc value
+    mod_offset(ADC_POT);
+    mod_value(ADC_DC);
+    set_scale();
+    break;
+  case 33: // pot value, dc value
+    mod_value(ADC_DC);
+    break;
   }
   interrupts();
 }
