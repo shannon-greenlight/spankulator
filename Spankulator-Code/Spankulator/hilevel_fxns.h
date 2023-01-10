@@ -505,6 +505,11 @@ void new_fxn()
 #define TRIGGER_MASK 0x80
 void hilevel_debug()
 {
+  DAC->CTRLB.reg &= 0x3f; // use EXT as the reference
+  DAC->CTRLB.reg |= 0x80; // use EXT as the reference
+  Serial.print("Reg B: ");
+  Serial.println(DAC->CTRLB.reg, HEX);
+  return;
   // ui.terminal_debug(" Gain: " + String(gainCorrectionValue.get()) + " Offset: " + String(offsetCorrectionValue.get()));
   //  return;
   fxn.test();
