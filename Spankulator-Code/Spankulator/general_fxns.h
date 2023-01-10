@@ -292,6 +292,7 @@ void do_cv_mod()
   noInterrupts();
   // critical, time-sensitive code here
   int mod_type = 10 * settings_get_dc_fxn() + settings_get_pot_fxn();
+  int sig_in;
   switch (mod_type)
   {
   case 0: // all off
@@ -357,7 +358,11 @@ void do_cv_mod()
     set_scale();
     break;
   case 33: // pot value, dc value
-    mod_value(ADC_DC);
+    if (!triggered)
+    {
+      sig_in = (readADC(ADC_DC) >> 2) - DAC_FS / 2;
+      cv_out(sig_in + readADC(ADC_POT) >> 2);
+    }
     break;
   }
   interrupts();
