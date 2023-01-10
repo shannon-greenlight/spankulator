@@ -56,6 +56,17 @@ void intFxnB(void)
     e.bChanInt();
 }
 
+// DAC
+// #define DAC_CTRLB_REFSEL_Pos _UINT8_(6)                                                           /* (DAC_CTRLB) Reference Selection Position */
+// #define DAC_CTRLB_REFSEL_Msk (_UINT8_(0x3) << DAC_CTRLB_REFSEL_Pos)                               /* (DAC_CTRLB) Reference Selection Mask */
+// #define DAC_CTRLB_REFSEL(value) (DAC_CTRLB_REFSEL_Msk & (_UINT8_(value) << DAC_CTRLB_REFSEL_Pos)) /* Assigment of value for REFSEL in the DAC_CTRLB register */
+// #define DAC_CTRLB_REFSEL_INT1V_Val _UINT8_(0x0)                                                   /* (DAC_CTRLB) Internal 1.0V reference  */
+// #define DAC_CTRLB_REFSEL_AVCC_Val _UINT8_(0x1)                                                    /* (DAC_CTRLB) AVCC  */
+// #define DAC_CTRLB_REFSEL_VREFP_Val _UINT8_(0x2)                                                   /* (DAC_CTRLB) External reference  */
+// #define DAC_CTRLB_REFSEL_INT1V (DAC_CTRLB_REFSEL_INT1V_Val << DAC_CTRLB_REFSEL_Pos)               /* (DAC_CTRLB) Internal 1.0V reference Position  */
+// #define DAC_CTRLB_REFSEL_AVCC (DAC_CTRLB_REFSEL_AVCC_Val << DAC_CTRLB_REFSEL_Pos)                 /* (DAC_CTRLB) AVCC Position  */
+// #define DAC_CTRLB_REFSEL_VREFP (DAC_CTRLB_REFSEL_VREFP_Val << DAC_CTRLB_REFSEL_Pos)               /* (DAC_CTRLB) External reference Position  */
+
 void hardware_begin()
 {
     pinMode(repeat_led_pin, OUTPUT);
@@ -81,6 +92,7 @@ void hardware_begin()
     // analogReadCorrection(-23, 2000);
     // analogReadCorrection(-30, 2047);
 
+    // DAC_CTRLB_REFSEL(DAC_CTRLB_REFSEL_INT1V_Val);
     analogWriteResolution(10);
     // DAC->CTRLB.reg &= 0x3f; // use EXT as the reference
     // DAC->CTRLB.reg |= 0x80; // use EXT as the reference
