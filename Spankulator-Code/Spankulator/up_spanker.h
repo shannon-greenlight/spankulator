@@ -8,41 +8,45 @@ Greenface_gadget up_spanker("Up", up_labels, up_stuff, sizeof(_up_params) / size
 
 void up_trigger()
 {
-  // Serial.print("Doing up trigger at: "+String(millis())+" -- ");
-  // Serial.println(selected_fxn->name);
-  // if(f==NULL) f = up_spanker;
-  static float the_delay = 0;
-  float longest_pulse = float(selected_fxn->get_param(LONGEST_PULSE));
-  float shortest_pulse = selected_fxn->get_param(SHORTEST_PULSE);
-  float the_swell = (longest_pulse - shortest_pulse) / selected_fxn->get_param(NUM_PULSES);
-  // Serial.println("Longest: " + String(longest_pulse) + " Shortest: " + String(shortest_pulse));
-  int rnd = selected_fxn->get_param(RANDOMNESS);
-  if (!doing_trigger)
+  static bool led_on = true;
+  unsigned long ms = millis();
+  if (trigger_go(ms))
   {
-    doing_trigger = true;
-    the_delay = shortest_pulse;
-    do_delay(selected_fxn->get_param(INITIAL_DELAY));
+    if (settings_is_ext_clk())
+    {
+      is_triggered = false;
+    }
+    gate.put(led_on);
+    led_on = !led_on;
+
+    trigger_control.trigger(TRIG_UP, led_on, ms);
+
+    cv_out_scaled(&trigger_control.aval);
   }
-  send_one_pulse(the_delay, longest_pulse, shortest_pulse, rnd, the_swell);
-  the_delay += the_swell * 1.1;
-  if (the_delay >= longest_pulse)
-  {
-    doing_trigger = false;
-    the_delay = shortest_pulse;
-    do_toggle();
-  }
+}
+
+void set_up_trigger()
+{
+  trigger_control.delay = up_spanker.get_param(SHORTEST_PULSE);
+  trigger_control.pulse_count = up_spanker.get_param(NUM_PULSES);
+  trigger_control.next_time = millis() + up_spanker.get_param(INITIAL_DELAY);
+  trigger_control.triggered = true;
+  trigger_fxn = up_trigger;
+  // Serial.println("Set Up Trigger: " + String(trigger_control.pulse_count));
 }
 
 void up_fxn()
 {
   selected_fxn = &up_spanker;
   selected_fxn->display();
+  trigger_control.triggered = false;
+  trigger_fxn = up_trigger;
 }
 
 void up_begin()
 {
   // Serial.println("UP Begin!");
   up_spanker.begin();
-  up_spanker.trigger_fxn = up_trigger;
+  up_spanker.trigger_fxn = set_up_trigger;
   up_spanker.check_params = true;
 }

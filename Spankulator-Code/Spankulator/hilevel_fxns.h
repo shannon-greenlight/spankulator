@@ -126,13 +126,26 @@ String list_fxns()
 }
 
 // trigger
+void reset_trigger()
+{
+  do_toggle();
+  if (user_doing_trigger)
+  {
+    trigger_control.triggered = false;
+  }
+  else
+  {
+    trigger_control.triggered = is_triggered = repeat_on.get();
+  }
+}
+
 void do_trigger()
 {
   digitalWrite(triggered_led_pin, HIGH);
   switch (fxn.get())
   {
   case DVM_FXN:
-    dvm_do_trigger();
+    set_dvm_trigger();
     break;
   case USER_FXN:
     user_do_trigger();
@@ -148,16 +161,22 @@ void do_trigger()
 
 void check_trigger()
 {
-  if (triggered)
+  if (is_triggered || settings_is_ext_clk())
   {
-    do_trigger();
+    if (!trigger_control.triggered)
+    {
+      do_trigger();
+      // delay(1);
+      // Serial.println("Is triggered: " + String(trigger_control.triggered) + "          ");
+    }
     if (settings_is_ext_clk() || fxn.get() == SETTINGS_FXN)
     {
-      triggered = false;
+      trigger_control.triggered = true;
     }
     else
     {
-      triggered = repeat_on.get() || doing_trigger || user_doing_trigger;
+      is_triggered = repeat_on.get() || trigger_control.triggered || user_doing_trigger;
+      // Serial.println("Delay: " + String(spank_engine.delay));
     }
   }
   else
@@ -165,8 +184,14 @@ void check_trigger()
     if (!settings_is_ext_clk())
     {
       digitalWrite(triggered_led_pin, LOW);
+      trigger_control.triggered = false;
     }
   }
+}
+
+bool trigger_go(unsigned long ms)
+{
+  return settings_is_ext_clk() ? is_triggered : trigger_control.triggered && ms >= trigger_control.next_time;
 }
 
 void test_trig()
@@ -398,6 +423,7 @@ void inc_param_num()
     break;
   default:
     selected_fxn->inc_param_num_by(1);
+    terminal_print_status();
     // Serial.println("Unknown inc_param_num fxn: " + String(fxn.get()));
   }
 }
@@ -416,6 +442,7 @@ void dec_param_num()
     break;
   default:
     selected_fxn->inc_param_num_by(-1);
+    terminal_print_status();
   }
 }
 
@@ -447,6 +474,9 @@ void housekeep()
   {
   case LFO_FXN:
     lfo_housekeep();
+    break;
+  case DVM_FXN:
+    dvm_housekeep();
     break;
   }
 }
@@ -492,11 +522,10 @@ void new_fxn()
 {
   // ui.clearDisplay();
   pinMode(gate_out_pin, OUTPUT); // dvm changes this to PWM, put it back
-  triggered = doing_trigger = user_doing_trigger = false;
+  is_triggered = user_doing_trigger = false;
   wifi_ui_message = "";
   reset_triggers();
   settings_set_ext_trig();
-  event_pending = false;
   exe_fxn();
   terminal_print_status();
   wifi_new_fxn();
@@ -505,6 +534,17 @@ void new_fxn()
 #define TRIGGER_MASK 0x80
 void hilevel_debug()
 {
+  for (int i = 0; i < LFO_PARTS; i++)
+  {
+    if (i % 8 == 0)
+    {
+      Serial.println("");
+    }
+    Serial.print(wave_table[i], HEX);
+    Serial.print(" ");
+  }
+  return;
+  adc_summary();
   DAC->CTRLB.reg &= 0x3f; // use EXT as the reference
   DAC->CTRLB.reg |= 0x80; // use EXT as the reference
   Serial.print("Reg B: ");
@@ -576,7 +616,7 @@ void check_serial()
 }
 
 // boolean monitor = false;
-void heartbeat()
+void check_keyboard()
 {
   // gate.toggle(); // gate.set();
   // int inactivity_timeout = settings_get_inactivity_timeout();
@@ -676,8 +716,8 @@ void process_keypress()
     selected_fxn->remove_char();
     break;
   case '!': // 33
-    triggered = !triggered;
-    terminal_print_status();
+    is_triggered = !is_triggered;
+    // terminal_print_status();
     // ui.terminal_debug("Triggered: " + String(triggered) + " Button: " + String(digitalRead(trigger_button_pin)));
     // delay(50);
     break;
@@ -737,11 +777,19 @@ void process_cmd(String in_str)
   // noInterrupts();
   char cmd = in_str.charAt(0);
   int int_param = in_str.substring(1).toInt();
-  int val;
+  uint16_t aval;
   remote_adjusting = false;
 
   switch (cmd)
   {
+  case '{':
+    gainCorrectionValue.put(int_param);
+    analogReadCorrection(offsetCorrectionValue.get(), gainCorrectionValue.get());
+    adc_summary();
+    break;
+  case ';':
+    MyTimer5.begin(int_param); // beats per sec
+    break;
   case '[':
     esc_mode = true;
     cmd = in_str.charAt(1);
@@ -762,7 +810,7 @@ void process_cmd(String in_str)
     break;
   case 'q':
     settings_put_quantized(int_param);
-    // exe_fxn();
+    terminal_print_status();
     break;
   case 'O':
     offset_adj = int_param;
@@ -773,9 +821,11 @@ void process_cmd(String in_str)
     break;
   case 'P':
     settings_spanker.param_put(int_param, SETTINGS_POT_FXN);
+    terminal_print_status();
     break;
   case 'V':
     settings_spanker.param_put(int_param, SETTINGS_DC_FXN);
+    terminal_print_status();
     break;
   case 'S':
     scale_adj = int_param;
@@ -792,9 +842,8 @@ void process_cmd(String in_str)
     cv_out(int_param); // unscaled
     break;
   case 'C':
-    val = int_param;
-    scale_and_offset(&val);
-    cv_out(val); // scaled
+    aval = int_param;
+    cv_out_scaled(&aval);
     break;
   case 'r':
     // ui.terminal_debug("Process cmd: " + in_str + " Param: " + String(int_param));
@@ -818,16 +867,16 @@ void process_cmd(String in_str)
     switch (int_param)
     {
     case 0:
-      triggered = false;
+      is_triggered = false;
       break;
     case 1:
-      triggered = true;
+      is_triggered = true;
       break;
     case 2:
-      triggered = !triggered;
+      is_triggered = !is_triggered;
       break;
     default:
-      triggered = false;
+      is_triggered = false;
     }
     terminal_print_status();
     break;
@@ -881,13 +930,17 @@ void process_cmd(String in_str)
     switch (int_param)
     {
     case 0:
+      is_triggered = false;
+      settings_put_ext_clk(0);
+      break;
     case 1:
-      settings_put_ext_clk(int_param);
+      settings_put_ext_clk(1);
       break;
     case 2:
       settings_toggle_ext_clk();
       break;
     }
+    terminal_print_status();
     break;
   case 'D':
     switch (int_param)
@@ -917,6 +970,7 @@ void process_cmd(String in_str)
       settings_toggle_ext_trig();
       break;
     }
+    terminal_print_status();
     break;
   case '$':
     String sval = urlDecode(in_str.substring(1));
@@ -976,9 +1030,14 @@ void fxn_begin()
   set_repeat_display();
 }
 
+void heartbeat()
+{
+  (*trigger_fxn)();
+}
+
 void heartbeat_begin()
 {
-  MyTimer5.begin(HEART_RATE); // beats per sec
+  MyTimer5.begin(1000); // beats per sec
 
   // define the interrupt callback function
   MyTimer5.attachInterrupt(heartbeat);
@@ -1001,7 +1060,7 @@ void begin_all()
   adc_config_hardware();
 
   hardware_begin();
-  heartbeat_begin();
+  // heartbeat_begin();
   ui.begin(face1);
   adc_begin();
   up_begin();
