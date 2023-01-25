@@ -45,6 +45,24 @@ int readADC(adc_chan chan)
     }
 }
 
+float read_dc_filtered(adc_chan chan)
+{
+    float xn;
+    float yn;
+    static float xn1;
+    static float yn1;
+    int raw = readADC(chan);
+    // int dac_raw = DAC_FS - (raw >> 2);
+    // scale_and_offset(&dac_raw);
+    // analog_out(dac_raw);
+    xn = (ADC_MID - raw);
+    yn = 0.969 * yn1 + 0.0155 * xn + 0.0155 * xn1;
+    // yn = (xn + xn1) / 2;
+    xn1 = xn;
+    yn1 = yn;
+    return yn + ADC_MID;
+}
+
 // Rotary Encoder
 void intFxnA(void)
 {
@@ -75,6 +93,9 @@ void hardware_begin()
     pinMode(triggered_led_pin, OUTPUT);
     pinMode(0, INPUT);
     pinMode(1, INPUT);
+    pinMode(A1, INPUT);
+    pinMode(A2, INPUT);
+    pinMode(A3, INPUT);
 
     pinMode(up_button_pin, INPUT_PULLUP);
     pinMode(dn_button_pin, INPUT_PULLUP);

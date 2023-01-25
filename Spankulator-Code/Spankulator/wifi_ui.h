@@ -120,7 +120,7 @@ void send_data_to_client(WiFiClient client, char cmd)
   client.print(",");
   client.print(toJSON("repeat_on", repeat_on.get() ? "ON" : "OFF"));
   client.print(",");
-  client.print(toJSON("triggered", triggered ? "ON" : "OFF"));
+  client.print(toJSON("triggered", is_triggered ? "ON" : "OFF"));
   client.print(",");
   client.print(toJSON("cmd", String(cmd)));
   client.print(",");
@@ -292,7 +292,7 @@ void _do_server()
     client.stop();
     // Serial.println("client disonnected");
   }
-  if (!triggered && fxn.get() != LFO_FXN && wifi_status == WL_CONNECTED)
+  if (!is_triggered && fxn.get() != LFO_FXN && wifi_status == WL_CONNECTED)
     ui.printWiFiBars(WiFi.RSSI());
 }
 

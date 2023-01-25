@@ -8,38 +8,44 @@ Greenface_gadget dn_spanker("Down", dn_labels, dn_stuff, sizeof(_dn_params) / si
 
 void dn_trigger()
 {
-  // Serial.println("Doing dn trigger");
-  static float the_delay = 0;
-  float longest_pulse = float(selected_fxn->get_param(LONGEST_PULSE));
-  float shortest_pulse = selected_fxn->get_param(SHORTEST_PULSE);
-  float the_swell = (shortest_pulse - longest_pulse) / selected_fxn->get_param(NUM_PULSES);
-  // Serial.println("Longest: " + String(longest_pulse) + " Shortest: " + String(shortest_pulse));
-  int rnd = selected_fxn->get_param(RANDOMNESS);
-  if (!doing_trigger)
+  static bool led_on = true;
+  unsigned long ms = millis();
+  if (trigger_go(ms))
   {
-    doing_trigger = true;
-    the_delay = longest_pulse;
-    do_delay(selected_fxn->get_param(INITIAL_DELAY));
+    if (settings_is_ext_clk())
+    {
+      is_triggered = false;
+    }
+    gate.put(led_on);
+    led_on = !led_on;
+
+    trigger_control.trigger(TRIG_DOWN, led_on, ms);
+
+    cv_out_scaled(&trigger_control.aval);
   }
-  send_one_pulse(the_delay, longest_pulse, shortest_pulse, rnd, the_swell);
-  the_delay += the_swell * 1.1;
-  if (the_delay <= shortest_pulse)
-  {
-    doing_trigger = false;
-    the_delay = longest_pulse;
-    do_toggle();
-  }
+}
+
+void set_dn_trigger()
+{
+  trigger_control.delay = dn_spanker.get_param(LONGEST_PULSE);
+  trigger_control.pulse_count = dn_spanker.get_param(NUM_PULSES);
+  trigger_control.next_time = millis() + dn_spanker.get_param(INITIAL_DELAY);
+  trigger_control.triggered = true;
+  trigger_fxn = dn_trigger;
+  // Serial.println("Set Dn Trigger: " + String(trigger_control.delay));
 }
 
 void dn_fxn()
 {
   selected_fxn = &dn_spanker;
   dn_spanker.display();
+  trigger_control.triggered = false;
+  trigger_fxn = dn_trigger;
 }
 
 void dn_begin()
 {
   dn_spanker.begin();
-  dn_spanker.trigger_fxn = dn_trigger;
+  dn_spanker.trigger_fxn = set_dn_trigger;
   dn_spanker.check_params = true;
 }
