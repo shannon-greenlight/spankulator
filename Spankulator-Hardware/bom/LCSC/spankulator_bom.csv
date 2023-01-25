@@ -8,7 +8,7 @@
 "D6, D13, ","2","1N4148","Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal","C84412"
 "D8, ","1","1N5711","Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_AnodeUp","C283247"
 "D9, ","1","1N5711","Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_KathodeUp","C283247"
-"Q1, ","1","2N3904","digikey-footprints:TO-92-3_Formed_Leads","C94514"
+"Q1, ","1","2N3904","digikey-footprints:TO-92-3_Formed_Leads","C258185"
 "Q2, Q4, ","2","VP2106/ZVP3306A","digikey-footprints:TO-92-3_Formed_Leads","C211372"
 "Q3, Q5, Q7, Q8, ","4","2N7000","digikey-footprints:TO-92-3_Formed_Leads","C9114"
 "R1, R6, R11, R15, ","4","10K","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","C433778"
