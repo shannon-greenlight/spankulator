@@ -2,29 +2,35 @@
 #include <TerminalVT100.h>
 #include <stdlib.h>
 
-#define LFO_BASE_PERIOD 2
-#define LFO_BASE_DELAY 2
 #define LFO_PARTS 128
-#define LFO_PERIOD 0
-#define LFO_WAVEFORM 1
-#define LFO_RANDOMNESS 2
+
+enum
+{
+    LFO_PERIOD = 0,
+    LFO_WAVEFORM,
+    LFO_RANDOMNESS,
+    LFO_MIN_PARTS,
+    LFO_NUM_PARAMS,
+};
 
 void lfo_fxn();
 
-uint16_t wave_table[128] PROGMEM;
-int delay_usecs = 39047;
+uint16_t wave_table[LFO_PARTS] PROGMEM;
 boolean lfo_params_set = false;
 // for ext clk
 uint16_t lfo_index = 0;
 
-uint16_t _lfo_params[3];
-uint16_t _lfo_mins[] = {2, 0, 0};
-uint16_t _lfo_maxs[] = {32767, 3, 99};
-uint16_t _lfo_init_vals[] = {100, 0, 0};
+uint16_t _lfo_params[LFO_NUM_PARAMS];
+uint16_t _lfo_mins[] = {2, 0, 0, 4};
+uint16_t _lfo_maxs[] = {32767, 3, 99, 128};
+uint16_t _lfo_init_vals[] = {100, 0, 0, 16};
 uint16_t *lfo_stuff[] = {_lfo_params, _lfo_mins, _lfo_maxs, _lfo_init_vals};
-String lfo_string_params[] = {"", "Sine,Inv Sine,Ramp Up,Ramp Down", ""};
-String lfo_labels[] = {"Period: ", "Waveform: ", "Randomness: "};
+String lfo_string_params[] = {"", "Sine,Inv Sine,Ramp Up,Ramp Down", "", ""};
+String lfo_labels[] = {"Period: ", "Waveform: ", "Randomness: ", "Min Parts: "};
 Greenface_gadget lfo_spanker("LFO", lfo_labels, lfo_stuff, sizeof(_lfo_params) / sizeof(_lfo_params[0]));
+
+unsigned int sample_time; // in msecs
+unsigned int sample_skip; // how many samples in table to skip when generating signal
 
 // void write_dac(uint16_t val) {
 //   val = ( val << 2 ) | 0x3000;
@@ -64,12 +70,11 @@ void lfo_set_waveform()
         default:
             Serial.println(err + String(selected_fxn->get_param(LFO_WAVEFORM)));
         }
-        scale_and_offset(&temp);
         int rnd = random(-selected_fxn->get_param(LFO_RANDOMNESS), selected_fxn->get_param(LFO_RANDOMNESS));
         temp += rnd * scale * DAC_FS / 100;
-        temp = max(0, temp);
-        temp = min(DAC_FS, temp);
+        temp = constrain(temp, 0, DAC_FS);
         wave_table[i] = temp;
+        scale_and_offset(&wave_table[i]);
         if (i > 0)
             wifi_ui_message += ", ";
         wifi_ui_message += String(wave_table[i]);
@@ -90,12 +95,12 @@ void lfo_housekeep()
     {
         remote_adjusting = false;
         lfo_set_waveform();
-        int data[128];
+        int data[LFO_PARTS];
 
         ui.fill(BLACK, 16);
-        //   ui.printText("LFO " + String(lfo_period.get()) + "ms",0,0,2);
+        // ui.printText("Adj LFO " + String(selected_fxn->get_param(LFO_PERIOD)) + "ms", 0, 0, 2);
         // todo: move this calc to ui.graphData
-        for (int i = 0; i < 128; i++)
+        for (int i = 0; i < LFO_PARTS; i++)
         {
             float val = float(wave_table[i]) / DAC_FS;
             data[i] = max(16, 63 - (int(48 * val)));
@@ -105,12 +110,32 @@ void lfo_housekeep()
     }
 }
 
-//#define LFO_FREQ_FACTOR 993.982
+// #define LFO_FREQ_FACTOR 993.982
 #define LFO_FREQ_FACTOR 1000.0
 
 void lfo_set_period()
 {
-    delay_usecs = int(1000.0 * (selected_fxn->get_param(LFO_PERIOD)) / LFO_PARTS) - 6;
+    float target_ratio = selected_fxn->get_param(LFO_PERIOD) / float(LFO_PARTS); // waveform parts * sample time
+    float minimum = 100000.0;
+    unsigned int max_skip = LFO_PARTS / selected_fxn->get_param(LFO_MIN_PARTS);
+    unsigned int chosen_skip;
+    unsigned int chosen_n;
+    for (int skip = 1; skip <= max_skip; skip++)
+    {
+        int n = target_ratio * skip;
+        float r = float(n) / skip;
+        // Serial.println("R: " + String(r) + " n: " + String(n));
+        if (abs(target_ratio - r) < minimum)
+        {
+            chosen_skip = skip;
+            chosen_n = n;
+            minimum = abs(target_ratio - r);
+        }
+    }
+    sample_skip = chosen_skip;
+    sample_time = chosen_n;
+    // Serial.println("Ratio: " + String(target_ratio) + " Minimum: " + String(minimum));
+    // Serial.println("Chosen Skip: " + String(chosen_skip) + " n: " + String(chosen_n));
 }
 
 void lfo_put_param(uint16_t val)
@@ -140,41 +165,37 @@ void lfo_set_params()
     lfo_set_waveform();
 }
 
-void lfo_do_trigger()
+void lfo_trigger()
 {
-    if (!lfo_params_set)
+    // gate.toggle();
+    unsigned long ms = millis();
+    if (trigger_go(ms))
     {
-        lfo_set_params();
-        lfo_params_set = true;
-        lfo_index = 0;
-    }
-    if (!settings_is_ext_clk())
-    {
-        gate.set();
-        for (int i = 0; (i < LFO_PARTS) && !keypress && !e.getEncoderValue(); i++)
+        if (settings_is_ext_clk())
         {
-            cv_out(wave_table[i]);
-            delayMicroseconds(delay_usecs);
+            is_triggered = false;
         }
-        do_toggle();
-        doing_trigger = false;
-        gate.reset();
-    }
-    else
-    {
-        if (lfo_index == 0)
+        cv_out(wave_table[trigger_control.pulse_count]);
+        trigger_control.next_time += sample_time;
+        trigger_control.pulse_count += sample_skip;
+        if (trigger_control.pulse_count >= LFO_PARTS)
         {
-            gate.set();
+            trigger_control.pulse_count = 0;
         }
-        cv_out(wave_table[lfo_index++]);
-        if (lfo_index >= LFO_PARTS)
+        if (trigger_control.pulse_count == 0)
         {
-            do_toggle();
-            doing_trigger = false;
-            gate.reset();
-            lfo_index = 0;
+            reset_trigger();
         }
     }
+}
+
+void set_lfo_trigger()
+{
+    trigger_control.next_time = millis() + 1;
+    trigger_control.pulse_count = 0;
+    trigger_control.triggered = true;
+    trigger_fxn = lfo_trigger;
+    // Serial.println("Set LFO Trigger: " + String(spank_engine.delay));
 }
 
 void lfo_fxn()
@@ -187,12 +208,29 @@ void lfo_fxn()
     lfo_housekeep();
     ui.newFxn(selected_fxn->name);
     selected_fxn->printParams();
+    // MyTimer5.begin(964); // beats per sec
+    MyTimer5.begin(1000); // beats per sec
+    trigger_control.triggered = false;
+    trigger_fxn = lfo_trigger;
 }
+
+void lfo_update_resolution()
+{
+    lfo_set_period();
+}
+
+update_fxn lfo_update_fxns[LFO_NUM_PARAMS] = {
+    nullptr,
+    nullptr,
+    nullptr,
+    lfo_update_resolution,
+};
 
 void lfo_begin()
 {
     // Serial.println("LFO beginning");
     lfo_spanker.begin();
-    lfo_spanker.trigger_fxn = lfo_do_trigger;
+    lfo_spanker.trigger_fxn = set_lfo_trigger;
     lfo_spanker.string_params = lfo_string_params;
+    lfo_spanker.update_fxns = lfo_update_fxns;
 }

@@ -28,6 +28,8 @@ void set_encoder();
 bool wifi_enabled(void);
 
 // hilevel functions
+void reset_trigger();
+bool trigger_go(unsigned long ms);
 void new_fxn();
 // void reset_inactivity_timer();
 // void check_inactivity_timer();
@@ -42,8 +44,8 @@ volatile boolean fp_key_pressed = false; // only set by front panel keypress
 volatile int inactivity_timer = 0;
 boolean remote_adjusting = false;
 boolean esc_mode = false;
-boolean triggered = false;
-boolean doing_trigger = false;
+boolean is_triggered = false;
+boolean user_doing_trigger = false;
 String in_str = ""; // for serial input
 boolean cmd_available = false;
 String wifi_ui_message = "";
@@ -85,6 +87,10 @@ EEPROM_Bool repeat_on = EEPROM_Bool(); // sizeof fxn val
 #define SETTINGS_FXN 9
 
 #include <Greenface_wifi_fxns.h>
+#include "SPANK_Trigger.h"
+SPANK_Trigger trigger_control;
+FunctionPointer trigger_fxn;
+
 #include "up_spanker.h"
 #include "dn_spanker.h"
 #include "stretch_spanker.h"
@@ -101,28 +107,59 @@ EEPROM_Bool repeat_on = EEPROM_Bool(); // sizeof fxn val
 // #include "wdt.h"
 
 #include "hilevel_fxns.h"
+
 void terminal_print_status()
 {
   if (ui.terminal_mirror)
   {
     ui.t.setCursor(STATUS_ROW, "33");
-    ui.t.print(triggered ? "TRIGGERED" : "         ");
+    ui.t.print(is_triggered ? "TRIGGERED" : "         ");
     String rpeat = repeat_on.get() ? "ON " : "OFF";
     ui.t.setCursor(FXN_ROW, "16");
-    ui.t.print("Repeat: " + rpeat);
+    ui.t.print("Repeat:" + rpeat);
+
     ui.t.setCursor(FXN_ROW, "28");
     float percent = 100 * scale;
-    ui.t.print("CV Scale: " + String(percent) + String("%"));
-
-    float volts = (float(offset_adj) / ADC_FS) * 10.66 - 5.33;
-    ui.t.print(" Offset: " + String(volts) + String("V"));
+    ui.t.print("Scale:" + String(percent) + String("%"));
     ui.t.clrToEOL();
+
+    ui.t.setCursor(FXN_ROW, "42");
+    float volts = (float(offset_adj) / ADC_FS) * 10.66 - 5.33;
+    ui.t.print(" Offset:" + String(volts) + String("V"));
+    ui.t.clrToEOL();
+
+    // ui.t.setCursor(FXN_ROW, "55");
+    // ui.t.print(" Clk:" + String(settings_is_ext_clk() ? "EXT" : "INT"));
+    // ui.t.clrToEOL();
+
+    ui.t.setCursor("20", "1");
+    ui.t.print("Pot:" + settings_spanker.get_param_as_string(SETTINGS_POT_FXN));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor("20", "12");
+    ui.t.print("SigIn:" + settings_spanker.get_param_as_string(SETTINGS_DC_FXN));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor("20", "24");
+    ui.t.print(" Clk:" + settings_spanker.get_param_as_string(SETTINGS_CLK));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor("20", "37");
+    ui.t.print(" TrigIn:" + settings_spanker.get_param_as_string(SETTINGS_EXT_TRIG));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor("20", "53");
+    ui.t.print(" Quantize:" + settings_spanker.get_param_as_string(SETTINGS_QUANTIZE));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor(DEBUG_ROW, "1");
   }
 }
 
 // EEO must come after last EEPROM var is declared
 #define EEO Greenface_EEPROM::eeprom_offset
 
+bool trig_memory;
 void setup(void)
 {
   begin_all();
@@ -146,24 +183,37 @@ void setup(void)
     wifi_ssid.put("");
   }
 
+  trigger_fxn = noop;
+
   // connect if wifi is active
   wifi_attempt_connect(false);
 
   ui.splash();
   delay(2500);
   exe_fxn();
+  trig_memory = !is_triggered; // force terminal_print_status()
+  heartbeat_begin();           // must come after exe_fxn()
 }
 
 void loop()
 {
+  // static bool trig_memory;
   // ui.terminal_debug("inactivity_timer: " + String(inactivity_timer) + " keypress: " + String(keypress));
 
   // check_serial affects
   // instr and cmd_avail for process_cmd
   // and keypress used directly below
-  check_serial();
+  check_keyboard();
+  // Serial.println("Keyboard checked!");
 
-  // terminal_print_status();
+  check_serial();
+  // Serial.println("Serial checked!");
+
+  if (is_triggered != trig_memory)
+  {
+    trig_memory = is_triggered;
+    terminal_print_status();
+  }
 
   if (keypress || cmd_available)
   {
@@ -181,7 +231,11 @@ void loop()
   }
   else
   {
-    do_cv_mod();
+    if (fxn.get() != DVM_FXN)
+    {
+      do_cv_mod(); // dvm does this in trigger fxn
+    }
+    // Serial.println("cv mod checked!");
     housekeep();
     do_server();
   }
@@ -189,4 +243,5 @@ void loop()
   check_trigger();
   check_rotary_encoder();
   ui.check_inactivity_timer(settings_get_inactivity_timeout());
+  // Serial.println("Whew!");
 }

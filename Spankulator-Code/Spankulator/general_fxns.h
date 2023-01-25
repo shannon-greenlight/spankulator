@@ -108,8 +108,9 @@ boolean user_adjusting()
   }
   else
   {
-    int reading = readADC(ADC_POT);
-    if (abs(adj - reading) > 2)
+    int reading = read_dc_filtered(ADC_POT);
+    // ui.terminal_debug("Adjusting: " + String(reading));
+    if (abs(adj - reading) > 64)
     {
       adj = reading;
       return true;
@@ -119,20 +120,6 @@ boolean user_adjusting()
       return false;
     }
   }
-}
-
-void set_scale()
-{
-  scale = (scale_adj / float(ADC_FS));
-  offset = offset_adj - scale_adj / 2;
-}
-
-void scale_and_offset(int *val)
-{
-  *val *= scale;
-  *val += offset >> ADC_DAC_SHIFT;
-  *val = min(DAC_FS, *val);
-  *val = max(0, *val);
 }
 
 boolean read_trigger_pin()
@@ -259,6 +246,19 @@ void write_dac(uint16_t val)
   analogWrite(aout_pin, val);
 }
 
+void set_scale()
+{
+  scale = (scale_adj / float(ADC_FS));
+  offset = offset_adj - scale_adj / 2;
+}
+
+void scale_and_offset(uint16_t *val)
+{
+  *val *= scale;
+  *val += offset >> ADC_DAC_SHIFT;
+  *val = constrain(*val, 0, DAC_FS);
+}
+
 // The CV Output circuit inverts the signal, so invert it here
 void cv_out(uint16_t val)
 {
@@ -267,6 +267,12 @@ void cv_out(uint16_t val)
     val &= 0xFFF8;
   cv_val = val;
   write_dac(DAC_FS - cv_val);
+}
+
+void cv_out_scaled(uint16_t *val)
+{
+  scale_and_offset(val);
+  cv_out(*val);
 }
 
 void mod_scale(adc_chan chan)
@@ -281,7 +287,7 @@ void mod_offset(adc_chan chan)
 
 void mod_value(adc_chan chan)
 {
-  if (!triggered)
+  if (!is_triggered)
   {
     cv_out(readADC(chan) >> 2);
   }
@@ -289,7 +295,7 @@ void mod_value(adc_chan chan)
 
 void do_cv_mod()
 {
-  noInterrupts();
+  // noInterrupts();
   // critical, time-sensitive code here
   int mod_type = 10 * settings_get_dc_fxn() + settings_get_pot_fxn();
   int sig_in;
@@ -358,66 +364,12 @@ void do_cv_mod()
     set_scale();
     break;
   case 33: // pot value, dc value
-    if (!triggered)
+    if (!is_triggered)
     {
       sig_in = (readADC(ADC_DC) >> 2) - DAC_FS / 2;
       cv_out(sig_in + readADC(ADC_POT) >> 2);
     }
     break;
   }
-  interrupts();
-}
-
-boolean event_pending = false;
-void do_delay(unsigned int d)
-{
-  // Serial.println("");
-  // Serial.println("Do delay: " + String(d) + " millis: " + String(millis()));
-  if (d < 200)
-  {
-    delay(d);
-    // Serial.println("Delay done at: " + String(millis()));
-  }
-  else
-  {
-    boolean ser_avail, adjusting;
-    unsigned long targetMillis = millis() + d;
-    do
-    {
-      adjusting = e.is_adjusting();
-      ser_avail = false && Serial.available() > 0;
-      event_pending = adjusting || ser_avail || keypress;
-      // Serial.println("millis: " + String(millis()));
-    } while (millis() < targetMillis && !event_pending && triggered);
-  }
-}
-
-unsigned int calc_delay(unsigned int d, int rnd)
-{
-  float delay_adj = rnd * d / 200.0;
-  // reuse rnd here
-  rnd = random(int(-delay_adj), int(delay_adj));
-  return d + rnd;
-}
-
-void do_pulse(unsigned int on_time, unsigned int off_time, int aval1, int aval2)
-{
-  cv_out(aval1);
-  gate.set();
-  do_delay(on_time);
-  gate.reset();
-  cv_out(aval2);
-  do_delay(off_time);
-}
-
-void send_one_pulse(float the_delay, float longest_pulse, float shortest_pulse, int rnd, float the_swell)
-{
-  unsigned int my_delay = calc_delay(the_delay, rnd);
-  int span = longest_pulse - shortest_pulse;
-  int normalized_delay = my_delay - shortest_pulse;
-  int aval1 = max(0, normalized_delay * DAC_FS / span);
-  int aval2 = max(0, (normalized_delay + the_swell / 2) * DAC_FS / span);
-  scale_and_offset(&aval1);
-  scale_and_offset(&aval2);
-  do_pulse(my_delay, my_delay, aval1, aval2);
+  // interrupts();
 }

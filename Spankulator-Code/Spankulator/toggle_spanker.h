@@ -14,49 +14,58 @@ Greenface_gadget toggle_spanker("Toggle", toggle_labels, toggle_stuff, sizeof(_t
 
 void toggle_set_output()
 {
-  int aval1 = selected_fxn->get_param(gate.get() ? TOGGLE_HI_LEVEL : TOGGLE_LO_LEVEL);
-  // Serial.print("Toggle Trigger, aval1: ");
-  // Serial.println(aval1);
-  //  scale_and_offset(&aval1);
-  cv_out(aval1);
+  uint16_t aval1 = selected_fxn->get_param(gate.get() ? TOGGLE_HI_LEVEL : TOGGLE_LO_LEVEL);
+  cv_out_scaled(&aval1);
 }
 
 void toggle_trigger()
 {
-  triggered = true;
-  doing_trigger = true;
-  int delay = selected_fxn->get_param(TOGGLE_DELAY);
-  do_delay(delay);
-  switch (selected_fxn->get_param(TOGGLE_STATE))
+  unsigned long ms = millis();
+  if (trigger_go(ms))
   {
-  case 0: // toggle
-    // ui.terminal_debug("Toggle State: " + String(!gate.get()));
-    gate.toggle();
-    break;
-  case 1: // high
-    gate.set();
-    break;
-  case 2: // low
-    gate.reset();
-    break;
+    if (settings_is_ext_clk())
+    {
+      is_triggered = false;
+    }
+    switch (selected_fxn->get_param(TOGGLE_STATE))
+    {
+    case 0: // toggle
+      // ui.terminal_debug("Toggle State: " + String(!gate.get()));
+      gate.toggle();
+      break;
+    case 1: // high
+      gate.set();
+      break;
+    case 2: // low
+      gate.reset();
+      break;
+    }
+    toggle_set_output();
+
+    trigger_control.next_time = millis() + selected_fxn->get_param(TOGGLE_DELAY);
+    reset_trigger();
   }
+}
 
-  toggle_set_output();
-
-  do_toggle();
-  doing_trigger = false;
+void set_toggle_trigger()
+{
+  trigger_control.next_time = millis() + toggle_spanker.get_param(TOGGLE_DELAY);
+  trigger_control.triggered = true;
+  trigger_fxn = toggle_trigger;
+  // Serial.println("Set Toggle Trigger: " + String(spank_engine.delay));
 }
 
 void toggle_fxn()
 {
   selected_fxn = &toggle_spanker;
-  // possibly init toggle state here
   toggle_spanker.display();
+  trigger_control.triggered = false;
+  trigger_fxn = toggle_trigger;
 }
 
 void toggle_begin()
 {
   toggle_spanker.begin();
-  toggle_spanker.trigger_fxn = toggle_trigger;
+  toggle_spanker.trigger_fxn = set_toggle_trigger;
   toggle_spanker.string_params = toggle_string_params;
 }

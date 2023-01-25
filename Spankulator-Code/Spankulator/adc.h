@@ -30,12 +30,13 @@ uint16_t readLevel()
     uint32_t readAccumulator = 0;
 
     for (int i = 0; i < ADC_READS_COUNT; ++i)
-        readAccumulator += readADC(ADC_DC);
+        readAccumulator += analogRead(ADC_DC);
 
     uint16_t readValue = readAccumulator >> ADC_READS_SHIFT;
 
     // if (readValue < (ADC_RANGE >> 1))
     //     readValue += ADC_RANGE;
+    // uint16_t readValue = readADC(ADC_CAL);
 
     Serial.print("ADC Level = ");
     Serial.println(readValue);
@@ -62,6 +63,7 @@ void adc_correct_offset()
     for (int offset = -100; offset < 100; ++offset)
     {
         analogReadCorrection(offset, gainCorrectionValue.get());
+        offsetCorrectionValue.put(offset);
         // readLevel(); // settling time
 
         Serial.print(F("   Offset = "));
@@ -75,7 +77,6 @@ void adc_correct_offset()
             break;
         }
         save_value = meas;
-        offsetCorrectionValue.put(offset);
     }
 }
 
@@ -201,7 +202,10 @@ void adc_begin()
     offsetCorrectionValue.xfer();
     gainCorrectionValue.begin(false);
     gainCorrectionValue.xfer();
-    // delay(100);
+    // delay(3000);
+    // Serial.println("ADC Begin offset: " + String(offsetCorrectionValue.get()) + " gain: " + String(gainCorrectionValue.get()));
+    // offsetCorrectionValue.put(0);
+    gainCorrectionValue.put(2048);
     analogReadCorrection(offsetCorrectionValue.get(), gainCorrectionValue.get());
 }
 

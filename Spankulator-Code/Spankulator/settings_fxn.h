@@ -80,8 +80,8 @@ boolean settings_is_quantized()
 
 void settings_put_quantized(uint16_t val)
 {
-  settings_spanker.put_param_num(SETTINGS_QUANTIZE);
-  settings_spanker.put_param(val);
+  // settings_spanker.put_param_num(SETTINGS_QUANTIZE);
+  settings_spanker.param_put(val, SETTINGS_QUANTIZE);
 }
 
 String settings_get_device_name()
@@ -96,8 +96,8 @@ boolean settings_is_ext_clk()
 
 void settings_put_ext_clk(uint16_t val)
 {
-  settings_spanker.put_param_num(SETTINGS_CLK);
-  settings_spanker.put_param(val);
+  // settings_spanker.put_param_num(SETTINGS_CLK);
+  settings_spanker.param_put(val, SETTINGS_CLK);
 }
 
 void settings_toggle_ext_clk()
@@ -113,8 +113,8 @@ uint16_t settings_get_ext_trig()
 
 void settings_put_ext_trig(uint16_t val)
 {
-  settings_spanker.put_param_num(SETTINGS_EXT_TRIG);
-  settings_spanker.put_param(val);
+  // settings_spanker.put_param_num(SETTINGS_EXT_TRIG);
+  settings_spanker.param_put(val, SETTINGS_EXT_TRIG);
   put_disable_ext_trigger(val);
 }
 
