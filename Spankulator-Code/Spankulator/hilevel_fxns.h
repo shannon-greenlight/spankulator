@@ -226,6 +226,7 @@ void adjust_param(int encoder_val)
   default:
     selected_fxn->adjust_param(encoder_val, delta);
   }
+  terminal_print_status();
   // ui.terminal_debug("Encoder delta: " + String(delta));
   last_change_time = now;
 }

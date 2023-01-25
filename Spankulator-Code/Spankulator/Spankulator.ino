@@ -108,6 +108,8 @@ FunctionPointer trigger_fxn;
 
 #include "hilevel_fxns.h"
 
+#define SETTINGS_INFO_LABEL_ROW "19"
+#define SETTINGS_INFO_ROW "20"
 void terminal_print_status()
 {
   if (ui.terminal_mirror)
@@ -132,23 +134,27 @@ void terminal_print_status()
     // ui.t.print(" Clk:" + String(settings_is_ext_clk() ? "EXT" : "INT"));
     // ui.t.clrToEOL();
 
-    ui.t.setCursor("20", "1");
+    ui.t.setCursor(SETTINGS_INFO_LABEL_ROW, "1");
+    ui.t.print(F("Settings Info"));
+    ui.t.clrToEOL();
+
+    ui.t.setCursor(SETTINGS_INFO_ROW, "1");
     ui.t.print("Pot:" + settings_spanker.get_param_as_string(SETTINGS_POT_FXN));
     ui.t.clrToEOL();
 
-    ui.t.setCursor("20", "12");
+    ui.t.setCursor(SETTINGS_INFO_ROW, "12");
     ui.t.print("SigIn:" + settings_spanker.get_param_as_string(SETTINGS_DC_FXN));
     ui.t.clrToEOL();
 
-    ui.t.setCursor("20", "24");
+    ui.t.setCursor(SETTINGS_INFO_ROW, "24");
     ui.t.print(" Clk:" + settings_spanker.get_param_as_string(SETTINGS_CLK));
     ui.t.clrToEOL();
 
-    ui.t.setCursor("20", "37");
+    ui.t.setCursor(SETTINGS_INFO_ROW, "37");
     ui.t.print(" TrigIn:" + settings_spanker.get_param_as_string(SETTINGS_EXT_TRIG));
     ui.t.clrToEOL();
 
-    ui.t.setCursor("20", "53");
+    ui.t.setCursor(SETTINGS_INFO_ROW, "53");
     ui.t.print(" Quantize:" + settings_spanker.get_param_as_string(SETTINGS_QUANTIZE));
     ui.t.clrToEOL();
 
