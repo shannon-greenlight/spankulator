@@ -20,7 +20,7 @@
 "R23, R28, ","2","300K .1%","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","C173001"
 "R29, ","1","200K .1%","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","C172982"
 "R30, ","1","95.3K 1%","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","C172602"
-"SK1, SK2, SK3, ","3","A_08-LC-TT","Package_DIP:DIP-8_W7.62mm_Socket","none"
+"SK1, SK2, SK3, SK5, ","4","A_08-LC-TT","Package_DIP:DIP-8_W7.62mm_Socket","none"
 "SK4, ","1","A_14-LC-TT","digikey-footprints:Socket_DIP-14_7.62mm_Conn","none"
 "SW2, SW3, SW4, SW5, SW6, SW7, SW8, ","7","Push Button","Button_Switch_THT:SW_PUSH_6mm","C266209"
 "U1, U3, ","2","TL072CP","Package_DIP:DIP-8_W7.62mm_Socket","C72124"

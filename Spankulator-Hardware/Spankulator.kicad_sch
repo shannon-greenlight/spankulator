@@ -8437,6 +8437,9 @@
     (path "/681cdba4-7e5c-45e3-bb80-441c833d63d5/05f8ef7a-e042-42c0-9f5b-145e0463e908"
       (reference "SK4") (unit 1) (value "A_14-LC-TT") (footprint "")
     )
+    (path "/681cdba4-7e5c-45e3-bb80-441c833d63d5/9547e5d4-0670-4f97-a6a2-9a65b9193d6e"
+      (reference "SK5") (unit 1) (value "A_08-LC-TT") (footprint "Package_DIP:DIP-8_W7.62mm_Socket")
+    )
     (path "/681cdba4-7e5c-45e3-bb80-441c833d63d5/6714bf9c-71a2-48ee-b6d1-afbf0097602e"
       (reference "SO2") (unit 1) (value "Standoff 12mm") (footprint "")
     )
