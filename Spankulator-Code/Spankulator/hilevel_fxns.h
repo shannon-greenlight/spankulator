@@ -709,6 +709,10 @@ void process_keypress()
   case '*': // *
     repeat_on.toggle();
     set_repeat_display(true);
+    do
+    {
+    } while (!all_buttons_up());
+    delay(25);
     break;
   case 'i':
     selected_fxn->insert_char(' ');
