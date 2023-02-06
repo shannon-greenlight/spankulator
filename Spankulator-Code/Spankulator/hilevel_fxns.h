@@ -584,7 +584,7 @@ void check_serial()
       entering_string = true;
       ui.t.setRow(DEBUG_ROW);
     }
-    if (!entering_string && (c == 'i' || c == 127 || c == '~' || c == '*' || c == '!' || c == 'u' || c == 'd' || c == '+' || c == '-' || c == 'z' || c == 'Z' || esc_mode))
+    if (!entering_string && (c == '&' || c == 'i' || c == 127 || c == '~' || c == '*' || c == '!' || c == 'u' || c == 'd' || c == '+' || c == '-' || c == 'z' || c == 'Z' || esc_mode))
     {
       // process this immediately with process_keypress
       keypress = c;
@@ -690,6 +690,10 @@ void process_keypress()
 
   switch (keypress)
   {
+  case '&':
+    fxn.put(SETTINGS_FXN);
+    new_fxn();
+    break;
   case 'u':
     adjust_param(1);
     break;
