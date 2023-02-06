@@ -17,7 +17,7 @@ int tries = 0;
 
 void print_push_trig()
 {
-    ui.printLine(F("Then Push Trig"), LINE_2, 1);
+    ui.printLine(F("Then Push Activate"), LINE_2, 1);
 }
 
 void print_please_wait()
@@ -38,8 +38,8 @@ uint16_t readLevel()
     //     readValue += ADC_RANGE;
     // uint16_t readValue = readADC(ADC_CAL);
 
-    Serial.print("ADC Level = ");
-    Serial.println(readValue);
+    ui.terminal_debug("ADC Level = " + String(readValue));
+    // Serial.println(readValue);
 
     return readValue;
 }
@@ -51,9 +51,9 @@ void adc_correct_offset()
     offsetCorrectionValue.put(0);
     gainCorrectionValue.put(0x600);
 
-    Serial.print(F("\r\nOffset correction (@gain = "));
-    Serial.print(gainCorrectionValue.get());
-    Serial.println(F(" (min gain))"));
+    // Serial.print(F("\r\nOffset correction (@gain = "));
+    // Serial.print(gainCorrectionValue.get());
+    // Serial.println(F(" (min gain))"));
 
     // Set default correction values and enable correction
     analogReadCorrection(offsetCorrectionValue.get(), gainCorrectionValue.get());
@@ -68,7 +68,7 @@ void adc_correct_offset()
 
         Serial.print(F("   Offset = "));
         Serial.print(offset);
-        Serial.print(", ");
+        // Serial.print(", ");
 
         meas = readLevel();
 
@@ -78,12 +78,14 @@ void adc_correct_offset()
         }
         save_value = meas;
     }
+    ui.t.clrDown("8");
 }
 
 void adc_correct_gain()
 {
-    Serial.println(F("\r\nGain correction"));
+    // Serial.println(F("\r\nGain correction"));
     print_please_wait();
+    mid_cal = readLevel();
     uint16_t i;
     for (i = ADC_MIN_GAIN; i < ADC_MAX_GAIN && (abs(mid_cal - 2048) >= 2); i++)
     {
@@ -93,6 +95,7 @@ void adc_correct_gain()
         mid_cal = readLevel();
     }
     gainCorrectionValue.put(i);
+    ui.t.clrDown("8");
 }
 
 void adc_summary()
@@ -125,6 +128,7 @@ void adc_summary()
 
 void adc_cal()
 {
+    is_triggered = false; // make sure next trig toggles to true
     ui.fill(BLACK, 16);
     ui.t.clrDown("8");
     switch (adc_cal_screen)

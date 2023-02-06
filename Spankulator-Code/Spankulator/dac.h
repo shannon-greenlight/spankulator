@@ -13,6 +13,7 @@ void dac_correct_gain()
 
 void dac_cal()
 {
+    is_triggered = false; // make sure next trig toggles to true
     // A change of 8 on the DAC should result in a change of 1/12V on CV output
     String line1;
     String line2;
@@ -21,28 +22,28 @@ void dac_cal()
     switch (dac_cal_screen)
     {
     case 0:
-        line1 = F("DAC Zero - Adj OFFSET");
+        line1 = F("DAC Zero: Adj OFFSET");
         line2 = F("for CV=0.0V");
-        write_dac(DAC_MID); // adjust for 0V
+        write_dac(511); // adjust for 0V
 
         dac_cal_screen++;
         break;
     case 1:
-        line1 = F("DAC +Mid - Adj GAIN");
+        line1 = F("DAC +Mid: Adj GAIN");
         line2 = F("for CV=2.0V");
         write_dac(DAC_MID - 193); // adjust for 2V
         dac_cal_screen++;
         break;
     case 2:
-        line1 = F("DAC -Mid - Adj GAIN");
+        line1 = F("DAC -Mid: Adj GAIN");
         line2 = F("for CV=-2.0V");
         write_dac(DAC_MID + 192); // adjust for -2V
         dac_cal_screen++;
         break;
     case 3:
         line1 = F("Calibration complete");
-        line2 = F("Push TRIG to redo");
-        //dac_summary();
+        line2 = F("Push Activate to redo");
+        // dac_summary();
         dac_cal_screen = 0;
         break;
 
