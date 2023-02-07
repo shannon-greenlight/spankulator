@@ -27,9 +27,9 @@ void dn_trigger()
 
 void set_dn_trigger()
 {
-  trigger_control.delay = dn_spanker.get_param(LONGEST_PULSE);
-  trigger_control.pulse_count = dn_spanker.get_param(NUM_PULSES);
-  trigger_control.next_time = millis() + dn_spanker.get_param(INITIAL_DELAY);
+  trigger_control.delay = selected_fxn->get_param(LONGEST_PULSE);
+  trigger_control.pulse_count = selected_fxn->get_param(NUM_PULSES);
+  trigger_control.next_time = millis() + selected_fxn->get_param(INITIAL_DELAY);
   trigger_control.triggered = true;
   trigger_fxn = dn_trigger;
   // Serial.println("Set Dn Trigger: " + String(trigger_control.delay));

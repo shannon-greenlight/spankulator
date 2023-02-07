@@ -52,9 +52,9 @@ void stretch_trigger()
 
 void set_stretch_trigger()
 {
-  trigger_control.delay = stretch_spanker.get_param(STRETCH_ON_TIME);
-  trigger_control.pulse_count = stretch_spanker.get_param(STRETCH_NUM_PULSES);
-  trigger_control.next_time = millis() + stretch_spanker.get_param(STRETCH_INIT_DELAY);
+  trigger_control.delay = selected_fxn->get_param(STRETCH_ON_TIME);
+  trigger_control.pulse_count = selected_fxn->get_param(STRETCH_NUM_PULSES);
+  trigger_control.next_time = millis() + selected_fxn->get_param(STRETCH_INIT_DELAY);
   trigger_control.triggered = true;
   trigger_fxn = stretch_trigger;
   // Serial.println("Set Stretch Trigger: " + String(spank_engine.delay));

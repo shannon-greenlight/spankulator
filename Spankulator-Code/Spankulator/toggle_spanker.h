@@ -49,7 +49,7 @@ void toggle_trigger()
 
 void set_toggle_trigger()
 {
-  trigger_control.next_time = millis() + toggle_spanker.get_param(TOGGLE_DELAY);
+  trigger_control.next_time = millis() + selected_fxn->get_param(TOGGLE_DELAY);
   trigger_control.triggered = true;
   trigger_fxn = toggle_trigger;
   // Serial.println("Set Toggle Trigger: " + String(spank_engine.delay));

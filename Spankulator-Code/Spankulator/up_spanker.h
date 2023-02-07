@@ -27,9 +27,9 @@ void up_trigger()
 
 void set_up_trigger()
 {
-  trigger_control.delay = up_spanker.get_param(SHORTEST_PULSE);
-  trigger_control.pulse_count = up_spanker.get_param(NUM_PULSES);
-  trigger_control.next_time = millis() + up_spanker.get_param(INITIAL_DELAY);
+  trigger_control.delay = selected_fxn->get_param(SHORTEST_PULSE);
+  trigger_control.pulse_count = selected_fxn->get_param(NUM_PULSES);
+  trigger_control.next_time = millis() + selected_fxn->get_param(INITIAL_DELAY);
   trigger_control.triggered = true;
   trigger_fxn = up_trigger;
   // Serial.println("Set Up Trigger: " + String(trigger_control.pulse_count));

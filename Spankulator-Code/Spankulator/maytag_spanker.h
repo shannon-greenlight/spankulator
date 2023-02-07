@@ -50,9 +50,9 @@ void maytag_trigger()
 
 void set_maytag_trigger()
 {
-  trigger_control.delay = maytag_spanker.get_param(MAYTAG_DELAY);
-  trigger_control.pulse_count = maytag_spanker.get_param(MAYTAG_NUM_PULSES);
-  trigger_control.next_time = millis() + maytag_spanker.get_param(MAYTAG_DELAY);
+  trigger_control.delay = selected_fxn->get_param(MAYTAG_DELAY);
+  trigger_control.pulse_count = selected_fxn->get_param(MAYTAG_NUM_PULSES);
+  trigger_control.next_time = millis() + selected_fxn->get_param(MAYTAG_DELAY);
   trigger_control.triggered = true;
   trigger_fxn = maytag_trigger;
   // Serial.println("Set Maytag Trigger: " + String(trigger_control.delay));

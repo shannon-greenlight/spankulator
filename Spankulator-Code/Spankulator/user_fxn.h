@@ -539,6 +539,7 @@ void user_do_trigger()
   }
   selected_fxn = user_spanks[user_dig_num];
   // ui.terminal_debug("User Fxn: " + selected_fxn->name);
+  // Serial.println("Init delay: " + String(selected_fxn->get_param(INITIAL_DELAY)));
   lfo_params_set = false;
   selected_fxn->trigger_fxn();
   do
