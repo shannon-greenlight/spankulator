@@ -10,8 +10,6 @@
 // #define TERMINAL_BASE 8
 
 #define WAVEFORM_PARTS 128
-// 30 beats per second
-#define HEART_RATE 30
 
 #define ADC_PIN A2
 

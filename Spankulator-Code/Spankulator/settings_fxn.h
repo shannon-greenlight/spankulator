@@ -15,10 +15,18 @@ enum
   SETTINGS_NUM_PARAMS,
 };
 
+enum
+{
+  SETTING_CV_OFF = 0,
+  SETTING_CV_SCALE,
+  SETTING_CV_OFFSET,
+  SETTING_CV_VALUE,
+};
+
 uint16_t _settings_params[SETTINGS_NUM_PARAMS];
-uint16_t _settings_mins[] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
-uint16_t _settings_maxs[] = {0, 3, 3, 1, 1, 1, 1, 1, 9999, 0, 0, 1};
-uint16_t _settings_init_vals[] = {0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0, 0};
+uint16_t _settings_mins[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+uint16_t _settings_maxs[] = {0, SETTING_CV_VALUE, SETTING_CV_VALUE, 1, 1, 1, 1, 1, 9999, 0, 0, 1};
+uint16_t _settings_init_vals[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 1, 0, 0, 0, 1, 15, 0, 0, 0};
 uint16_t *settings_stuff[] = {_settings_params, _settings_mins, _settings_maxs, _settings_init_vals};
 String settings_labels[] = {"Version: ", "CV Pot: ", "Sig In: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: "};
 String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "", "$~", "Push Activate", "ADC,DAC"};
@@ -144,8 +152,6 @@ bool wifi_enabled()
 int settings_get_inactivity_timeout()
 {
   return settings_spanker.get_param(SETTINGS_SCREEN);
-  // return settings_spanker.get_param(SETTINGS_SCREEN) * HEART_RATE * 60;
-  // return max(300, settings_spanker.get_param(SETTINGS_SCREEN) * 300); // 1 minute = 300 heartbeats
 }
 
 void settings_trigger()

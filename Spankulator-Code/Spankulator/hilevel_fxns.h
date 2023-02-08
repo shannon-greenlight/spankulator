@@ -822,14 +822,18 @@ void process_cmd(String in_str)
     terminal_print_status();
     break;
   case 'O':
-    offset_adj = int_param;
-    set_scale();
-    remote_adjusting = true;
-    housekeep();
-    terminal_print_status();
+    if (settings_get_pot_fxn() != SETTING_CV_OFFSET && settings_get_dc_fxn() != SETTING_CV_OFFSET)
+    {
+      offset_adj = int_param;
+      set_scale();
+      remote_adjusting = true;
+      housekeep();
+      terminal_print_status();
+    }
     break;
   case 'P':
     settings_spanker.param_put(int_param, SETTINGS_POT_FXN);
+    do_cv_mod(); // ?? dvm does this in trigger fxn
     terminal_print_status();
     break;
   case 'V':
@@ -837,22 +841,31 @@ void process_cmd(String in_str)
     terminal_print_status();
     break;
   case 'S':
-    scale_adj = int_param;
-    set_scale();
-    remote_adjusting = true;
-    housekeep();
-    terminal_print_status();
+    if (settings_get_pot_fxn() != SETTING_CV_SCALE && settings_get_dc_fxn() != SETTING_CV_SCALE)
+    {
+      scale_adj = int_param;
+      set_scale();
+      remote_adjusting = true;
+      housekeep();
+      terminal_print_status();
+    }
+    break;
+  case 'c':
+    if (settings_get_pot_fxn() != SETTING_CV_VALUE && settings_get_dc_fxn() != SETTING_CV_VALUE)
+    {
+      cv_out(int_param); // unscaled
+    }
+    break;
+  case 'C':
+    if (settings_get_pot_fxn() != SETTING_CV_VALUE && settings_get_dc_fxn() != SETTING_CV_VALUE)
+    {
+      aval = int_param;
+      cv_out_scaled(&aval);
+    }
     break;
   case 'f':
     fxn.put(int_param);
     new_fxn();
-    break;
-  case 'c':
-    cv_out(int_param); // unscaled
-    break;
-  case 'C':
-    aval = int_param;
-    cv_out_scaled(&aval);
     break;
   case 'r':
     // ui.terminal_debug("Process cmd: " + in_str + " Param: " + String(int_param));
