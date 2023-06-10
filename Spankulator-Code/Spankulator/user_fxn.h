@@ -80,10 +80,28 @@ String user_ops = "UDSTML ";
 
 void user_set_params(char c);
 void user_display();
+void user_inc_dig_num_by(byte n);
 
 char user_get_char()
 {
   return user_string.charAt(user_dig_num);
+}
+
+void user_insert_char(char c)
+{
+  String s = user_string.get();
+  user_string.put(s.substring(0, user_dig_num) + String(c) + s.substring(user_dig_num));
+  user_display();
+  // ui.terminal_debug(F("User insert char"));
+}
+
+void user_remove_char()
+{
+  String s = user_string.get();
+  s.remove(user_dig_num - 1, 1);
+  user_string.put(s);
+  user_inc_dig_num_by(-1);
+  user_display();
 }
 
 void user_print_sput()

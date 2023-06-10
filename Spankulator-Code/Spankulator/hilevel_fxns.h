@@ -322,7 +322,18 @@ int inc_dig_num()
   case DVM_FXN:
     break;
   case USER_FXN:
-    user_inc_dig_num_by(1);
+    if (key_held_down)
+    {
+      user_insert_char(' ');
+      do
+      {
+      } while (!all_buttons_up());
+      delay(100);
+    }
+    else
+    {
+      user_inc_dig_num_by(1);
+    }
     break;
   default:
     if (selected_fxn->get_param_type(selected_fxn->param_num) == SPANK_STRING_VAR_TYPE && key_held_down)
@@ -344,7 +355,19 @@ void dec_dig_num()
   case DVM_FXN:
     break;
   case USER_FXN:
-    user_inc_dig_num_by(-1);
+    if (key_held_down)
+    {
+      user_remove_char();
+      // user_inc_dig_num_by(-1);
+      do
+      {
+      } while (!all_buttons_up());
+      delay(100);
+    }
+    else
+    {
+      user_inc_dig_num_by(-1);
+    }
     break;
   default:
     if (selected_fxn->get_param_type(selected_fxn->param_num) == SPANK_STRING_VAR_TYPE && key_held_down)
@@ -719,10 +742,24 @@ void process_keypress()
     delay(25);
     break;
   case 'i':
-    selected_fxn->insert_char(' ');
+    if (fxn.get() == USER_FXN)
+    {
+      user_insert_char(' ');
+    }
+    else
+    {
+      selected_fxn->insert_char(' ');
+    }
     break;
   case 127:
-    selected_fxn->remove_char();
+    if (fxn.get() == USER_FXN)
+    {
+      user_remove_char();
+    }
+    else
+    {
+      selected_fxn->remove_char();
+    }
     break;
   case '!': // 33
     is_triggered = !is_triggered;
