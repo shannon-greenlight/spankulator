@@ -27,8 +27,9 @@ void stretch_trigger()
       is_triggered = false;
     }
     trigger_control.delay = selected_fxn->get_param(led_on ? STRETCH_ON_TIME : STRETCH_OFF_TIME);
-    unsigned int my_delay = trigger_control.calc_delay(up_spanker.get_param(RANDOMNESS));
+    unsigned int my_delay = trigger_control.calc_delay(0);
     trigger_control.next_time = ms + my_delay;
+    // trigger_control.next_time = ms;
 
     gate.put(led_on);
     led_on = !led_on;
@@ -39,6 +40,7 @@ void stretch_trigger()
 
     uint16_t aval = selected_fxn->get_param(led_on ? STRETCH_LVL1 : STRETCH_LVL2);
     cv_out_scaled(&aval);
+    // ui.terminal_debug("My delay: " + String(my_delay) + " Pulse count: " + String(trigger_control.pulse_count));
 
     if (trigger_control.pulse_count == 0)
     {

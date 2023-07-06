@@ -131,7 +131,7 @@ void reset_trigger()
   do_toggle();
   if (user_doing_trigger)
   {
-    trigger_control.triggered = false;
+    trigger_control.triggered = is_triggered = false;
   }
   else
   {
@@ -141,7 +141,10 @@ void reset_trigger()
 
 void do_trigger()
 {
-  digitalWrite(triggered_led_pin, HIGH);
+  if (!settings_is_ext_clk())
+  {
+    digitalWrite(triggered_led_pin, HIGH);
+  }
   switch (fxn.get())
   {
   case DVM_FXN:
@@ -166,24 +169,26 @@ void check_trigger()
     if (!trigger_control.triggered)
     {
       do_trigger();
-      // delay(1);
-      // Serial.println("Is triggered: " + String(trigger_control.triggered) + "          ");
+      delay(1);
+      // Serial.println("do_trigger: " + String(trigger_control.triggered) + "          " + selected_fxn->name);
     }
     if (settings_is_ext_clk() || fxn.get() == SETTINGS_FXN)
     {
       trigger_control.triggered = true;
+      is_triggered = false;
     }
     else
     {
-      is_triggered = repeat_on.get() || trigger_control.triggered || user_doing_trigger;
+      // is_triggered = repeat_on.get() || trigger_control.triggered || user_doing_trigger;
+      is_triggered = repeat_on.get() || trigger_control.triggered;
       // Serial.println("Delay: " + String(spank_engine.delay));
     }
   }
   else
   {
+    digitalWrite(triggered_led_pin, LOW);
     if (!settings_is_ext_clk())
     {
-      digitalWrite(triggered_led_pin, LOW);
       trigger_control.triggered = false;
     }
   }
@@ -542,6 +547,19 @@ void set_encoder()
 //   ui.terminal_print_status(repeat_on.get(), triggered, scale, offset);
 // }
 
+void set_repeat_on(bool val)
+{
+  if (val)
+  {
+    repeat_on.set();
+  }
+  else
+  {
+    repeat_on.reset();
+  }
+  set_repeat_display(true);
+}
+
 void new_fxn()
 {
   // ui.clearDisplay();
@@ -734,12 +752,15 @@ void process_keypress()
     new_fxn();
     break;
   case '*': // *
-    repeat_on.toggle();
-    set_repeat_display(true);
-    do
+    if (!settings_is_ext_clk())
     {
-    } while (!all_buttons_up());
-    delay(25);
+      repeat_on.toggle();
+      set_repeat_display(true);
+      do
+      {
+      } while (!all_buttons_up());
+      delay(25);
+    }
     break;
   case 'i':
     if (fxn.get() == USER_FXN)
@@ -762,7 +783,8 @@ void process_keypress()
     }
     break;
   case '!': // 33
-    is_triggered = !is_triggered;
+    // is_triggered = !is_triggered;
+    is_triggered = settings_is_ext_clk() ? true : !is_triggered;
     // terminal_print_status();
     // ui.terminal_debug("Triggered: " + String(triggered) + " Button: " + String(digitalRead(trigger_button_pin)));
     // delay(50);

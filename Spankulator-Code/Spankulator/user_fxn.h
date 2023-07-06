@@ -112,6 +112,7 @@ void user_print_sput()
 void user_stop_trigger()
 {
   user_doing_trigger = false;
+  user_dig_num = 0;
 }
 
 void user_debug()
@@ -134,7 +135,20 @@ void user_init()
 
 void user_underline_char()
 {
-  const char *c = user_param_num == 0 && !is_triggered ? "-" : "^";
+  // char *c;
+  // if (user_param_num > 0)
+  // {
+  //   *c = '^';
+  // }
+  // else if (user_doing_trigger)
+  // {
+  //   *c = '.';
+  // }
+  // else
+  // {
+  //   *c = '-';
+  // }
+  const char *c = user_param_num == 0 && !user_doing_trigger ? "-" : "^";
   ui.underline_char(user_dig_num, 0, 1, 8, c); // min(9,user_dig_num)
 }
 
@@ -247,7 +261,7 @@ void user_begin()
     Greenface_gadget f = user_get_spank_obj(user_string.charAt(i));
     if (f.name > "")
     {
-      // Serial.println("User Begin: "+user_spanks[i]->name);
+      // Serial.println("User Begin: " + user_spanks[i]->name);
       user_spanks[i]->num_params = f.num_params;
       user_spanks[i]->check_params = f.check_params;
       user_spanks[i]->trigger_fxn = f.trigger_fxn;
@@ -297,6 +311,7 @@ void user_fxn()
   ui.newFxn("User");
   trigger_fxn = noop;
   user_doing_trigger = false;
+  trigger_control.triggered = false;
   // ui.clearDisplay();
   // ui.printText("User",0,0,2);
   // user_string.put("UDU      ");
@@ -543,7 +558,7 @@ void user_adjust_param(int encoder_val)
 
 void user_do_trigger()
 {
-  // Serial.println("Doing user trigger! control: " + String(trigger_control.triggered));
+  // ui.terminal_debug("Doing user trigger! control: " + String(trigger_control.triggered) + " doing trigger: " + String(user_doing_trigger));
   int sanity = 0;
   if (!user_doing_trigger)
   {
@@ -552,36 +567,28 @@ void user_do_trigger()
     user_dig_num = 0;
     user_param_num = 0;
     user_underline_char();
-    // user_print_sput();
     // selected_fxn->debug();
   }
   selected_fxn = user_spanks[user_dig_num];
-  // ui.terminal_debug("User Fxn: " + selected_fxn->name);
-  // Serial.println("Init delay: " + String(selected_fxn->get_param(INITIAL_DELAY)));
   lfo_params_set = false;
   selected_fxn->trigger_fxn();
   do
   {
-    // nothing while waiting for selected_fxn trigger to complete
-    // must delay to properly multi-task
-    delay(1);
-  } while (trigger_control.triggered && !keypress && sanity++ < 12000);
-  // is_triggered = keypress == 0;
-  // Serial.println("triggered: " + String(trigger_control.triggered));
-  if (true || !trigger_control.triggered && is_triggered)
+    // do nothing while waiting for selected_fxn trigger to complete
+    check_keyboard();
+    check_serial();
+    // Serial.println("Trig: " + String(read_trigger_pin()) + +" trig ctrl: " + String(trigger_control.triggered) + " doing trigger: " + String(user_doing_trigger));
+  } while (trigger_control.triggered && !keypress && !read_trigger_pin());
+  do
   {
-    do
-    {
-      user_dig_num++;
-    } while (user_string.charAt(user_dig_num) == ' ');
-    if (user_dig_num >= user_string.length())
-    {
-      user_stop_trigger();
-    }
-    else
-    {
-      user_underline_char();
-      // user_print_sput();
-    }
+    user_dig_num++;
+  } while (user_string.charAt(user_dig_num) == ' ');
+  if (user_dig_num >= user_string.length())
+  {
+    user_stop_trigger();
+  }
+  else
+  {
+    user_underline_char();
   }
 }

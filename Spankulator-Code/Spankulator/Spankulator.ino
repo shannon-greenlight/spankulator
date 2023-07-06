@@ -28,12 +28,15 @@ void set_encoder();
 bool wifi_enabled(void);
 
 // hilevel functions
+void set_repeat_on(bool val);
 void reset_trigger();
 bool trigger_go(unsigned long ms);
 void new_fxn();
 // void reset_inactivity_timer();
 // void check_inactivity_timer();
 void restore_display();
+void check_keyboard();
+void check_serial();
 void check_display_restore();
 String old_status = "";
 

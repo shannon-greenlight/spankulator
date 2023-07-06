@@ -65,8 +65,10 @@ void SPANK_Trigger::trigger(trig_type type, bool led_on, unsigned long ms)
     randomized_pulse_count = max(0, randomized_pulse_count);
     aval = randomized_pulse_count / num_pulses * DAC_FS;
 
+    // ui.terminal_debug("Pulse count: " + String(pulse_count) + " aval: " + String(aval));
     if (pulse_count == 0)
     {
+        // Serial.println("End of Sequence");
         delay = type == TRIG_UP ? shortest_pulse : longest_pulse;
         pulse_count = num_pulses;
         next_time = millis() + selected_fxn->get_param(INITIAL_DELAY);

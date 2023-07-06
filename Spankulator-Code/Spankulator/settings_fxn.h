@@ -108,12 +108,18 @@ void settings_put_ext_clk(uint16_t val)
 {
   // settings_spanker.put_param_num(SETTINGS_CLK);
   settings_spanker.param_put(val, SETTINGS_CLK);
+  if (settings_is_ext_clk())
+  {
+    set_repeat_on(false);
+  }
+  // set_repeat_on(!settings_is_ext_clk());
 }
 
 void settings_toggle_ext_clk()
 {
   settings_spanker.put_param_num(SETTINGS_CLK);
   settings_spanker.put_param(settings_is_ext_clk() ? 0 : 1);
+  set_repeat_on(!settings_is_ext_clk());
 }
 
 uint16_t settings_get_ext_trig()

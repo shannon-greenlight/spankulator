@@ -22,6 +22,7 @@ void up_trigger()
     trigger_control.trigger(TRIG_UP, led_on, ms);
 
     cv_out_scaled(&trigger_control.aval);
+    // Serial.println("Up Trigger: " + String(trigger_control.aval));
   }
 }
 
