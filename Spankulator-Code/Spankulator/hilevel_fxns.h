@@ -731,7 +731,7 @@ void process_keypress()
 
   switch (keypress)
   {
-  case '&':
+  case '*':
     fxn.put(SETTINGS_FXN);
     new_fxn();
     break;
@@ -751,7 +751,7 @@ void process_keypress()
     fxn.inc(-1);
     new_fxn();
     break;
-  case '*': // *
+  case '&': // *
     if (!settings_is_ext_clk())
     {
       repeat_on.toggle();
