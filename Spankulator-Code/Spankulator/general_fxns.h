@@ -143,14 +143,7 @@ boolean all_buttons_up()
 // a "private" function
 bool get_active_state()
 {
-  switch (BOARD_GENERATION)
-  {
-  case 3:
-    return LOW;
-    break;
-  default:
-    return HIGH;
-  }
+  return settings_get_board_generation() < 4 ? LOW : HIGH;
 }
 
 void reset_triggers()

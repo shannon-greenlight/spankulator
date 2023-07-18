@@ -9,13 +9,14 @@ typedef void (*FunctionPointer)();
 #include <WiFiNINA.h>
 #include <arduino_secrets.h>
 
-#define BOARD_GENERATION 4
+#define BOARD_GENERATION 5
 #include "version_num.h"
 #include "hardware_defs.h"
 
 void adc_config_hardware();
 
 // settings functions
+int settings_get_board_generation();
 uint16_t settings_get_pot_fxn();
 uint16_t settings_get_dc_fxn();
 boolean settings_is_quantized();
@@ -193,6 +194,7 @@ void setup(void)
   }
 
   trigger_fxn = noop;
+  enable_triggers();
 
   // connect if wifi is active
   wifi_attempt_connect(false);
