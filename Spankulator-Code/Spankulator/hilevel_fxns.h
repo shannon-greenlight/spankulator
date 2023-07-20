@@ -669,7 +669,7 @@ void check_keyboard()
     else if (!digitalRead(dn_button_pin))
       keypress = '-'; // 60
     else if (!digitalRead(repeat_button_pin))
-      keypress = '*'; // 42
+      keypress = '&'; // 42
     else if (!digitalRead(trigger_button_pin))
     // else if ((port_a & TRIGGER_MASK) == 0)
     {
