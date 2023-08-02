@@ -208,6 +208,7 @@ void setup(void)
 
 void loop()
 {
+  char cmd;
   // static bool trig_memory;
   // ui.terminal_debug("inactivity_timer: " + String(inactivity_timer) + " keypress: " + String(keypress));
 
@@ -230,14 +231,22 @@ void loop()
   {
     if (cmd_available)
     {
+      cmd = in_str[0];
       process_cmd(in_str);
       in_str = "";
       cmd_available = false;
     }
     else
     {
+      cmd = keypress;
       check_display_restore();
       process_keypress();
+    }
+    if (usb_direct_enabled())
+    {
+      // ui.t.println("Howdy!");
+      cmd = (cmd == '\n') ? ' ' : cmd;
+      send_data_to_USB(cmd);
     }
   }
   else

@@ -612,6 +612,135 @@ void hilevel_debug()
   // ui.printLine("0123456789012345678901234", ui.lines[1], 1);
 }
 
+void send_user_params_to_USB()
+{
+  byte temp = user_dig_num;
+  String out = "";
+  ui.t.print("\"params\" : [");
+  for (user_dig_num = 0; user_dig_num < user_string.length() && user_dig_num < USER_MAXLEN; user_dig_num++)
+  {
+    // Serial.print(user_dig_num);
+    // Serial.print(". ");
+    // Serial.print(user_string.charAt(user_dig_num));
+    // Serial.println("*");
+    // Serial.println(out);
+    if (user_string.charAt(user_dig_num) != ' ')
+    {
+      if (user_dig_num > 0)
+      {
+        out += ",";
+      }
+      out += user_params_toJSON();
+    }
+    ui.t.print(out);
+    // Serial.print(out);
+    out = "";
+  }
+  ui.t.print("]");
+  user_dig_num = temp;
+}
+
+void send_data_to_USB(char cmd)
+{
+  ui.t.print("{");
+  if (cmd == '[')
+    return;
+  ui.t.print(toJSON("fxn", fxn_name()));
+  ui.t.print(",");
+  ui.t.print(toJSON("fxn_num", String(fxn.get())));
+  ui.t.print(",");
+  if (cmd == ' ' || cmd == 'f' || cmd == '+' || cmd == '-' || cmd == 'U')
+    ui.t.print(list_fxns());
+  ui.t.print(toJSON("device_name", settings_get_device_name()));
+  ui.t.print(",");
+  ui.t.print(toJSON("quantized", settings_is_quantized() ? "Quantized" : "Normal"));
+  ui.t.print(",");
+  ui.t.print(toJSON("repeat_on", repeat_on.get() ? "ON" : "OFF"));
+  ui.t.print(",");
+  ui.t.print(toJSON("triggered", is_triggered ? "ON" : "OFF"));
+  ui.t.print(",");
+  ui.t.print(toJSON("cmd", String(cmd)));
+  ui.t.print(",");
+  ui.t.print(toJSON("digit_num", String(get_dig_num())));
+  ui.t.print(",");
+  ui.t.print(toJSON("param_num", String(get_param_num())));
+  ui.t.print(",");
+  ui.t.print(toJSON("adj", String(adj)));
+  ui.t.print(",");
+  ui.t.print(toJSON("cv_val", String(cv_val)));
+  ui.t.print(",");
+  // ui.t.print(toJSON("scale", String((int)(scale * ADC_FS + .5))));
+  ui.t.print(toJSON("scale", get_control("scale")));
+  ui.t.print(",");
+  // ui.t.print(toJSON("offset", String(offset_adj)));
+  ui.t.print(toJSON("offset", get_control("offset")));
+  ui.t.print(",");
+  ui.t.print(toJSON("gate", String(gate.get() ? "ON" : "OFF")));
+  ui.t.print(",");
+  ui.t.print(toJSON("toggle", String(tog.get() ? "ON" : "OFF")));
+  ui.t.print(",");
+  ui.t.print(toJSON("dac_fs", String(DAC_FS)));
+  ui.t.print(",");
+  ui.t.print(toJSON("adc_fs", String(ADC_FS)));
+  ui.t.print(",");
+  ui.t.print(toJSON("clock", !settings_is_ext_clk() ? "internal" : "external"));
+  ui.t.print(",");
+  ui.t.print(toJSON("trigger_enable", get_trigger_enable() ? "enabled" : "disabled"));
+  ui.t.print(",");
+  // ui.t.print(toJSON("ext_trigger_disable", get_ext_trigger_disable() ? "disabled" : "enabled"));
+  ui.t.print(toJSON("ext_trigger_disable", settings_get_ext_trig() == 0 ? "enabled" : "disabled"));
+  ui.t.print(",");
+
+  if (fxn_name() == "User")
+  {
+    // Serial.println("Sending: "+fxn_name());
+    ui.t.print("\"sequence\" : {");
+    ui.t.print(toJSON("label", "Sequence"));
+    ui.t.print(",");
+    ui.t.print(toJSON("type", "sequence"));
+    ui.t.print(",");
+    ui.t.print(toJSON("value", user_string.get()));
+    ui.t.print(",");
+    ui.t.print(toJSON("legal_values", user_ops));
+    ui.t.print(",");
+    ui.t.print(toJSON("dig_num", String(user_dig_num)));
+    ui.t.print(",");
+    ui.t.print(toJSON("selected", user_param_num == 0 ? "true" : "false"));
+    ui.t.print(",");
+    send_user_params_to_USB();
+    ui.t.print("},");
+  }
+
+  if (wifi_ui_message > "" || true)
+  {
+    ui.t.print(toJSON("message", wifi_ui_message));
+    ui.t.print(",");
+  }
+
+  if (fxn_name() == "Bounce")
+  {
+    ui.t.print(toJSON("meas", dvm_meas));
+    ui.t.print(",");
+  }
+  else
+  {
+    // clear out old message
+    wifi_ui_message = "";
+  }
+
+  ui.t.print("\"params\" : [");
+  // fix this for other fxns
+  ui.t.print(params_toJSON());
+  ui.t.print("]");
+  ui.t.print("}");
+
+  // The HTTP response ends with another blank line:
+  // ui.t.println("");
+
+  // This terminates serialport message
+  ui.t.println("\r\n\r\n");
+}
+
 void check_serial()
 {
   static bool entering_string = false;
@@ -994,6 +1123,9 @@ void process_cmd(String in_str)
       Serial.println(F("Illegal value in process_cmd: Set Gate"));
     }
     terminal_print_status();
+    break;
+  case 'U':
+    settings_put_usb_direct(int_param);
     break;
   case 'J':
     switch (int_param)

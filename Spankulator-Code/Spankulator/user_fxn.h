@@ -285,7 +285,7 @@ void user_begin()
 void user_display()
 {
   ui.fill(BLACK, 16);
-  ui.t.clrDown("9");
+  // ui.t.clrDown("9");
   ui.printLine(user_string.get(), LINE_1, 1);
   if (true || user_param_num == 0)
   {
@@ -536,7 +536,7 @@ void user_adjust_param(int encoder_val)
     }
     user_set_params(c);
     ui.fill(BLACK, 16);
-    ui.t.clrDown("9");
+    // ui.t.clrDown("9");
     ui.printLine(user_string.get(), LINE_1, 1);
     user_underline_char();
     if (user_string.charAt(user_dig_num) == ' ')

@@ -8,6 +8,7 @@ enum
   SETTINGS_EXT_TRIG,
   SETTINGS_ENCODER,
   SETTINGS_WIFI,
+  SETTINGS_USB_DIRECT,
   SETTINGS_SCREEN,
   SETTINGS_NAME,
   SETTINGS_RESET,
@@ -25,12 +26,12 @@ enum
 };
 
 uint16_t _settings_params[SETTINGS_NUM_PARAMS];
-uint16_t _settings_mins[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1};
-uint16_t _settings_maxs[] = {0, SETTING_CV_VALUE, SETTING_CV_VALUE, 1, 1, 1, 1, 1, 9999, 0, 0, 1, BOARD_GENERATION};
-uint16_t _settings_init_vals[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 1, 0, 0, 0, 1, 15, 0, 0, 0, BOARD_GENERATION};
+uint16_t _settings_mins[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1};
+uint16_t _settings_maxs[] = {0, SETTING_CV_VALUE, SETTING_CV_VALUE, 1, 1, 1, 1, 1, 1, 9999, 0, 0, 1, BOARD_GENERATION};
+uint16_t _settings_init_vals[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 1, 0, 0, 0, 1, 0, 15, 0, 0, 0, BOARD_GENERATION};
 uint16_t *settings_stuff[] = {_settings_params, _settings_mins, _settings_maxs, _settings_init_vals};
-String settings_labels[] = {"Version: ", "CV Pot: ", "Sig In: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: ", "Board Generation: "};
-String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "", "$~", "Push Activate", "ADC,DAC", ""};
+String settings_labels[] = {"Version: ", "CV Pot: ", "Sig In: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "USB Direct: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: ", "Board Generation: "};
+String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "Disabled,Enabled ", "", "$~", "Push Activate", "ADC,DAC", ""};
 EEPROM_String settings_device_name(20);
 EEPROM_String settings_string_vars[] = {settings_device_name};
 Greenface_gadget settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]));
@@ -46,32 +47,15 @@ void settings_fxn()
   trigger_control.triggered = false;
 }
 
-void settings_put_param(int val)
+void set_usb_direct()
 {
-  settings_spanker.put_param(val);
-  switch (settings_spanker.param_num)
-  {
-  case SETTINGS_ENCODER:
-    set_encoder();
-    break;
-  case SETTINGS_SCREEN:
-    restore_display();
-    break;
-  }
+  ui.terminal_mirror = settings_spanker.get_param(SETTINGS_USB_DIRECT) ? false : true;
 }
 
-void settings_adjust_param(int encoder_val, unsigned long delta)
+void settings_put_usb_direct(int val)
 {
-  settings_spanker.adjust_param(encoder_val, delta);
-  switch (settings_spanker.param_num)
-  {
-  case SETTINGS_ENCODER:
-    set_encoder();
-    break;
-  case SETTINGS_SCREEN:
-    restore_display();
-    break;
-  }
+  settings_spanker.param_put(val, SETTINGS_USB_DIRECT);
+  set_usb_direct();
 }
 
 uint16_t settings_get_pot_fxn()
@@ -156,6 +140,11 @@ bool wifi_enabled()
   return settings_spanker.get_param(SETTINGS_WIFI);
 }
 
+bool usb_direct_enabled()
+{
+  return settings_spanker.get_param(SETTINGS_USB_DIRECT);
+}
+
 int settings_get_inactivity_timeout()
 {
   return settings_spanker.get_param(SETTINGS_SCREEN);
@@ -164,6 +153,40 @@ int settings_get_inactivity_timeout()
 int settings_get_board_generation()
 {
   return settings_spanker.get_param(SETTINGS_BOARD_GENERATION);
+}
+
+void settings_put_param(int val)
+{
+  settings_spanker.put_param(val);
+  switch (settings_spanker.param_num)
+  {
+  case SETTINGS_ENCODER:
+    set_encoder();
+    break;
+  case SETTINGS_SCREEN:
+    restore_display();
+    break;
+  case SETTINGS_USB_DIRECT:
+    set_usb_direct();
+    break;
+  }
+}
+
+void settings_adjust_param(int encoder_val, unsigned long delta)
+{
+  settings_spanker.adjust_param(encoder_val, delta);
+  switch (settings_spanker.param_num)
+  {
+  case SETTINGS_ENCODER:
+    set_encoder();
+    break;
+  case SETTINGS_SCREEN:
+    restore_display();
+    break;
+  case SETTINGS_USB_DIRECT:
+    set_usb_direct();
+    break;
+  }
 }
 
 void settings_trigger()
