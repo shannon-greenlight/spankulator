@@ -21,7 +21,7 @@ boolean lfo_params_set = false;
 uint16_t lfo_index = 0;
 
 uint16_t _lfo_params[LFO_NUM_PARAMS];
-uint16_t _lfo_mins[] = {2, 0, 0, 4};
+uint16_t _lfo_mins[] = {16, 0, 0, 4};
 uint16_t _lfo_maxs[] = {32767, 3, 99, 128};
 uint16_t _lfo_init_vals[] = {100, 0, 0, 16};
 uint16_t *lfo_stuff[] = {_lfo_params, _lfo_mins, _lfo_maxs, _lfo_init_vals};
@@ -138,6 +138,13 @@ void lfo_set_period()
     // Serial.println("Chosen Skip: " + String(chosen_skip) + " n: " + String(chosen_n));
 }
 
+void lfo_set_min()
+{
+    _lfo_mins[LFO_PERIOD] = selected_fxn->get_param(LFO_MIN_PARTS);
+    selected_fxn->param_put(selected_fxn->get_param(LFO_PERIOD), LFO_PERIOD);
+    lfo_set_period();
+}
+
 void lfo_put_param(uint16_t val)
 {
     selected_fxn->put_param(val);
@@ -149,6 +156,9 @@ void lfo_put_param(uint16_t val)
     case LFO_WAVEFORM:
     case LFO_RANDOMNESS:
         lfo_set_waveform();
+        break;
+    case LFO_MIN_PARTS:
+        lfo_set_min();
         break;
     }
 }
