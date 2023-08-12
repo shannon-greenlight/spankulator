@@ -665,6 +665,10 @@ void send_data_to_USB(char cmd)
   ui.t.print(",");
   ui.t.print(toJSON("param_num", String(get_param_num())));
   ui.t.print(",");
+  ui.t.print(toJSON("param_active", String(selected_fxn->get_param_active())));
+  ui.t.print(",");
+  ui.t.print(toJSON("dp", (selected_fxn->decimal_places) ? String(selected_fxn->decimal_places[selected_fxn->param_num]) : "0"));
+  ui.t.print(",");
   ui.t.print(toJSON("adj", String(adj)));
   ui.t.print(",");
   ui.t.print(toJSON("cv_val", String(cv_val)));

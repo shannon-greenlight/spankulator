@@ -128,6 +128,10 @@ void send_data_to_client(WiFiClient client, char cmd)
   client.print(",");
   client.print(toJSON("param_num", String(get_param_num())));
   client.print(",");
+  client.print(toJSON("param_active", String(selected_fxn->get_param_active())));
+  client.print(",");
+  client.print(toJSON("dp", (selected_fxn->decimal_places) ? String(selected_fxn->decimal_places[selected_fxn->param_num]) : "0"));
+  client.print(",");
   client.print(toJSON("adj", String(adj)));
   client.print(",");
   client.print(toJSON("cv_val", String(cv_val)));
