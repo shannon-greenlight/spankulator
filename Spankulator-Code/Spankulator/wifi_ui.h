@@ -112,7 +112,7 @@ void send_data_to_client(WiFiClient client, char cmd)
   client.print(",");
   client.print(toJSON("fxn_num", String(fxn.get())));
   client.print(",");
-  if (cmd == ' ' || cmd == 'f' || cmd == '+' || cmd == '-')
+  if (true || cmd == ' ' || cmd == 'f' || cmd == '+' || cmd == '-')
     client.print(list_fxns());
   client.print(toJSON("device_name", settings_get_device_name()));
   client.print(",");
