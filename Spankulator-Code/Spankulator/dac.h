@@ -18,7 +18,8 @@ void dac_cal()
     String line1;
     String line2;
     ui.fill(BLACK, 16);
-    ui.t.clrDown("8");
+    // ui.t.clrDown("8");
+    ui.terminal_clrDown("8");
     switch (dac_cal_screen)
     {
     case 0:
