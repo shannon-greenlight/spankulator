@@ -12,7 +12,7 @@ set tool_dir=arduino_bin
 set data_dir=C:\Users\shann\OneDrive\Documents\ArduinoData\packages
 set code_dir=C:\Users\shann\Dropbox\moog\spankulator\Spankulator-Code\Spankulator
 set library_dir=C:\Users\shann\Dropbox\moog\Arduino-Libs
-set cache_dir=C:\Users\shann\AppData\Local\Temp\arduino_cache_bud451
+set cache_dir=C:\Users\shann\AppData\Local\Temp\arduino_cache_aug2033
 set secret_dir=%code_dir%\secrets
 
 rem echo Arg: %1
@@ -32,5 +32,5 @@ if errorlevel 1 (
    if [%1]==[] echo Compiler Error: %errorlevel%
    exit /b %errorlevel%
 )
-set /p exitkey= "Press any key to continue..."
+rem set /p exitkey= "Press any key to continue..."
 exit /b 0
