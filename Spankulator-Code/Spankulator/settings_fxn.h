@@ -35,6 +35,7 @@ String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off
 EEPROM_String settings_device_name(20);
 EEPROM_String settings_string_vars[] = {settings_device_name};
 Greenface_gadget settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]));
+bool settings_param_active[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0};
 
 void settings_fxn()
 {
@@ -228,5 +229,6 @@ void settings_begin()
   settings_spanker.string_vars[0].xfer();
   settings_spanker.string_params = settings_string_params;
   settings_spanker.trigger_fxn = settings_trigger;
+  settings_spanker.active_params = settings_param_active;
   settings_set_ext_trig(); // make sure hardware reflects variable
 }
