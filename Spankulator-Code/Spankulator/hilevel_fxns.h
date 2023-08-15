@@ -649,7 +649,7 @@ void send_data_to_USB(char cmd)
   ui.t.print(",");
   ui.t.print(toJSON("fxn_num", String(fxn.get())));
   ui.t.print(",");
-  if (cmd == ' ' || cmd == 'f' || cmd == '+' || cmd == '-' || cmd == 'U')
+  if (true || cmd == ' ' || cmd == 'f' || cmd == '+' || cmd == '-' || cmd == 'U')
     ui.t.print(list_fxns());
   ui.t.print(toJSON("device_name", settings_get_device_name()));
   ui.t.print(",");
@@ -753,10 +753,10 @@ void check_serial()
   {
     char c = Serial.read();
     // ui.terminal_debug(in_str + " .. " + String(c));
-    if (c == '$')
+    if (c == '$' && selected_fxn->param_is_stringvar())
     {
       entering_string = true;
-      ui.t.setRow(DEBUG_ROW);
+      selected_fxn->set_cursor_to_param();
     }
     if (!entering_string && (c == '&' || c == 'i' || c == 127 || c == '~' || c == '*' || c == '!' || c == 'u' || c == 'd' || c == '+' || c == '-' || c == 'z' || c == 'Z' || esc_mode))
     {
@@ -775,7 +775,7 @@ void check_serial()
       {
         if (entering_string && c != '$')
         {
-          Serial.print(c);
+          ui.terminal_print(c); // echo string to terminal
         }
         if (c == 27 || c == '[')
         {
