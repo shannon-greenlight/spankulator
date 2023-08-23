@@ -640,8 +640,32 @@ void send_user_params_to_USB()
   user_dig_num = temp;
 }
 
+bool sending_to_USB;
+void send_status_to_USB()
+{
+  if (!sending_to_USB)
+  {
+    sending_to_USB = true;
+    ui.t.print("{");
+    ui.t.print(toJSON("status", "trigger"));
+    ui.t.print(",");
+    ui.t.print(toJSON("triggered", is_triggered ? "ON" : "OFF"));
+    ui.t.print(",");
+    ui.t.print(toJSON("gate", String(gate.get() ? "ON" : "OFF")));
+    ui.t.print(",");
+    ui.t.print(toJSON("toggle", String(tog.get() ? "ON" : "OFF")));
+    ui.t.print("}");
+    // This terminates serialport message
+    ui.t.println("\r\n\r\n");
+    sending_to_USB = false;
+  }
+}
+
 void send_data_to_USB(char cmd)
 {
+  if (sending_to_USB)
+    return;
+  sending_to_USB = true;
   ui.t.print("{");
   if (cmd == '[')
     return;
@@ -743,6 +767,7 @@ void send_data_to_USB(char cmd)
 
   // This terminates serialport message
   ui.t.println("\r\n\r\n");
+  sending_to_USB = false;
 }
 
 void check_serial()
