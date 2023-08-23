@@ -27,6 +27,7 @@ void settings_put_ext_trig(uint16_t);
 void settings_put_quantized(uint16_t);
 void set_encoder();
 bool wifi_enabled(void);
+void send_status_to_USB();
 
 // hilevel functions
 void set_repeat_on(bool val);
@@ -209,7 +210,8 @@ void setup(void)
 void loop()
 {
   char cmd;
-  // static bool trig_memory;
+  static bool gate_memory = false;
+  static bool tog_memory = false;
   // ui.terminal_debug("inactivity_timer: " + String(inactivity_timer) + " keypress: " + String(keypress));
 
   // check_serial affects
@@ -221,10 +223,23 @@ void loop()
   check_serial();
   // Serial.println("Serial checked!");
 
+  if (gate.get() != gate_memory)
+  {
+    gate_memory = gate.get();
+    send_status_to_USB();
+  }
+
+  if (tog.get() != tog_memory)
+  {
+    tog_memory = tog.get();
+    send_status_to_USB();
+  }
+
   if (is_triggered != trig_memory)
   {
     trig_memory = is_triggered;
     terminal_print_status();
+    send_status_to_USB();
   }
 
   if (keypress || cmd_available)
