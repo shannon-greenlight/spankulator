@@ -591,4 +591,5 @@ void user_do_trigger()
   {
     user_underline_char();
   }
+  send_data_to_USB(' ');
 }

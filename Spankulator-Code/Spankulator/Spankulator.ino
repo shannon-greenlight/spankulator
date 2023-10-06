@@ -28,6 +28,7 @@ void settings_put_quantized(uint16_t);
 void set_encoder();
 bool wifi_enabled(void);
 void send_status_to_USB();
+void send_data_to_USB(char cmd);
 
 // hilevel functions
 void set_repeat_on(bool val);

@@ -180,7 +180,7 @@ void check_trigger()
     else
     {
       // is_triggered = repeat_on.get() || trigger_control.triggered || user_doing_trigger;
-      is_triggered = repeat_on.get() || trigger_control.triggered;
+      is_triggered = repeat_on.get() || trigger_control.triggered || (user_doing_trigger && !settings_is_ext_clk());
       // Serial.println("Delay: " + String(spank_engine.delay));
     }
   }
@@ -661,6 +661,10 @@ void send_status_to_USB()
   }
 }
 
+// savced just in case
+// const char *underline_chars[2] = {"-", "^"};
+// int underline_char_index = 0;
+
 void send_data_to_USB(char cmd)
 {
   if (sending_to_USB)
@@ -685,6 +689,8 @@ void send_data_to_USB(char cmd)
   ui.t.print(",");
   ui.t.print(toJSON("cmd", String(cmd)));
   ui.t.print(",");
+  // ui.t.print(toJSON("underline_char", String(underline_chars[underline_char_index])));
+  // ui.t.print(",");
   ui.t.print(toJSON("digit_num", String(get_dig_num())));
   ui.t.print(",");
   ui.t.print(toJSON("param_num", String(get_param_num())));
@@ -733,7 +739,7 @@ void send_data_to_USB(char cmd)
     ui.t.print(",");
     ui.t.print(toJSON("dig_num", String(user_dig_num)));
     ui.t.print(",");
-    ui.t.print(toJSON("selected", user_param_num == 0 ? "true" : "false"));
+    ui.t.print(toJSON("selected", (user_param_num == 0 && selected_fxn->param_num == 0) ? "true" : "false"));
     ui.t.print(",");
     send_user_params_to_USB();
     ui.t.print("},");
