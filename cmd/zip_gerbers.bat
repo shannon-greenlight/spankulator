@@ -21,6 +21,7 @@ if %ok% == y (
 	del %file_path%
 rem	"C:\Program Files\7-Zip\7z.exe" a %file_path% .\gerber\%basename%-%gerbers%.gbr
 	%zip_path% a %file_path% .\gerber\%basename%-%gerbers%.gbr
+	%zip_path% a %file_path% .\gerber\%basename%-Edge_Cuts.gbr
 	%zip_path% a %file_path% .\gerber\%basename%-job.gbrjob
 	%zip_path% a %file_path% .\gerber\*.drl
 ) else (
