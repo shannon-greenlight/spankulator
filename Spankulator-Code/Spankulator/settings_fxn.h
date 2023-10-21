@@ -48,9 +48,14 @@ void settings_fxn()
   trigger_control.triggered = false;
 }
 
+bool is_usb_direct()
+{
+  return settings_spanker.get_param(SETTINGS_USB_DIRECT) ? true : false;
+}
+
 void set_usb_direct()
 {
-  ui.terminal_mirror = settings_spanker.get_param(SETTINGS_USB_DIRECT) ? false : true;
+  ui.terminal_mirror = !is_usb_direct();
 }
 
 void settings_put_usb_direct(int val)

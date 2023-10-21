@@ -55,6 +55,7 @@ boolean user_doing_trigger = false;
 String in_str = ""; // for serial input
 boolean cmd_available = false;
 String wifi_ui_message = "";
+int user_entering_param;
 
 uint16_t cv_val;
 int adj; // from pot
@@ -224,23 +225,26 @@ void loop()
   check_serial();
   // Serial.println("Serial checked!");
 
-  if (gate.get() != gate_memory)
+  if (is_usb_direct())
   {
-    gate_memory = gate.get();
-    send_status_to_USB();
-  }
+    if (gate.get() != gate_memory)
+    {
+      gate_memory = gate.get();
+      send_status_to_USB();
+    }
 
-  if (tog.get() != tog_memory)
-  {
-    tog_memory = tog.get();
-    send_status_to_USB();
-  }
+    if (tog.get() != tog_memory)
+    {
+      tog_memory = tog.get();
+      send_status_to_USB();
+    }
 
-  if (is_triggered != trig_memory)
-  {
-    trig_memory = is_triggered;
-    terminal_print_status();
-    send_status_to_USB();
+    if (is_triggered != trig_memory)
+    {
+      trig_memory = is_triggered;
+      terminal_print_status();
+      send_status_to_USB();
+    }
   }
 
   if (keypress || cmd_available)

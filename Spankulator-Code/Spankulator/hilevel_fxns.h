@@ -739,10 +739,14 @@ void send_data_to_USB(char cmd)
     ui.t.print(",");
     ui.t.print(toJSON("dig_num", String(user_dig_num)));
     ui.t.print(",");
-    ui.t.print(toJSON("selected", (user_param_num == 0 && selected_fxn->param_num == 0) ? "true" : "false"));
+    ui.t.print(toJSON("selected", (user_entering_param == 0 && selected_fxn->param_num == 0) ? "true" : "false"));
     ui.t.print(",");
     send_user_params_to_USB();
     ui.t.print("},");
+  }
+  else
+  {
+    user_entering_param = 1; // if not user mode make sure we aren't missing selected param
   }
 
   if (wifi_ui_message > "" || true)

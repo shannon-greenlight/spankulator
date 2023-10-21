@@ -172,7 +172,7 @@ void send_data_to_client(WiFiClient client, char cmd)
     client.print(",");
     client.print(toJSON("dig_num", String(user_dig_num)));
     client.print(",");
-    client.print(toJSON("selected", user_param_num == 0 ? "true" : "false"));
+    client.print(toJSON("selected", user_entering_param == 0 ? "true" : "false"));
     client.print(",");
     send_user_params_to_client(client);
     client.print("},");

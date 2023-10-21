@@ -73,7 +73,6 @@ Greenface_gadget user_spanker_9("User 9", user_labels_9, user_stuff_9, USER_MAX_
 
 Greenface_gadget *user_spanks[] = {&user_spanker_0, &user_spanker_1, &user_spanker_2, &user_spanker_3, &user_spanker_4, &user_spanker_5, &user_spanker_6, &user_spanker_7, &user_spanker_8, &user_spanker_9};
 
-int user_param_num;
 byte user_dig_num = 0;
 int user_op_index = 0;
 String user_ops = "UDSTML ";
@@ -125,7 +124,7 @@ void user_debug()
 
 void user_init()
 {
-  user_param_num = 0;
+  user_entering_param = 0;
   user_dig_num = 0;
   user_op_index = 0;
   user_doing_trigger = false;
@@ -148,7 +147,7 @@ void user_underline_char()
   // {
   //   *c = '-';
   // }
-  const char *c = user_param_num == 0 && !user_doing_trigger ? "-" : "^";
+  const char *c = user_entering_param == 0 && !user_doing_trigger ? "-" : "^";
   ui.underline_char(user_dig_num, 0, 1, 8, c); // min(9,user_dig_num)
 }
 
@@ -287,7 +286,7 @@ void user_display()
   ui.fill(BLACK, 16);
   // ui.t.clrDown("9");
   ui.printLine(user_string.get(), LINE_1, 1);
-  if (true || user_param_num == 0)
+  if (true || user_entering_param == 0)
   {
     user_underline_char();
   }
@@ -299,7 +298,7 @@ void user_display()
   {
     if (user_dig_num < user_string.length())
     {
-      user_spanks[user_dig_num]->enable_hilight = user_param_num == 1;
+      user_spanks[user_dig_num]->enable_hilight = user_entering_param == 1;
       user_spanks[user_dig_num]->display_offset = 1;
       user_spanks[user_dig_num]->printParams();
     }
@@ -324,16 +323,16 @@ void user_inc_param_num()
   // Serial.println("Char: " + String(user_string.charAt(user_dig_num)) + "Dig# " + String(user_dig_num));
   if (user_string.charAt(user_dig_num))
   {
-    if (user_param_num == 0)
+    if (user_entering_param == 0)
     {
-      user_param_num = 1;
+      user_entering_param = 1;
     }
     else
     {
       user_spanks[user_dig_num]->inc_param_num_by(1);
       if (user_spanks[user_dig_num]->param_num == 0)
       {
-        user_param_num = 0;
+        user_entering_param = 0;
       }
     }
     user_display();
@@ -346,16 +345,16 @@ void user_dec_param_num()
     user_dig_num--;
   if (user_string.charAt(user_dig_num))
   {
-    if (user_param_num == 0)
+    if (user_entering_param == 0)
     {
-      user_param_num = 1;
+      user_entering_param = 1;
       user_spanks[user_dig_num]->param_num = user_spanks[user_dig_num]->num_params - 1;
     }
     else
     {
       if (user_spanks[user_dig_num]->param_num == 0)
       {
-        user_param_num = 0;
+        user_entering_param = 0;
       }
       else
       {
@@ -383,7 +382,7 @@ void user_remove_blank()
 
 void user_put_dig_num(int val)
 {
-  if (user_param_num == 0)
+  if (user_entering_param == 0)
   {
     if (val < 0)
     {
@@ -403,7 +402,7 @@ void user_put_dig_num(int val)
 
 void user_inc_dig_num_by(byte n)
 {
-  if (user_param_num == 0)
+  if (user_entering_param == 0)
   {
     byte real_length = 0;
     for (int i = USER_MAXLEN; i >= 0; i--)
@@ -435,7 +434,7 @@ void user_inc_dig_num_by(byte n)
 
 byte user_get_dig_num()
 {
-  if (user_param_num == 0)
+  if (user_entering_param == 0)
   {
     return user_dig_num;
   }
@@ -475,19 +474,19 @@ void user_set_params(char c)
 
 int user_get_param_num()
 {
-  return user_param_num;
+  return user_entering_param;
   // return user_spanks[user_dig_num]->param_num;
 }
 
 void user_select_sequence()
 {
-  user_param_num = 0;
+  user_entering_param = 0;
   user_display();
 }
 
 void user_put_param_num(uint16_t pnum)
 {
-  user_param_num = 1;
+  user_entering_param = 1;
   user_spanks[user_dig_num]->param_num = pnum;
   user_display();
   // Serial.println("User put param num: " + user_spanks[user_dig_num]->name);
@@ -512,7 +511,7 @@ void user_adjust_param(int encoder_val)
   // user_stop_trigger();
   if (is_triggered)
     return;
-  if (user_param_num == 0)
+  if (user_entering_param == 0)
   {
     // char c = user_ops[user_op_index];
     // Serial.print("User Adjust Param: ");
@@ -565,7 +564,7 @@ void user_do_trigger()
     // initialize  ptr and set flag
     user_doing_trigger = true;
     user_dig_num = 0;
-    user_param_num = 0;
+    user_entering_param = 0;
     user_underline_char();
     // selected_fxn->debug();
   }
