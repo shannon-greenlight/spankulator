@@ -225,8 +225,11 @@ void loop()
   check_serial();
   // Serial.println("Serial checked!");
 
-  if (is_usb_direct())
+  static int ms_save;
+
+  if (is_usb_direct() && !is_dvm())
   {
+    ms_save = millis();
     if (gate.get() != gate_memory)
     {
       gate_memory = gate.get();

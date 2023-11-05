@@ -10,6 +10,11 @@ boolean is_lfo()
   return fxn.get() == LFO_FXN;
 }
 
+boolean is_dvm()
+{
+  return fxn.get() == DVM_FXN;
+}
+
 boolean key_held_down = false;
 
 void restore_display()
@@ -667,7 +672,7 @@ void send_status_to_USB()
 
 void send_data_to_USB(char cmd)
 {
-  if (sending_to_USB)
+  if (sending_to_USB || !is_usb_direct())
     return;
   sending_to_USB = true;
   ui.t.print("{");
@@ -778,6 +783,18 @@ void send_data_to_USB(char cmd)
   // This terminates serialport message
   ui.t.println("\r\n\r\n");
   sending_to_USB = false;
+}
+
+void send_data_to_apps(char c)
+{
+  if (is_usb_direct())
+  {
+    send_data_to_USB(c);
+  }
+  if (is_wifi_connected())
+  {
+    // send_data_to_client(client, c);
+  }
 }
 
 void check_serial()

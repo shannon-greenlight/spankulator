@@ -209,6 +209,8 @@ void dvm_do_trigger()
             }
             dvm_meas = String(buf);
             ui.printLine(dvm_meas, 20, 4);
+            wifi_ui_message += dvm_meas;
+            // send_data_to_USB(' ');
         }
         dvm_ctr = 0;
         doing_trigger = false;
@@ -356,7 +358,7 @@ void set_dvm_trigger()
 void dvm_fxn()
 {
     // MyTimer5.begin(30); // beats per sec
-    wifi_ui_message = F("Click TRIGGER");
+    wifi_ui_message = F("Click Activate to start. Refresh to see result.");
     ui.newFxn("Bounce");
     disable_ext_trigger();
     dvm_adjust_param(0, 0); // prints result

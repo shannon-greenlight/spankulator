@@ -15,14 +15,39 @@ uint16_t hi_cal = 0;
 int save_value = 0;
 int tries = 0;
 
+void print_result(String s, bool printCR = false, bool add_to_message = false)
+{
+    if (printCR)
+    {
+        ui.terminal_println(s);
+    }
+    else
+    {
+        ui.terminal_print(s);
+    }
+    if (add_to_message)
+    {
+        wifi_ui_message += s;
+    }
+    // wifi_ui_message += s;
+}
+
+void adc_printLine(String s, int line, int size = 1)
+{
+    ui.printLine(s, line, size);
+    wifi_ui_message += "<br>";
+    wifi_ui_message += s;
+}
+
 void print_push_trig()
 {
-    ui.printLine(F("Then Push Activate"), LINE_2, 1);
+    adc_printLine(F("Then Push Activate"), LINE_2, 1);
 }
 
 void print_please_wait()
 {
-    ui.printLine(F("Please wait..."), LINE_1, 1);
+    adc_printLine(F("Please wait..."), LINE_1, 1);
+    send_data_to_USB(' ');
 }
 
 uint16_t readLevel()
@@ -39,7 +64,7 @@ uint16_t readLevel()
     // uint16_t readValue = readADC(ADC_CAL);
 
     ui.terminal_debug("ADC Level = " + String(readValue));
-    // Serial.println(readValue);
+    // print_result(readValue,true);
 
     return readValue;
 }
@@ -51,9 +76,9 @@ void adc_correct_offset()
     offsetCorrectionValue.put(0);
     gainCorrectionValue.put(0x600);
 
-    // Serial.print(F("\r\nOffset correction (@gain = "));
-    // Serial.print(gainCorrectionValue.get());
-    // Serial.println(F(" (min gain))"));
+    // print_result(F("\r\nOffset correction (@gain = "));
+    // print_result(gainCorrectionValue.get());
+    // print_result(F(" (min gain))"),true);
 
     // Set default correction values and enable correction
     analogReadCorrection(offsetCorrectionValue.get(), gainCorrectionValue.get());
@@ -66,9 +91,9 @@ void adc_correct_offset()
         offsetCorrectionValue.put(offset);
         // readLevel(); // settling time
 
-        Serial.print(F("   Offset = "));
-        Serial.print(offset);
-        // Serial.print(", ");
+        print_result(F("   Offset = "));
+        print_result(String(offset), true);
+        // print_result(", ");
 
         meas = readLevel();
 
@@ -78,12 +103,12 @@ void adc_correct_offset()
         }
         save_value = meas;
     }
-    ui.t.clrDown("8");
+    ui.terminal_clrDown("8");
 }
 
 void adc_correct_gain()
 {
-    // Serial.println(F("\r\nGain correction"));
+    // print_result(F("\r\nGain correction"),true);
     print_please_wait();
     mid_cal = readLevel();
     uint16_t i;
@@ -91,46 +116,48 @@ void adc_correct_gain()
     {
         analogReadCorrection(offsetCorrectionValue.get(), i);
         delay(1); // offset
-        Serial.println("Gain: " + String(i));
+        print_result("Gain: " + String(i), true);
         mid_cal = readLevel();
     }
     gainCorrectionValue.put(i);
-    ui.t.clrDown("8");
+    ui.terminal_clrDown("8");
 }
 
 void adc_summary()
 {
-    Serial.println(F("\r\n==================\r\n"));
-    Serial.print(F("Low Meas: "));
-    Serial.println(String(low_cal));
-    Serial.print(F("Mid Meas: "));
-    Serial.println(String(mid_cal));
-    Serial.print(F("High Meas: "));
-    Serial.println(String(hi_cal));
+    // wifi_ui_message = "";
+    print_result(F("\r\n==================\r\n"));
+    print_result(F("Low Meas: "));
+    print_result(String(low_cal), true);
+    print_result(F("Mid Meas: "));
+    print_result(String(mid_cal), true);
+    print_result(F("High Meas: "));
+    print_result(String(hi_cal), true);
 
-    Serial.println(" ");
+    print_result(" ", true);
     int low_diff = mid_cal - low_cal;
     int hi_diff = hi_cal - mid_cal;
-    Serial.print(F("Low Diff: "));
-    Serial.println(String(low_diff));
-    Serial.print(F("High Diff: "));
-    Serial.println(String(hi_diff));
-    Serial.print(F("Error: "));
-    Serial.println(String(hi_diff - low_diff));
-    Serial.println(" ");
+    print_result(F("Low Diff: "));
+    print_result(String(low_diff), true);
+    print_result(F("High Diff: "));
+    print_result(String(hi_diff), true);
+    print_result(F("Error: "));
+    print_result(String(hi_diff - low_diff), true);
+    print_result(" ", true);
 
-    Serial.print(F("Gain Corr: "));
-    Serial.println(String(gainCorrectionValue.get()));
-    Serial.print(F("Offset Corr: "));
-    Serial.println(String(offsetCorrectionValue.get()));
-    Serial.println(F("\r\n=================="));
+    print_result(F("Gain Corr: "));
+    print_result(String(gainCorrectionValue.get()), true);
+    print_result(F("Offset Corr: "));
+    print_result(String(offsetCorrectionValue.get()), true);
+    print_result(F("\r\n=================="), true);
 }
 
 void adc_cal()
 {
     is_triggered = false; // make sure next trig toggles to true
     ui.fill(BLACK, 16);
-    ui.t.clrDown("8");
+    ui.terminal_clrDown("8");
+    wifi_ui_message = "";
     switch (adc_cal_screen)
     {
     case 0:
@@ -139,20 +166,20 @@ void adc_cal()
         hi_cal = 0;
         save_value = 0;
         tries = 0;
-        ui.printLine(F("Plug +5V to Sig In"), LINE_1, 1);
+        adc_printLine(F("Plug +5V to Sig In"), LINE_1, 1);
         print_push_trig();
         adc_cal_screen++;
         break;
     case 1:
         print_please_wait();
         adc_correct_offset();
-        ui.printLine(F("Plug +0V to Sig In"), LINE_1, 1);
+        adc_printLine(F("Plug +0V to Sig In"), LINE_1, 1);
         print_push_trig();
         adc_cal_screen++;
         break;
     case 2:
         adc_correct_gain();
-        ui.printLine(F("Plug +4V to Sig In"), LINE_1, 1);
+        adc_printLine(F("Plug +4V to Sig In"), LINE_1, 1);
         print_push_trig();
         adc_cal_screen++;
         break;
@@ -160,7 +187,7 @@ void adc_cal()
         print_please_wait();
         delay(1000); // offset
         low_cal = readLevel();
-        ui.printLine(F("Plug 0V to Sig In"), LINE_1, 1);
+        adc_printLine(F("Plug 0V to Sig In"), LINE_1, 1);
         print_push_trig();
         adc_cal_screen++;
         break;
@@ -168,17 +195,17 @@ void adc_cal()
         print_please_wait();
         delay(1000); // mid
         mid_cal = readLevel();
-        ui.printLine(F("Plug -4V to Sig In"), LINE_1, 1);
+        adc_printLine(F("Plug -4V to Sig In"), LINE_1, 1);
         print_push_trig();
-        ui.printLine("Low Diff: " + String(mid_cal - low_cal), LINE_3, 1);
+        // adc_printLine("Low Diff: " + String(mid_cal - low_cal), LINE_3, 1);
         adc_cal_screen++;
         break;
     case 5:
         print_please_wait();
         delay(1000); // gain
         hi_cal = readLevel();
-        ui.printLine(F("Calibration complete"), LINE_1, 1);
-        ui.printLine("Hi Diff: " + String(hi_cal - mid_cal), LINE_3, 1);
+        adc_printLine(F("Calibration complete"), LINE_1, 1);
+        // adc_printLine("Hi Diff: " + String(hi_cal - mid_cal), LINE_3, 1);
         adc_summary();
         adc_cal_screen = 0;
         break;
@@ -207,9 +234,9 @@ void adc_begin()
     gainCorrectionValue.begin(false);
     gainCorrectionValue.xfer();
     // delay(3000);
-    // Serial.println("ADC Begin offset: " + String(offsetCorrectionValue.get()) + " gain: " + String(gainCorrectionValue.get()));
+    // print_result("ADC Begin offset: " + String(offsetCorrectionValue.get()) + " gain: " + String(gainCorrectionValue.get()),true);
     // offsetCorrectionValue.put(0);
-    gainCorrectionValue.put(2048);
+    // gainCorrectionValue.put(2048);
     analogReadCorrection(offsetCorrectionValue.get(), gainCorrectionValue.get());
 }
 
@@ -229,7 +256,7 @@ void adc_config_hardware()
     // in case there is no ext ref
     if (raw > 1000)
     {
-        Serial.println(F("*** Setting default reference! ***"));
+        print_result(F("*** Setting default reference! ***"), true);
         analogReference(AR_DEFAULT);
     }
 }
