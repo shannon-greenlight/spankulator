@@ -247,9 +247,11 @@ void set_scale()
 
 void scale_and_offset(uint16_t *val)
 {
-  *val *= scale;
-  *val += offset >> ADC_DAC_SHIFT;
-  *val = constrain(*val, 0, DAC_FS);
+  int temp = *val;
+  temp *= scale;
+  temp += offset >> ADC_DAC_SHIFT;
+  temp = constrain(temp, 0, DAC_FS);
+  *val = temp;
 }
 
 // The CV Output circuit inverts the signal, so invert it here
