@@ -7,7 +7,7 @@ typedef void (*FunctionPointer)();
 #include <Timer5.h>
 #include <Adafruit_FRAM_I2C.h>
 #include <WiFiNINA.h>
-#include <arduino_secrets.h>
+#include "secrets/secrets/arduino_secrets.h"
 
 #define BOARD_GENERATION 5
 #include "version_num.h"
