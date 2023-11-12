@@ -29,6 +29,7 @@ void set_encoder();
 bool wifi_enabled(void);
 void send_status_to_USB();
 void send_data_to_USB(char cmd);
+uint16_t settings_get_wifi();
 
 // hilevel functions
 void set_repeat_on(bool val);
@@ -55,7 +56,7 @@ boolean user_doing_trigger = false;
 String in_str = ""; // for serial input
 boolean cmd_available = false;
 String wifi_ui_message = "";
-int user_entering_param;
+int user_entering_param = 1;
 
 uint16_t cv_val;
 int adj; // from pot
