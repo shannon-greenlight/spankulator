@@ -27,11 +27,11 @@ enum
 
 uint16_t _settings_params[SETTINGS_NUM_PARAMS];
 uint16_t _settings_mins[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1};
-uint16_t _settings_maxs[] = {0, SETTING_CV_VALUE, SETTING_CV_VALUE, 1, 1, 1, 1, 1, 1, 9999, 0, 0, 1, BOARD_GENERATION};
+uint16_t _settings_maxs[] = {0, SETTING_CV_VALUE, SETTING_CV_VALUE, 1, 1, 1, 1, 2, 1, 9999, 0, 0, 1, BOARD_GENERATION};
 uint16_t _settings_init_vals[] = {0, SETTING_CV_OFF, SETTING_CV_OFF, 1, 0, 0, 0, 1, 0, 15, 0, 0, 0, BOARD_GENERATION};
 uint16_t *settings_stuff[] = {_settings_params, _settings_mins, _settings_maxs, _settings_init_vals};
 String settings_labels[] = {"Version: ", "CV Pot: ", "Sig In: ", "Quantize: ", "Clock: ", "Ext Trig: ", "Encoder Type: ", "WiFi: ", "USB Direct: ", "Screen Saver: ", "Name: ", "Reset: ", "Calibrate: ", "Board Generation: "};
-String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ", "Disabled,Enabled ", "", "$~", "Push Activate", "ADC,DAC", ""};
+String settings_string_params[] = {VERSION_NUM, "Off,Scale ,Offset,Value ", "Off,Scale ,Offset,Value ", "No ,Yes", "Internal,External", "Enabled ,Disabled", "Normal ,Reverse", "Disabled,Enabled ,Reset", "Disabled,Enabled ", "", "$~", "Push Activate", "ADC,DAC", ""};
 EEPROM_String settings_device_name(20);
 EEPROM_String settings_string_vars[] = {settings_device_name};
 Greenface_gadget settings_spanker("Settings", settings_labels, settings_stuff, sizeof(_settings_params) / sizeof(_settings_params[0]));
@@ -146,6 +146,11 @@ bool wifi_enabled()
   return settings_spanker.get_param(SETTINGS_WIFI);
 }
 
+uint16_t settings_get_wifi()
+{
+  return settings_spanker.get_param(SETTINGS_WIFI);
+}
+
 bool usb_direct_enabled()
 {
   return settings_spanker.get_param(SETTINGS_USB_DIRECT);
@@ -175,6 +180,14 @@ void settings_put_param(int val)
   case SETTINGS_USB_DIRECT:
     set_usb_direct();
     break;
+  case SETTINGS_WIFI:
+    // mode = settings_fxn.get_param(SETTINGS_WIFI);
+    // if (settings_spanker.get_param(SETTINGS_WIFI) == 2)
+    // {
+    //   select_wifi_screen = 0;
+    //   // system_message = "WiFi Reset";
+    // }
+    break;
   }
 }
 
@@ -191,6 +204,14 @@ void settings_adjust_param(int encoder_val, unsigned long delta)
     break;
   case SETTINGS_USB_DIRECT:
     set_usb_direct();
+    break;
+  case SETTINGS_WIFI:
+    // mode = settings_fxn.get_param(SETTINGS_WIFI);
+    // if (settings_spanker.get_param(SETTINGS_WIFI) == 2)
+    // {
+    //   select_wifi_screen = 0;
+    //   // system_message = "WiFi Reset";
+    // }
     break;
   }
 }
@@ -212,6 +233,13 @@ void settings_trigger()
     case 1:
       dac_cal();
       break;
+    }
+    break;
+  case SETTINGS_WIFI:
+    if (selected_fxn == &settings_spanker)
+    {
+      // Serial.println("Trigger -> Enter wifi " + selected_fxn->name);
+      enter_wifi();
     }
     break;
 
