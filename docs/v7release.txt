@@ -1,0 +1,6 @@
+A new software release has been posted for the Spankulator. It updates the code to work with the latest changes to the desktop and Web apps.
+Here are some notes on using the Web app.
+1. Many browsers now force https. The app runs over http. You can fix this by clicking on the browser's address bar (possibly twice) and removing the 's' from the URL's 'https'.
+2. The WiFi chip on the Arduino board that the Spankulator uses has been reluctant to restart a session without a power cycle (or reset button press). I've Googled this issue to death and haven't found a solution. So, the workkaround is to set up the WiFi once after a power cycle. If you need to change it, make the changes in the menu, then recycle the power or press the reset button on the Arduino.
+3. I am working on updating the code to work over https. I think this is possible. I'll keep everyone posted on my progress.
+
