@@ -160,7 +160,16 @@ void do_trigger()
     break;
   case WIFI_FXN:
     repeat_on.reset();
+    if (settings_get_wifi() == 2)
+    {
+      select_wifi_screen = WIFI_IDLE;
+      settings_spanker.put_param(1, SETTINGS_WIFI);
+      // system_message = "WiFi Reset";
+    }
     wifi_activate();
+    break;
+  case SETTINGS_FXN:
+    settings_trigger();
     break;
   default:
     selected_fxn->trigger_fxn();
@@ -173,6 +182,7 @@ void check_trigger()
   {
     if (!trigger_control.triggered)
     {
+      // Serial.println("Oh yes you did!");
       do_trigger();
       delay(1);
       // Serial.println("do_trigger: " + String(trigger_control.triggered) + "          " + selected_fxn->name);
@@ -457,8 +467,8 @@ void inc_param_num()
     break;
   default:
     selected_fxn->inc_param_num_by(1);
-    terminal_print_status();
-    // Serial.println("Unknown inc_param_num fxn: " + String(fxn.get()));
+    // terminal_print_status();
+    // Serial.println("Default inc_param_num fxn: " + String(fxn.get()) + " " + selected_fxn->param_num);
   }
 }
 
