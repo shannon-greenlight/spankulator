@@ -5,6 +5,14 @@
 
 void enter_wifi()
 {
+  if (settings_get_wifi() == 2)
+  {
+    select_wifi_screen = WIFI_IDLE;
+    // Serial.println("WiFi Reset!!!");
+    // system_message = "WiFi Reset";
+  }
+  // Serial.println("Enter WiFi");
+  fxn.put(WIFI_FXN);
   selected_fxn = &wifi_fxn;
   selected_fxn->display();
 }
