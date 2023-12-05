@@ -3,13 +3,13 @@ echo.
 echo.
 echo Available COM ports
 echo -------------------
-powershell.exe [System.IO.Ports.SerialPort]::getportnames()
+REM Get a list of connected boards
+powershell -Command "$boardList = .\arduino-cli board list; $boardList -split \"`n\" | ForEach-Object { if ($_ -match '^(COM\d+)\s') { $port = $Matches[1]; if ($_ -match 'Arduino Nano RP2040 Connect') { Write-Host \"Bonkulator found on $port\" } elseif ($_ -match 'Arduino NANO 33 IoT') { Write-Host \"Spankulator found on $port\" } } }"
 echo.
-echo.
+
 set /p port=What's the COM port? (please enter a number)
 
-@mode com%port% baud=1200
-pause
+if %port% == x exit
 
-bossac.exe -d -U true -i -e -w -v -b Spankulator.ino.bin -R
+arduino-cli upload -p COM%port% -b arduino:samd:nano_33_iot -i ./Spankulator.ino.bin
 pause

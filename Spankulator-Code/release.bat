@@ -28,8 +28,19 @@ call make.bat
 
 copy .\out\Spankulator.ino.bin updater
 
-"C:\Program Files\7-Zip\7z.exe" a -r .\releases\spankulator_updater_%release_num%.zip updater 
+"C:\Program Files\7-Zip\7z.exe" a -r .\releases\spankulator_updater_%release_num%.zip updater -x!updater.sh
 
+REM Create a tar archive using 7-Zip for the Mac/Linux users
+"C:\Program Files\7-Zip\7z.exe" a -ttar archive.tar ./updater/* -x!update.bat
+
+REM Compress the tar archive into .gz format using 7-Zip
+"C:\Program Files\7-Zip\7z.exe" a -tgzip .\archive.tar.gz ./archive.tar
+
+"C:\Program Files\7-Zip\7z.exe" a .\releases\spankulator_updater_%release_num%.tar.zip ./archive.tar.gz
+
+REM Delete the intermediate .tar file
+del archive.tar
+del archive.tar.gz
 :end
 echo Goodbye!
 

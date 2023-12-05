@@ -2,6 +2,6 @@
 #ifndef VERSION_NUM_h 
 #define VERSION_NUM_h 
  
-#define VERSION_NUM "v7.0.6" 
+#define VERSION_NUM "v7.1.0" 
  
 #endif 
