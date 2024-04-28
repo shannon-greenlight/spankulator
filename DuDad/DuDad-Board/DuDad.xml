@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\shann\Dropbox\moog\spankulator\DuDad\DuDad-Board\DuDad.kicad_sch</source>
-    <date>10/24/2022 6:47:43 PM</date>
+    <date>12/10/2023 8:55:42 PM</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -67,12 +67,12 @@
       <value>EXP</value>
       <footprint>Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical</footprint>
       <fields>
-        <field name="  LCSC Part #">C225520</field>
         <field name="Digi-Key Part">S2011EC-05-ND</field>
+        <field name="LCSC Part #">C225520</field>
       </fields>
       <libsource lib="Connector_Generic" part="Conn_02x05_Odd_Even" description="Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <property name="Digi-Key Part" value="S2011EC-05-ND"/>
-      <property name="  LCSC Part #" value="C225520"/>
+      <property name="LCSC Part #" value="C225520"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -96,12 +96,12 @@
       <footprint>sputterizer:USB_A_Amphenol_UE27AE54100_Vertical</footprint>
       <datasheet> ~</datasheet>
       <fields>
-        <field name="  LCSC Part #">C718031</field>
         <field name="Digi-Key Part">UE27AE54100-ND</field>
+        <field name="LCSC Part #">C386737</field>
       </fields>
       <libsource lib="Connector" part="USB_A" description="USB Type A connector"/>
       <property name="Digi-Key Part" value="UE27AE54100-ND"/>
-      <property name="  LCSC Part #" value="C718031"/>
+      <property name="LCSC Part #" value="C386737"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -112,12 +112,12 @@
       <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
       <datasheet>https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</datasheet>
       <fields>
-        <field name="  LCSC Part #">C9809</field>
         <field name="Digi-Key Part">2N3906TFCT-ND</field>
+        <field name="LCSC Part #">C9809</field>
       </fields>
       <libsource lib="Transistor_BJT" part="2N3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92"/>
       <property name="Digi-Key Part" value="2N3906TFCT-ND"/>
-      <property name="  LCSC Part #" value="C9809"/>
+      <property name="LCSC Part #" value="C9809"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -128,12 +128,12 @@
       <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
       <datasheet>https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</datasheet>
       <fields>
-        <field name="  LCSC Part #">C9809</field>
         <field name="Digi-Key Part">2N3906TFCT-ND</field>
+        <field name="LCSC Part #">C9809</field>
       </fields>
       <libsource lib="Transistor_BJT" part="2N3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92"/>
       <property name="Digi-Key Part" value="2N3906TFCT-ND"/>
-      <property name="  LCSC Part #" value="C9809"/>
+      <property name="LCSC Part #" value="C9809"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -144,12 +144,12 @@
       <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
       <datasheet>https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</datasheet>
       <fields>
-        <field name="  LCSC Part #">C232838</field>
         <field name="Digi-Key Part">2N7000FS-ND</field>
+        <field name="LCSC Part #">C232838</field>
       </fields>
       <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
       <property name="Digi-Key Part" value="2N7000FS-ND"/>
-      <property name="  LCSC Part #" value="C232838"/>
+      <property name="LCSC Part #" value="C232838"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -160,42 +160,42 @@
       <footprint>Package_TO_SOT_THT:TO-92_Inline_Wide</footprint>
       <datasheet>https://www.onsemi.com/pub/Collateral/2N3906-D.PDF</datasheet>
       <fields>
-        <field name="  LCSC Part #">C9809</field>
         <field name="Digi-Key Part">2N3906TFCT-ND</field>
+        <field name="LCSC Part #">C9809</field>
       </fields>
       <libsource lib="Transistor_BJT" part="2N3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, TO-92"/>
       <property name="Digi-Key Part" value="2N3906TFCT-ND"/>
-      <property name="  LCSC Part #" value="C9809"/>
+      <property name="LCSC Part #" value="C9809"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>21f9fd69-9bb1-463a-96ef-e2ad5cdcaa6c</tstamps>
     </comp>
     <comp ref="R1">
-      <value>200</value>
+      <value>620</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C119309</field>
-        <field name="Digi-Key Part">CF14JT200RCT-ND</field>
+        <field name="Digi-Key Part">CF14JT620RCT-ND</field>
+        <field name="LCSC Part #">C120050</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT200RCT-ND"/>
-      <property name="  LCSC Part #" value="C119309"/>
+      <property name="Digi-Key Part" value="CF14JT620RCT-ND"/>
+      <property name="LCSC Part #" value="C120050"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-0000620129e0</tstamps>
     </comp>
     <comp ref="R2">
-      <value>43K</value>
+      <value>30K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C433719</field>
-        <field name="Digi-Key Part">CF14JT43K0CT-ND</field>
+        <field name="Digi-Key Part">CF14JT30K0CT-ND</field>
+        <field name="LCSC Part #">C176499</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT43K0CT-ND"/>
-      <property name="  LCSC Part #" value="C433719"/>
+      <property name="Digi-Key Part" value="CF14JT30K0CT-ND"/>
+      <property name="LCSC Part #" value="C176499"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -205,42 +205,42 @@
       <value>1K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C410696</field>
-        <field name="Digi-Key Part">738-CFF14JT1K00CT-ND</field>
+        <field name="Digi-Key Part">CF14JT1K00CT-ND</field>
+        <field name="LCSC Part #">C120055</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="738-CFF14JT1K00CT-ND"/>
-      <property name="  LCSC Part #" value="C410696"/>
+      <property name="Digi-Key Part" value="CF14JT1K00CT-ND"/>
+      <property name="LCSC Part #" value="C120055"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-0000620806b7</tstamps>
     </comp>
     <comp ref="R4">
-      <value>200</value>
+      <value>620</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C119309</field>
-        <field name="Digi-Key Part">CF14JT200RCT-ND</field>
+        <field name="Digi-Key Part">CF14JT620RCT-ND</field>
+        <field name="LCSC Part #">C120050</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT200RCT-ND"/>
-      <property name="  LCSC Part #" value="C119309"/>
+      <property name="Digi-Key Part" value="CF14JT620RCT-ND"/>
+      <property name="LCSC Part #" value="C120050"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-000061f47872</tstamps>
     </comp>
     <comp ref="R5">
-      <value>43K</value>
+      <value>30K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C433719</field>
-        <field name="Digi-Key Part">CF14JT43K0CT-ND</field>
+        <field name="Digi-Key Part">CF14JT30K0CT-ND</field>
+        <field name="LCSC Part #">C176499</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT43K0CT-ND"/>
-      <property name="  LCSC Part #" value="C433719"/>
+      <property name="Digi-Key Part" value="CF14JT30K0CT-ND"/>
+      <property name="LCSC Part #" value="C176499"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -250,12 +250,12 @@
       <value>10K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C433778</field>
         <field name="Digi-Key Part">CF14JT10K0CT-ND</field>
+        <field name="LCSC Part #">C433778</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
       <property name="Digi-Key Part" value="CF14JT10K0CT-ND"/>
-      <property name="  LCSC Part #" value="C433778"/>
+      <property name="LCSC Part #" value="C433778"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -265,27 +265,27 @@
       <value>30K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C176499</field>
         <field name="Digi-Key Part">CF14JT30K0CT-ND</field>
+        <field name="LCSC Part #">C176499</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
       <property name="Digi-Key Part" value="CF14JT30K0CT-ND"/>
-      <property name="  LCSC Part #" value="C176499"/>
+      <property name="LCSC Part #" value="C176499"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>455ab60b-7725-47c1-8bea-8bb2de9c3df5</tstamps>
     </comp>
     <comp ref="R8">
-      <value>43K</value>
+      <value>30K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C433719</field>
-        <field name="Digi-Key Part">CF14JT43K0CT-ND</field>
+        <field name="Digi-Key Part">CF14JT30K0CT-ND</field>
+        <field name="LCSC Part #">C176499</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
-      <property name="Digi-Key Part" value="CF14JT43K0CT-ND"/>
-      <property name="  LCSC Part #" value="C433719"/>
+      <property name="Digi-Key Part" value="CF14JT30K0CT-ND"/>
+      <property name="LCSC Part #" value="C176499"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -295,12 +295,12 @@
       <value>10K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
-        <field name="  LCSC Part #">C433778</field>
         <field name="Digi-Key Part">CF14JT10K0CT-ND</field>
+        <field name="LCSC Part #">C433778</field>
       </fields>
       <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
       <property name="Digi-Key Part" value="CF14JT10K0CT-ND"/>
-      <property name="  LCSC Part #" value="C433778"/>
+      <property name="LCSC Part #" value="C433778"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
@@ -310,10 +310,10 @@
       <value>Reset</value>
       <footprint>Button_Switch_THT:SW_PUSH_6mm</footprint>
       <fields>
-        <field name="Digi-Key Part">450-1940-ND</field>
+        <field name="Digi-Key Part">450-1653-ND</field>
       </fields>
       <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
-      <property name="Digi-Key Part" value="450-1940-ND"/>
+      <property name="Digi-Key Part" value="450-1653-ND"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="DuDad.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>

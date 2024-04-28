@@ -5,13 +5,13 @@
       "Application": "Pcbnew",
       "Version": "(6.0.1)"
     },
-    "CreationDate": "2022-10-26T10:55:45-07:00"
+    "CreationDate": "2024-01-24T19:53:21-08:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "DuDad2HP",
       "GUID": "44754461-6432-4485-902e-6b696361645f",
-      "Revision": "1.0"
+      "Revision": "1.1"
     },
     "Size": {
       "X": 10.05,
@@ -24,8 +24,8 @@
   "DesignRules": [
     {
       "Layers": "Outer",
-      "PadToPad": 0.2,
-      "PadToTrack": 0.2,
+      "PadToPad": 0.0,
+      "PadToTrack": 0.0,
       "TrackToTrack": 0.2,
       "MinLineWidth": 0.2,
       "TrackToRegion": 0.508,
