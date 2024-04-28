@@ -253,8 +253,14 @@ void adjust_param(int encoder_val)
 
 void check_rotary_encoder()
 {
+  if (false && e.getEncoderValue())
+  {
+    // ui.terminal_debug("Encoder state: " + String(e.state) + " Encoder: " + String(e.getEncoderValue()) + " Last: " + String(e.last_encoder_val));
+    // ui.terminal_debug("Encoder state: " + String(e.state) + " Encoded: " + String(e.encoded) + " Missed it: " + String(e.missed_it));
+  }
   if (e.is_adjusting())
   {
+    // ui.terminal_debug("Encoder state: " + String(e.state) + " Encoded: " + String(e.encoded) + " Last: " + String(e.last_encoder_val));
     ui.reset_inactivity_timer();
     adjust_param(e.getEncoderValue());
     e.resetEncoder();
