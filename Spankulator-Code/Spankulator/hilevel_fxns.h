@@ -498,6 +498,12 @@ void dec_param_num()
 
 String get_control(String control)
 {
+  bool scale_using_pot = settings_get_pot_fxn() == SETTING_CV_SCALE;
+  bool scale_using_sigin = settings_get_dc_fxn() == SETTING_CV_SCALE;
+  bool offset_using_pot = settings_get_pot_fxn() == SETTING_CV_OFFSET;
+  bool offset_using_sigin = settings_get_dc_fxn() == SETTING_CV_OFFSET;
+  bool value_using_pot = settings_get_pot_fxn() == SETTING_CV_VALUE;
+  bool value_using_sigin = settings_get_dc_fxn() == SETTING_CV_VALUE;
   switch (fxn.get())
   {
   case STRETCH_FXN:
@@ -509,11 +515,15 @@ String get_control(String control)
   default:
     if (control == "scale")
     {
-      return String((int)(scale * ADC_FS + .5));
+      return (scale_using_pot || scale_using_sigin) ? "disabled" : String((int)(scale * ADC_FS + .5));
     }
     else if (control == "offset")
     {
-      return String(offset_adj);
+      return (offset_using_pot || offset_using_sigin) ? "disabled" : String(offset_adj);
+    }
+    else if (control == "cv_val")
+    {
+      return (value_using_pot || value_using_sigin || trigger_control.triggered) ? "disabled" : String(cv_val);
     }
   }
 }
@@ -722,7 +732,7 @@ void send_data_to_USB(char cmd)
   ui.t.print(",");
   ui.t.print(toJSON("adj", String(adj)));
   ui.t.print(",");
-  ui.t.print(toJSON("cv_val", String(cv_val)));
+  ui.t.print(toJSON("cv_val", get_control("cv_val"))); // String(cv_val)
   ui.t.print(",");
   // ui.t.print(toJSON("scale", String((int)(scale * ADC_FS + .5))));
   ui.t.print(toJSON("scale", get_control("scale")));
