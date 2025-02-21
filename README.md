@@ -1,4 +1,7 @@
 # Spankulator
+# The Spankulator has been discontinued due to parts issues
+
+
 The Spankulator is a WiFi-enabled multi-function Eurorack module. Its main function is to generate a trio of coordinated analog and digital signals which can be used in an endless variety of ways. While each output generates familiar signals, it is the coordination of these signals and the methods of control that make the Spankulator special.
 
 # Spankulator-Hardware, Spankulator-Panel
